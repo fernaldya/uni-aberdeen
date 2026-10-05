@@ -1,6 +1,6 @@
 # Exercise 4
 
-df = read.table('exercises/data/cardiacdata.txt', header=TRUE, sep='\t')
+df = read.table('data/cardiacdata.txt', header=TRUE, sep='\t')
 head(df)
 
 summary(df)
@@ -107,6 +107,9 @@ aggregate(
     median,
     na.rm=TRUE
 )
+
+# Q5
+table(df$fsmoking, df$fsex)
 
 # Q6
 summary(df$triglyceride)
