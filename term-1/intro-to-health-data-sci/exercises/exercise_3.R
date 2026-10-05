@@ -45,8 +45,10 @@ cardiac_risk = df[, c('patno', 'sex', 'smoking', 'tchol')]
 head(cardiac_risk, 5)
 
 # Q9b
-cardiac_risk_exc = df[-(1:10), (-1)]
+str(df)
+cardiac_risk_exc = df[-(1:10), -c(ncol(df))]
 head(cardiac_risk_exc)
+# -c(ncol(df)) excludes the last column because ncol(df) returns the total number of columns
 
 # Q10
 # 1. patients with a systolic blood pressure greater than 160 mmHg
