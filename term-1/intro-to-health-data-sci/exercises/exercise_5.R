@@ -111,12 +111,11 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...) {
   text(0.5, 0.5, txt, cex = cex.cor * (0.4 + 0.6 * abs(r)))
 }
 
-pairs(
-    cardiac[
-        , c('age', 'systolic', 'diastolic', 'tchol',
+corr_vars = c('age', 'systolic', 'diastolic', 'tchol',
             'hdlchol', 'triglyceride', 'bmi')
-    ],
-    upper.panel=panel.cor,
+pairs(
+    cardiac[, corr_vars],
+    upper.panel=NULL, # =panel.cor
     pch=21,
-    bg = c("red", "green", "blue")
+    # bg = c("red", "green", "blue")
 )
