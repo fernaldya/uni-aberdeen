@@ -1,8 +1,9 @@
 # Exercise 3
 
 # Q5
-df = read.table('data/cardiacdata.txt', header=TRUE, sep='\t')
+df = read.table('data/cardiacdata.txt', header=TRUE, sep='\t', stringsAsFactors=TRUE)
 df
+# stringAsFactors to cast patno to factor type (categorical) instead of char
 
 # Q6
 head(df, n=6)
