@@ -37,7 +37,7 @@ table(cardiac$fsex, cardiac$fsmoking, useNA='ifany')
 
 # Q6
 par(mfrow=c(2,2)) # Creates a single figure with 2x2 room for 4 plots
-dotchart(cardiac$bmi, labels='BMI') # There's an outlier with value > 500
-dotchart(cardiac$systolic, labels='Systolic')
-dotchart(cardiac$tchol, labels='Total cholesterol')
-dotchart(cardiac$alcohol, labels='Alcohol consumption')
+dotchart(cardiac$bmi, main='BMI') # There's an outlier with value > 500
+dotchart(cardiac$systolic, main='Systolic')
+dotchart(cardiac$tchol, main='Total cholesterol')
+dotchart(cardiac$alcohol, main='Alcohol consumption')
