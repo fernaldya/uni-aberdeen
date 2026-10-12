@@ -199,4 +199,11 @@ sum(is.na(cardiac_all$n_admissions)) # 0 => no more NA data
 head(cardiac_all[cardiac_all$n_admissions == 0, ])
 
 # Q10
-write.table(cardiac_all, 'data/cardiac_all.txt', quote=FALSE, sep='\t')
+write.table(
+    cardiac_all,
+    'data/cardiac_all.txt',
+    quote=FALSE,
+    sep='\t',
+    col.names=TRUE,
+    row.names=FALSE
+)
