@@ -115,7 +115,7 @@ corr_vars = c('age', 'systolic', 'diastolic', 'tchol',
             'hdlchol', 'triglyceride', 'bmi')
 pairs(
     cardiac[, corr_vars],
-    upper.panel=NULL, # =panel.cor
+    upper.panel=NULL, # =panel.cor for the correlation coeff value
     pch=21,
     # bg = c("red", "green", "blue")
 )

@@ -16,11 +16,16 @@ table(scotpho$area_type)
 # Council area has 320 rows of data, Scotland has 10
 
 table(scotpho$area_name)
-# Each area has 10 points of data
+unique(table(scotpho$area_name))
+table(scotpho$year)
+# 33 areas and each area has 10 points of data (year)
+
+range(scotpho$year)
+# 2010 - 2019
 
 # Q5
 scot = scotpho[scotpho$area_name == 'Scotland',]
-scot
+nrow(scot)
 summary(scot)
 str(scot)
 
@@ -43,18 +48,19 @@ nrow(three_areas)
 
 ggplot(data=three_areas, mapping=aes(x=year, y=measure, colour=area_name)) +
   geom_point() +
-  geom_smooth(method='lm', se=FALSE)
+  geom_line(linewidth=1)
+  # geom_smooth(method='lm', se=FALSE)
 
 
 # Q7a
 cols = palette.colors(3, palette = "Okabe-Ito")
 ggplot(data=three_areas, mapping=aes(x=year, y=measure, colour=area_name)) +
-  geom_line(method='lm', se=FALSE) +
+  geom_line(linewidth=1) +
   scale_colour_manual(values=cols)
 
 # Q7b
 ggplot(data=three_areas, mapping=aes(x=year, y=measure, colour=area_name)) +
-  geom_line(method='lm', se=FALSE) +
+  geom_line(linewidth=1) +
   scale_colour_manual(values=grey(c(0, 0.64, 0.62)))
 
 # Q7c
@@ -62,7 +68,7 @@ ggplot(data=three_areas, mapping=aes(
     x=year, y=measure,
     colour=area_name, line_type=area_name
   )) +
-  geom_line() +
+  geom_line(linewidth=1) +
   scale_colour_manual(values=cols)
 
 
@@ -79,6 +85,7 @@ admissions_plot = ggplot(data=three_areas, mapping=aes(
   theme(legend.position='bottom') +
   labs(
     x='Year', y='Measure (per 100,000 people)', title='Alcohol Related Hospital Admission',
+    caption='Source: Scottish Public Health Observatory. Rates are age-sex standardised.',
     colour=NULL, linetype=NULL
   ) # Q8
 
