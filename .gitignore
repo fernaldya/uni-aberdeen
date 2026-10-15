@@ -1,3 +1,5 @@
+.agents/
+.claude/
 .env
 **/.DS_Store
 .Rproj.user

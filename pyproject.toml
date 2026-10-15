@@ -8,5 +8,8 @@ dependencies = [
     "chromadb>=1.5.9",
     "langchain>=1.4.6",
     "pymupdf>=1.28.2",
+    "sentence-transformers>=6.1.0",
     "streamlit>=1.65.0",
+    "torchvision>=0.29.1",
+    "watchdog>=6.0.0",
 ]
