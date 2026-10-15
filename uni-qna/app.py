@@ -14,7 +14,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 
 # pyrefly: ignore[missing-import]
-from ingest_helpers import parse_pdf
+from ingest_helpers import load_manifest, parse_pdf
 
 # pyrefly: ignore[missing-import]
 from __init__ import CHROMA_DIR
@@ -78,6 +78,25 @@ with st.sidebar:
 
     else:
         st.info("No PDF files found in the specified directory.")
+
+    st.divider()
+    st.subheader("📑 Indexed Documents")
+    manifest = load_manifest()
+    if manifest:
+        for file_path in manifest.keys():
+            file_name = os.path.basename(file_path)
+            try:
+                full_path = (
+                    os.path.join(BASE_DIR, file_path)
+                    if not os.path.isabs(file_path)
+                    else file_path
+                )
+                display_path = os.path.relpath(full_path, DATA_DIR)
+            except ValueError:
+                display_path = file_path
+            st.markdown(f"- **{file_name}**  \n  `{display_path}`")
+    else:
+        st.caption("No documents currently indexed.")
 
 
 # -----------------------------------------------------------------------------
