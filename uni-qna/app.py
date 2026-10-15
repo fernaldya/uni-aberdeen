@@ -14,7 +14,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 
 # pyrefly: ignore[missing-import]
-from ingest_helpers import load_manifest, parse_pdf
+from ingest_helpers import load_manifest, parse_pdf, purge_file
 
 # pyrefly: ignore[missing-import]
 from __init__ import CHROMA_DIR
@@ -97,6 +97,27 @@ with st.sidebar:
             st.markdown(f"- **{file_name}**  \n  `{display_path}`")
     else:
         st.caption("No documents currently indexed.")
+
+    st.divider()
+    st.subheader("🗑️ Purge Document")
+    if manifest:
+        file_to_purge = st.selectbox(
+            "Select document to purge",
+            options=list(manifest.keys()),
+            format_func=lambda x: os.path.basename(x),
+            key="purge_file_select",
+        )
+        if st.button("Purge Document", icon=":material/delete:"):
+            with st.spinner(f"Purging {os.path.basename(file_to_purge)}..."):
+                result = purge_file(file_to_purge)
+                if result["status"] == "success":
+                    st.success(f"✓ {result['message']}")
+                    st.cache_resource.clear()
+                    st.rerun()
+                else:
+                    st.error(f"✗ {result['message']}")
+    else:
+        st.caption("No indexed documents available to purge.")
 
 
 # -----------------------------------------------------------------------------
