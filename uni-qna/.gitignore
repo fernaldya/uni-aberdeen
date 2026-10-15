@@ -1,3 +1,4 @@
 chat_history.jsonl
 manifest.json
 .env
+chroma_db/
