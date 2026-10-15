@@ -151,3 +151,44 @@ def parse_pdf(
         "status": "success",
         "message": f"Indexed: {doc_name} ({len(chunks)} chunks)",
     }
+
+
+def purge_file(file_path: str) -> dict:
+    """
+    Purge all chunks for a document from Chroma vector database and remove from manifest.
+
+    Args:
+        file_path (str): Key or path of the document as stored in manifest.
+
+    Returns:
+        dict: Status of the purge operation.
+    """
+    doc_name = os.path.basename(file_path)
+    manifest = load_manifest()
+
+    embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-large-en-v1.5")
+    vectorstore = Chroma(embedding_function=embeddings, persist_directory=CHROMA_DIR)
+
+    try:
+        vectorstore.delete(where={"doc_name": doc_name})
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Failed to delete vectors for {doc_name}: {str(e)}",
+        }
+
+    # Remove from manifest
+    found = False
+    if file_path in manifest:
+        del manifest[file_path]
+        found = True
+    else:
+        for key in list(manifest.keys()):
+            if os.path.basename(key) == doc_name:
+                del manifest[key]
+                found = True
+
+    if found:
+        save_manifest(manifest)
+
+    return {"status": "success", "message": f"Purged: {doc_name}"}
