@@ -1,11 +1,12 @@
 import os
 import hashlib
 import json
-import fitz
+import pymupdf
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+# pyrefly: ignore[missing-import]
 from __init__ import CHROMA_DIR, MANIFEST_FILE
 
 
@@ -107,11 +108,11 @@ def parse_pdf(
         return {'status': 'error', 'message': f'Failed to delete existing vectors: {str(e)}'}
 
     # 2. Parse PDF and attach Metadata to each page
-    doc_fitz = fitz.open(file_path)
+    doc_pdf = pymupdf.open(file_path)
     raw_documents = []
 
-    for page_idx in range(len(doc_fitz)):
-        page_text = doc_fitz[page_idx].get_text()
+    for page_idx in range(len(doc_pdf)):
+        page_text = doc_pdf[page_idx].get_text()
 
         # Match fig labels against images in local course image/ dir
         page_image_paths = extract_page_images_by_label(page_text, img_dir)
@@ -126,7 +127,7 @@ def parse_pdf(
 
         raw_documents.append(Document(page_content=page_text, metadata=metadata))
 
-    doc_fitz.close()
+    doc_pdf.close()
 
     # 3. Chunk & Assign Deterministic IDs
     text_splitter = RecursiveCharacterTextSplitter(
