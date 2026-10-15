@@ -2,15 +2,17 @@ import os
 import json
 import streamlit as st
 from datetime import datetime
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.llms import Ollama
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import ChatOllama
+from langchain_classic.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
+# pyrefly: ignore[missing-import]
 from ingest_helpers import parse_pdf
-from __init__ import CHROMA_DIR, MANIFEST_FILE
+# pyrefly: ignore[missing-import]
+from __init__ import CHROMA_DIR
 
 DATA_DIR = '../'
 CHAT_LOG_FILE = 'chat_history.jsonl'
@@ -79,7 +81,7 @@ except Exception:
     st.stop()
 
 # Initialize the LLM (Gemma on Ollama)
-llm = Ollama(model='gemma2:9b')
+llm = ChatOllama(model='gemma2:9b')
 
 # History-Aware Reformulation Prompt
 contextualization_q_sys_prompt = (
@@ -125,3 +127,95 @@ rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chai
 # -----------------------------------------------------------------------------
 # 3. CHAT UI WITH PERSISTENCE
 # -----------------------------------------------------------------------------
+def log_interaction(query: str, answer: str, sources: list):
+    """
+    Log chat interactions (query, AI answer, and retrieved sources)
+    """
+    # ensure log exists
+    if not os.path.exists(CHAT_LOG_FILE):
+        with open(CHAT_LOG_FILE, 'w', encoding='utf-8') as f:
+            f.write('[]')
+
+    entry = {
+        'timestamp': datetime.now().isoformat(),
+        'query': query,
+        'answer': answer,
+        'sources': [
+            {
+            'doc_name': doc.get('metadata').get('doc_name'),
+            'page_number': doc.get('metadata').get('page_number'),
+            'image_paths': doc.get('metadata').get('image_paths'),
+            'course_name': doc.get('metadata').get('course_name'),
+            } for doc in sources
+        ]
+    }
+
+    with open(CHAT_LOG_FILE, 'a', encoding='utf-8') as f:
+        f.write(json.dumps(entry) + '\n')
+
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+
+    # Display convo history
+    for message in st.session_state.messages:
+        with st.chat_message(message['role']):
+            st.markdown(message['content'])
+            if 'images' in message:
+                for img_path in message['images']:
+                    if os.path.exists(img_path):
+                        st.image(img_path, caption=os.path.basename(img_path), use_column_width='auto')
+
+    # Process new user input
+    if user_input := st.chat_input('Ask a question about your notes...'):
+        # add user message to chat history
+        st.chat_message('user').markdown(user_input)
+
+        # Format history for langchain
+        langchain_history = []
+        for msg in st.session_state.messages:
+            if msg['role'] == 'user':
+                langchain_history.append(HumanMessage(content=msg['content']))
+            elif msg['role'] == 'assistant':
+                langchain_history.append(AIMessage(content=msg['content']))
+
+        with st.spinner('Searching...'):
+            response = rag_chain.invoke({
+                'input': user_input,
+                'chat_history': langchain_history
+            })
+
+            answer = response['answer']
+            retrieved_docs = response.get('context', [])
+
+        # Extract image paths from retrieved docs
+        doc_image_paths = []
+        for doc in retrieved_docs:
+            img_list = doc.get('metadata', {}).get('image_paths', [])
+            if img_list:
+                paths = json.loads(img_list)
+                for p in paths:
+                    if os.path.exists(p) and p not in doc_image_paths:
+                        doc_image_paths.append(p)
+
+        # Display assistant response with images
+        with st.chat_message('assistant'):
+            st.markdown(answer)
+
+            # Display image if exists
+            for img_path in doc_image_paths:
+                st.image(img_path, caption=os.path.basename(img_path), use_column_width='auto')
+
+            with st.expander('🔍 View Retrieved Passages'):
+                st.markdown(f"**{doc.metadata.get('course_name')} / {doc.metadata.get('doc_name')} (Page {doc.metadata.get('page_number')})**")
+                st.write(doc.page_content)
+
+        # Save to session state and append to chat history
+        assistant_msg = {'role': 'assistant', 'content': answer}
+        if doc_image_paths:
+            assistant_msg['images'] = doc_image_paths
+
+        st.session_state.messages.append({'role': 'user', 'content': user_input})
+        st.session_state.messages.append(assistant_msg)
+
+        # Log interaction
+        log_interaction(user_input, answer, retrieved_docs)
