@@ -18,12 +18,12 @@ flowchart TD
 
     subgraph RAG ["2. QUERY & RAG PIPELINE (app.py)"]
         UserInput["User Question in st.chat_input"] --> HistAware["History-Aware Reformulator (Gemma 2:9b)"]
-        HistAware -->|Standalone Search Query| EmbedModel2["BAAI/bge-large-en-v1.5"]
-        EmbedModel2 -->|Vector Similarity (k=4)| ChromaDB
-        ChromaDB -->|Top 4 Chunks + Metadata| ContextStuffer["Prompt Builder (Strict Academic Context)"]
+        HistAware -->|"Standalone Search Query"| EmbedModel2["BAAI/bge-large-en-v1.5"]
+        EmbedModel2 -->|"Vector Similarity (k=4)"| ChromaDB
+        ChromaDB -->|"Top 4 Chunks + Metadata"| ContextStuffer["Prompt Builder (Strict Academic Context)"]
         ContextStuffer --> LLMAnswer["Answer Generation (Gemma 2:9b)"]
         LLMAnswer --> StreamlitUI["Streamlit Chat UI"]
-        ChromaDB -->|image_paths| ImageDisplay["Inline Figure Viewer"]
+        ChromaDB -->|"image_paths"| ImageDisplay["Inline Figure Viewer"]
         ImageDisplay --> StreamlitUI
     end
 ```
