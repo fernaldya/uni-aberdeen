@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRECIS-2 Wheel Tool - Trial Design Assessment</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #0284c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --success: #15803d;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* Top Bar */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #1e40af, #06b6d4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .assessment-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg);
+      padding: 4px 8px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .assessment-selector label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    select.select-input {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      background: white;
+      color: var(--text);
+      cursor: pointer;
+      max-width: 220px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--text);
+      border-color: var(--border-dark);
+    }
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .btn-danger {
+      background: white;
+      color: var(--danger);
+      border-color: #fca5a5;
+    }
+    .btn-danger:hover {
+      background: #fef2f2;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Paper Header Inputs */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #334155;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: white;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+    }
+
+    .form-textarea {
+      min-height: 85px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    /* Main 2-column layout: Table vs Wheel */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1080px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Domains Table */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    table.domains-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    table.domains-table th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border-dark);
+    }
+
+    table.domains-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    table.domains-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.domains-table tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .domain-cell {
+      min-width: 160px;
+    }
+
+    .domain-name {
+      font-weight: 700;
+      color: #1e3a8a;
+      display: block;
+      font-size: 0.92rem;
+    }
+
+    .domain-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .score-cell {
+      min-width: 175px;
+    }
+
+    .score-control {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .score-select-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .score-select {
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 6px 8px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      background: white;
+      color: #0f172a;
+      cursor: pointer;
+      width: 65px;
+    }
+
+    .score-badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .score-slider {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
+    /* Score badges color classes */
+    .badge-s1 { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; } /* Very Explanatory */
+    .badge-s2 { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; } /* Rather Explanatory */
+    .badge-s3 { background: #fefce8; color: #854d0e; border: 1px solid #fef08a; } /* Equally */
+    .badge-s4 { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; } /* Rather Pragmatic */
+    .badge-s5 { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; } /* Very Pragmatic */
+
+    .justification-cell {
+      min-width: 260px;
+    }
+
+    .justification-input {
+      width: 100%;
+      min-height: 52px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .justification-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+    }
+
+    /* Wheel Card / Sticky Panel */
+    .wheel-panel {
+      position: sticky;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .wheel-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    svg.precis-wheel {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      user-select: none;
+    }
+
+    .legend-box {
+      margin-top: 12px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      text-align: left;
+    }
+
+    .legend-title {
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .legend-items {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .legend-item {
+      padding: 4px 2px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .summary-metrics {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Print / Single-Pager Styles */
+    @media print {
+      body {
+        background: white !important;
+        padding-bottom: 0 !important;
+        font-size: 8.5pt !important;
+        color: #0f172a !important;
+      }
+
+      header, .actions-bar, .assessment-selector, .btn, .domain-hint, .score-slider, #toast, #exportCanvas, #importJsonFile {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .card {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+        padding: 8px 10px !important;
+        margin-bottom: 8px !important;
+        border-radius: 4px !important;
+      }
+
+      .card-header {
+        margin-bottom: 4px !important;
+      }
+
+      .card-title {
+        font-size: 9.5pt !important;
+      }
+
+      .meta-grid {
+        display: grid !important;
+        grid-template-columns: 2fr 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 4px !important;
+      }
+
+      .form-group {
+        margin-bottom: 4px !important;
+      }
+
+      .form-group label {
+        font-size: 7.5pt !important;
+        margin-bottom: 1px !important;
+      }
+
+      .form-input, .form-textarea {
+        border: 1px solid #cbd5e1 !important;
+        background: transparent !important;
+        padding: 4px 6px !important;
+        font-size: 8pt !important;
+        min-height: auto !important;
+      }
+
+      .main-grid {
+        display: grid !important;
+        grid-template-columns: 1.15fr 0.85fr !important;
+        gap: 10px !important;
+        align-items: start !important;
+      }
+
+      .wheel-panel {
+        position: static !important;
+        gap: 6px !important;
+      }
+
+      .wheel-card {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 6px !important;
+        margin: 0 auto !important;
+      }
+
+      .wheel-container {
+        max-width: 310px !important;
+      }
+
+      table.domains-table th {
+        padding: 4px 6px !important;
+        font-size: 7.5pt !important;
+      }
+
+      table.domains-table td {
+        padding: 4px 6px !important;
+        font-size: 7.5pt !important;
+      }
+
+      .domain-name {
+        font-size: 8pt !important;
+      }
+
+      .justification-input {
+        border: 1px solid #e2e8f0 !important;
+        padding: 3px 5px !important;
+        min-height: 28px !important;
+        font-size: 7.5pt !important;
+        background: #fafafa !important;
+      }
+
+      .score-select {
+        border: 1px solid #cbd5e1 !important;
+        padding: 1px 3px !important;
+        font-size: 8pt !important;
+      }
+
+      .score-badge {
+        font-size: 7pt !important;
+        padding: 1px 4px !important;
+      }
+
+      .summary-metrics {
+        padding: 4px 8px !important;
+        margin-top: 4px !important;
+      }
+
+      .metric-value {
+        font-size: 1.05rem !important;
+      }
+
+      .legend-box {
+        margin-top: 4px !important;
+        padding: 4px 6px !important;
+      }
+
+      .legend-items {
+        gap: 2px !important;
+      }
+
+      .legend-item {
+        font-size: 6pt !important;
+        padding: 2px 1px !important;
+      }
+
+      .print-header {
+        display: block !important;
+        border-bottom: 2px solid #0f172a !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 4px !important;
+      }
+
+      .print-header h1 {
+        font-size: 13pt !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+      }
+
+      .print-header p {
+        font-size: 7.5pt !important;
+        color: #475569 !important;
+      }
+
+      @page {
+        margin: 8mm 10mm;
+        size: A4 portrait;
+      }
+    }
+
+    .print-header {
+      display: none;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo">P2</div>
+        <div>
+          <div class="brand-title">PRECIS-2 Wheel Tool</div>
+          <div class="brand-subtitle">Pragmatic Explanatory Continuum Indicator Summary</div>
+        </div>
+      </div>
+
+      <div class="actions-bar">
+        <div class="assessment-selector">
+          <label for="assessmentSelect">Wheel:</label>
+          <select id="assessmentSelect" class="select-input" onchange="loadSelectedAssessment()">
+            <!-- Dynamic options -->
+          </select>
+        </div>
+
+        <button class="btn btn-outline" onclick="createNewAssessment()" title="Start a new blank PRECIS-2 wheel">
+          ✨ New
+        </button>
+        <button class="btn btn-primary" onclick="saveCurrentAssessment(true)" title="Save changes locally in browser">
+          💾 Save
+        </button>
+        <button class="btn btn-outline" onclick="exportSinglePageHTML()" title="Download a complete single-file interactive HTML report (runs anywhere offline)">
+          📄 Export HTML
+        </button>
+        <button class="btn btn-outline" onclick="prepareAndPrint()" title="Print or save as a single-page PDF">
+          🖨️ Save as PDF
+        </button>
+        <button class="btn btn-outline" onclick="exportWheelPNG()" title="Download high-res PNG of the PRECIS-2 Wheel">
+          🖼️ PNG Wheel
+        </button>
+        <button class="btn btn-outline" onclick="exportJSON()" title="Export JSON backup file">
+          📤 Export JSON
+        </button>
+        <button class="btn btn-outline" onclick="document.getElementById('importJsonFile').click()" title="Import JSON file from disk">
+          📥 Import JSON
+        </button>
+        <input type="file" id="importJsonFile" accept=".json" style="display:none;" onchange="handleImportJSON(event)">
+        <button class="btn btn-danger" onclick="deleteCurrentAssessment()" title="Delete this wheel">
+          🗑️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Print Header Only -->
+  <div class="print-header container">
+    <h1>PRECIS-2 Trial Design Assessment Report</h1>
+    <p>Generated by PRECIS-2 Wheel Assessment Tool &bull; Loudon et al. BMJ 2015</p>
+  </div>
+
+  <div class="container">
+    <!-- Paper Metadata Card -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>📋 Trial & Paper Details</span>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--text-muted);" id="lastSavedTimestamp">Not saved yet</span>
+      </div>
+
+      <div class="meta-grid">
+        <div class="form-group">
+          <label for="trialTitle">Paper / Trial Title</label>
+          <input type="text" id="trialTitle" class="form-input" placeholder="e.g., A Pragmatic Randomized Controlled Trial of..." oninput="autoSaveDebounced()">
+        </div>
+        <div class="form-group">
+          <label for="trialReviewer">Reviewer(s) / Date</label>
+          <input type="text" id="trialReviewer" class="form-input" placeholder="e.g., Dr. Jane Doe (October 2026)" oninput="autoSaveDebounced()">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trialDescription">Description & Clinical Context</label>
+        <input type="text" id="trialDescription" class="form-input" placeholder="Brief summary of the clinical problem, intervention vs control/usual care, and target population..." oninput="autoSaveDebounced()">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="trialAbstract">Abstract / Protocol Summary</label>
+        <textarea id="trialAbstract" class="form-textarea" placeholder="Paste the paper abstract or key methodology summary here for reference..." oninput="autoSaveDebounced()"></textarea>
+      </div>
+    </div>
+
+    <!-- Main Grid: Table & Wheel -->
+    <div class="main-grid">
+      <!-- Left: Domain Table -->
+      <div>
+        <div class="card" style="padding: 14px 16px;">
+          <div class="card-header" style="margin-bottom: 10px;">
+            <div class="card-title">
+              <span>🎯 9 PRECIS-2 Domains & Scoring</span>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Scores update wheel in real-time</span>
+          </div>
+
+          <div class="table-container">
+            <table class="domains-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Domain</th>
+                  <th style="width: 25%;">Score (1 to 5)</th>
+                  <th style="width: 50%;">Justification / Rationale</th>
+                </tr>
+              </thead>
+              <tbody id="domainsTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: PRECIS-2 Wheel Visualization -->
+      <div class="wheel-panel">
+        <div class="wheel-card">
+          <div class="card-title" style="justify-content: center; margin-bottom: 4px;">
+            <span>🎡 PRECIS-2 Wheel</span>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
+            Hub (1) = Very Explanatory &bull; Rim (5) = Very Pragmatic
+          </p>
+
+          <div class="wheel-container">
+            <svg id="precisWheelSvg" class="precis-wheel" viewBox="0 0 520 520">
+              <!-- Rendered via JS -->
+            </svg>
+          </div>
+
+          <div class="summary-metrics">
+            <div class="metric">
+              <div class="metric-value" id="meanScore">3.0</div>
+              <div class="metric-label">Mean Score</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value" id="overallTendency" style="font-size: 1.05rem;">Pragmatic</div>
+              <div class="metric-label">Overall Design Profile</div>
+            </div>
+          </div>
+
+          <div class="legend-box">
+            <div class="legend-title">
+              <span>PRECIS-2 Continuum Scale:</span>
+            </div>
+            <div class="legend-items">
+              <div class="legend-item badge-s1">1: Very Explanatory</div>
+              <div class="legend-item badge-s2">2: Rather Explanatory</div>
+              <div class="legend-item badge-s3">3: Equally Pragmatic/Explanatory</div>
+              <div class="legend-item badge-s4">4: Rather Pragmatic</div>
+              <div class="legend-item badge-s5">5: Very Pragmatic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">Changes saved</div>
+
+  <!-- Hidden canvas for PNG export -->
+  <canvas id="exportCanvas" style="display:none;"></canvas>
+
+  <script>
+    // PRECIS-2 Standard 9 Domains Specification
+    const DOMAIN_DEFS = [
+      {
+        id: "eligibility",
+        name: "1. Eligibility",
+        shortName: "Eligibility",
+        hint: "To what extent are participants similar to patients who receive this care in usual practice?"
+      },
+      {
+        id: "recruitment",
+        name: "2. Recruitment",
+        shortName: "Recruitment",
+        hint: "How are participants recruited compared to usual clinical referral or appointment paths?"
+      },
+      {
+        id: "setting",
+        name: "3. Setting",
+        shortName: "Setting",
+        hint: "Where is the trial conducted (usual care clinics vs. specialised tertiary/academic units)?"
+      },
+      {
+        id: "organisation",
+        name: "4. Organisation",
+        shortName: "Organisation",
+        hint: "What resources, staffing, and expertise are needed to deliver the intervention vs. usual care?"
+      },
+      {
+        id: "flex_delivery",
+        name: "5. Flexibility (Delivery)",
+        shortName: "Flexibility (Delivery)",
+        hint: "How much flexibility is allowed in how clinicians deliver the intervention vs strict protocol?"
+      },
+      {
+        id: "flex_adherence",
+        name: "6. Flexibility (Adherence)",
+        shortName: "Flexibility (Adherence)",
+        hint: "What measures exist to encourage/enforce patient adherence beyond normal clinical practice?"
+      },
+      {
+        id: "followup",
+        name: "7. Follow-up",
+        shortName: "Follow-up",
+        hint: "How intensive is data collection and participant follow-up compared with standard care?"
+      },
+      {
+        id: "outcome",
+        name: "8. Primary Outcome",
+        shortName: "Primary Outcome",
+        hint: "How relevant and important is the primary endpoint to participants in normal clinical care?"
+      },
+      {
+        id: "analysis",
+        name: "9. Primary Analysis",
+        shortName: "Primary Analysis",
+        hint: "To what extent are all available patient data included (Intention-To-Treat under routine circumstances)?"
+      }
+    ];
+
+    const SCORE_LABELS = {
+      1: "Very Explanatory",
+      2: "Rather Explanatory",
+      3: "Equally Pragmatic & Explanatory",
+      4: "Rather Pragmatic",
+      5: "Very Pragmatic"
+    };
+
+    const SCORE_BADGE_CLASSES = {
+      1: "badge-s1",
+      2: "badge-s2",
+      3: "badge-s3",
+      4: "badge-s4",
+      5: "badge-s5"
+    };
+
+    // State Store
+    const STORAGE_KEY = "precis2_wheel_assessments";
+    const ACTIVE_ID_KEY = "precis2_active_id";
+
+    let state = {
+      assessments: {},
+      currentId: null
+    };
+
+    // Initialize Default Assessment
+    function createBlankAssessment(title = "New PRECIS-2 Assessment") {
+      const id = "p2_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6);
+      const scores = {};
+      const justifications = {};
+
+      DOMAIN_DEFS.forEach(d => {
+        scores[d.id] = 3; // Default to middle
+        justifications[d.id] = "";
+      });
+
+      return {
+        id: id,
+        title: title,
+        reviewer: "",
+        description: "",
+        abstract: "",
+        scores: scores,
+        justifications: justifications,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    // Load from LocalStorage
+    function initData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          state.assessments = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.error("Error reading localStorage", e);
+        state.assessments = {};
+      }
+
+      if (Object.keys(state.assessments).length === 0) {
+        const defaultDoc = createBlankAssessment("Example: Pragmatic Trial Assessment");
+        // Pre-fill with reasonable starter values
+        defaultDoc.description = "Assessment of real-world trial pragmatic features using PRECIS-2.";
+        state.assessments[defaultDoc.id] = defaultDoc;
+        state.currentId = defaultDoc.id;
+        saveToStorage();
+      } else {
+        const savedActive = localStorage.getItem(ACTIVE_ID_KEY);
+        if (savedActive && state.assessments[savedActive]) {
+          state.currentId = savedActive;
+        } else {
+          state.currentId = Object.keys(state.assessments)[0];
+        }
+      }
+
+      renderAssessmentSelect();
+      loadAssessmentIntoUI(state.currentId);
+    }
+
+    function saveToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.assessments));
+        localStorage.setItem(ACTIVE_ID_KEY, state.currentId);
+      } catch (e) {
+        console.error("Storage error:", e);
+      }
+    }
+
+    // Render selector options
+    function renderAssessmentSelect() {
+      const select = document.getElementById("assessmentSelect");
+      select.innerHTML = "";
+      Object.values(state.assessments).forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.id;
+        opt.textContent = (item.title || "Untitled Assessment").substring(0, 32);
+        if (item.id === state.currentId) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+
+    // Load into UI
+    function loadAssessmentIntoUI(id) {
+      const doc = state.assessments[id];
+      if (!doc) return;
+
+      state.currentId = id;
+      localStorage.setItem(ACTIVE_ID_KEY, id);
+
+      document.getElementById("trialTitle").value = doc.title || "";
+      document.getElementById("trialReviewer").value = doc.reviewer || "";
+      document.getElementById("trialDescription").value = doc.description || "";
+      document.getElementById("trialAbstract").value = doc.abstract || "";
+      
+      const lastSaved = doc.updatedAt ? new Date(doc.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Just now";
+      document.getElementById("lastSavedTimestamp").textContent = "Last saved: " + lastSaved;
+
+      renderTable(doc);
+      renderWheel(doc);
+      updateSummaryMetrics(doc);
+    }
+
+    // Switch assessment from dropdown
+    function loadSelectedAssessment() {
+      const select = document.getElementById("assessmentSelect");
+      loadAssessmentIntoUI(select.value);
+    }
+
+    // Create New Assessment
+    function createNewAssessment() {
+      const title = prompt("Enter a title for this new PRECIS-2 evaluation:", "New Trial Evaluation");
+      if (title === null) return;
+
+      const newDoc = createBlankAssessment(title.trim() || "Untitled Evaluation");
+      state.assessments[newDoc.id] = newDoc;
+      state.currentId = newDoc.id;
+      saveToStorage();
+      renderAssessmentSelect();
+      loadAssessmentIntoUI(newDoc.id);
+      showToast("✨ New PRECIS-2 evaluation created!");
+    }
+
+    // Delete Current Assessment
+    function deleteCurrentAssessment() {
+      const keys = Object.keys(state.assessments);
+      if (keys.length <= 1) {
+        alert("You must keep at least one assessment. You can reset or rename this one instead.");
+        return;
+      }
+      if (!confirm("Are you sure you want to delete this PRECIS-2 assessment?")) return;
+
+      delete state.assessments[state.currentId];
+      state.currentId = Object.keys(state.assessments)[0];
+      saveToStorage();
+      renderAssessmentSelect();
+      loadAssessmentIntoUI(state.currentId);
+      showToast("Evaluation deleted");
+    }
+
+    // Render Table
+    function renderTable(doc) {
+      const tbody = document.getElementById("domainsTableBody");
+      tbody.innerHTML = "";
+
+      DOMAIN_DEFS.forEach((d) => {
+        const score = doc.scores[d.id] || 3;
+        const justification = doc.justifications[d.id] || "";
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td class="domain-cell">
+            <span class="domain-name">${d.name}</span>
+            <div class="domain-hint">${d.hint}</div>
+          </td>
+          <td class="score-cell">
+            <div class="score-control">
+              <div class="score-select-wrapper">
+                <select class="score-select" id="select_${d.id}" onchange="onScoreChange('${d.id}', this.value)">
+                  <option value="1" ${score == 1 ? "selected" : ""}>1</option>
+                  <option value="2" ${score == 2 ? "selected" : ""}>2</option>
+                  <option value="3" ${score == 3 ? "selected" : ""}>3</option>
+                  <option value="4" ${score == 4 ? "selected" : ""}>4</option>
+                  <option value="5" ${score == 5 ? "selected" : ""}>5</option>
+                </select>
+                <span class="score-badge ${SCORE_BADGE_CLASSES[score]}" id="badge_${d.id}">
+                  ${score}: ${SCORE_LABELS[score]}
+                </span>
+              </div>
+              <input type="range" class="score-slider" id="slider_${d.id}" min="1" max="5" step="1" value="${score}" 
+                oninput="onScoreSlider('${d.id}', this.value)">
+            </div>
+          </td>
+          <td class="justification-cell">
+            <textarea class="justification-input" placeholder="Note trial details justifying this score..." 
+              oninput="onJustificationChange('${d.id}', this.value)">${justification}</textarea>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Score changed via Select
+    function onScoreChange(domainId, val) {
+      const score = parseInt(val, 10);
+      const doc = state.assessments[state.currentId];
+      if (!doc) return;
+
+      doc.scores[domainId] = score;
+      document.getElementById(`slider_${domainId}`).value = score;
+
+      const badge = document.getElementById(`badge_${domainId}`);
+      badge.className = `score-badge ${SCORE_BADGE_CLASSES[score]}`;
+      badge.textContent = `${score}: ${SCORE_LABELS[score]}`;
+
+      renderWheel(doc);
+      updateSummaryMetrics(doc);
+      autoSaveDebounced();
+    }
+
+    // Score changed via Slider
+    function onScoreSlider(domainId, val) {
+      const score = parseInt(val, 10);
+      document.getElementById(`select_${domainId}`).value = score;
+      onScoreChange(domainId, score);
+    }
+
+    // Justification changed
+    function onJustificationChange(domainId, text) {
+      const doc = state.assessments[state.currentId];
+      if (!doc) return;
+      doc.justifications[domainId] = text;
+      autoSaveDebounced();
+    }
+
+    // Render the PRECIS-2 SVG Wheel
+    function renderWheel(doc) {
+      const svg = document.getElementById("precisWheelSvg");
+      const width = 520;
+      const height = 520;
+      const cx = width / 2;
+      const cy = height / 2;
+      const maxRadius = 180; // Radius for score 5
+      const minRadius = 36;  // Radius for score 1
+      const totalDomains = DOMAIN_DEFS.length; // 9
+
+      // Helper: calculate polar to Cartesian
+      // Starting domain 0 at top (-PI/2)
+      function getCoordinates(domainIndex, score) {
+        const angle = (2 * Math.PI / totalDomains) * domainIndex - (Math.PI / 2);
+        // Linear interpolation from score 1 to 5
+        const r = minRadius + ((score - 1) / 4) * (maxRadius - minRadius);
+        return {
+          x: cx + r * Math.cos(angle),
+          y: cy + r * Math.sin(angle),
+          angle: angle
+        };
+      }
+
+      let html = "";
+
+      // 1. Concentric circles & rings (Scores 1 to 5)
+      for (let s = 1; s <= 5; s++) {
+        const r = minRadius + ((s - 1) / 4) * (maxRadius - minRadius);
+        const isRim = (s === 5);
+        const strokeColor = isRim ? "#0284c7" : "#cbd5e1";
+        const strokeWidth = isRim ? 2 : 1;
+        const strokeDash = (s % 2 === 0) ? "4 4" : "none";
+        
+        html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-dasharray="${strokeDash}" />`;
+
+        // Ring score watermark labels along bottom-vertical
+        html += `<text x="${cx}" y="${cy + r - 4}" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">${s}</text>`;
+      }
+
+      // Center Hub label
+      html += `<circle cx="${cx}" cy="${cy}" r="${minRadius - 8}" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" />`;
+      html += `<text x="${cx}" y="${cy - 3}" fill="#64748b" font-size="8.5" font-weight="700" text-anchor="middle">PRECIS-2</text>`;
+      html += `<text x="${cx}" y="${cy + 8}" fill="#94a3b8" font-size="7.5" text-anchor="middle">1 = Explanatory</text>`;
+
+      // 2. Spokes (9 radiating lines)
+      DOMAIN_DEFS.forEach((d, idx) => {
+        const outerCoord = getCoordinates(idx, 5);
+        html += `<line x1="${cx}" y1="${cy}" x2="${outerCoord.x}" y2="${outerCoord.y}" stroke="#cbd5e1" stroke-width="1.2" />`;
+      });
+
+      // 3. User Data Polygon
+      let points = [];
+      DOMAIN_DEFS.forEach((d, idx) => {
+        const score = doc.scores[d.id] || 3;
+        const pt = getCoordinates(idx, score);
+        points.push(`${pt.x.toFixed(1)},${pt.y.toFixed(1)}`);
+      });
+
+      const polygonPoints = points.join(" ");
+
+      // Semi-transparent gradient/color filled polygon
+      html += `
+        <defs>
+          <linearGradient id="p2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#0284c7" stop-opacity="0.55" />
+          </linearGradient>
+          <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+      `;
+
+      html += `<polygon points="${polygonPoints}" fill="url(#p2Grad)" stroke="#1d4ed8" stroke-width="2.5" stroke-linejoin="round" filter="url(#shadowFilter)" />`;
+
+      // 4. Data Points & Value Badges on Polygon vertices
+      DOMAIN_DEFS.forEach((d, idx) => {
+        const score = doc.scores[d.id] || 3;
+        const pt = getCoordinates(idx, score);
+        html += `
+          <circle cx="${pt.x}" cy="${pt.y}" r="5" fill="#ffffff" stroke="#1e40af" stroke-width="2.5" />
+        `;
+      });
+
+      // 5. Spokes Labels (Domain Name + Score) placed outside the outer rim
+      DOMAIN_DEFS.forEach((d, idx) => {
+        const angle = (2 * Math.PI / totalDomains) * idx - (Math.PI / 2);
+        const labelRadius = maxRadius + 30;
+        const lx = cx + labelRadius * Math.cos(angle);
+        const ly = cy + labelRadius * Math.sin(angle);
+        const score = doc.scores[d.id] || 3;
+
+        // Alignment based on position in circle
+        let textAnchor = "middle";
+        if (Math.cos(angle) > 0.3) textAnchor = "start";
+        else if (Math.cos(angle) < -0.3) textAnchor = "end";
+
+        // Vertical adjustment
+        let dy = "0.35em";
+        if (Math.sin(angle) < -0.7) dy = "-0.2em";
+        else if (Math.sin(angle) > 0.7) dy = "0.85em";
+
+        html += `
+          <g transform="translate(${lx}, ${ly})">
+            <text x="0" y="0" text-anchor="${textAnchor}" dy="${dy}" fill="#0f172a" font-size="10.5" font-weight="700">
+              ${d.shortName} <tspan fill="#1e40af" font-weight="800">(${score})</tspan>
+            </text>
+          </g>
+        `;
+      });
+
+      svg.innerHTML = html;
+
+      // Enable interactive click directly on the wheel to adjust score
+      svg.onclick = function(e) {
+        const rect = svg.getBoundingClientRect();
+        const clickX = (e.clientX - rect.left) * (width / rect.width);
+        const clickY = (e.clientY - rect.top) * (height / rect.height);
+        const dx = clickX - cx;
+        const dy = clickY - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist >= minRadius - 15 && dist <= maxRadius + 25) {
+          let angle = Math.atan2(dy, dx) + (Math.PI / 2);
+          if (angle < 0) angle += 2 * Math.PI;
+
+          const sectorAngle = (2 * Math.PI) / totalDomains;
+          let closestIndex = Math.round(angle / sectorAngle) % totalDomains;
+
+          let score = Math.round(1 + ((dist - minRadius) / (maxRadius - minRadius)) * 4);
+          score = Math.max(1, Math.min(5, score));
+
+          const domain = DOMAIN_DEFS[closestIndex];
+          if (domain) {
+            const selectEl = document.getElementById(`select_${domain.id}`);
+            if (selectEl) {
+              selectEl.value = score;
+              onScoreChange(domain.id, score);
+            }
+          }
+        }
+      };
+    }
+
+    // Update Overall Summary Metrics
+    function updateSummaryMetrics(doc) {
+      let sum = 0;
+      let count = DOMAIN_DEFS.length;
+      DOMAIN_DEFS.forEach(d => {
+        sum += (doc.scores[d.id] || 3);
+      });
+
+      const mean = (sum / count).toFixed(1);
+      document.getElementById("meanScore").textContent = mean;
+
+      let label = "Equally Pragmatic & Explanatory";
+      if (mean < 2.2) label = "Strongly Explanatory";
+      else if (mean < 2.8) label = "Rather Explanatory";
+      else if (mean <= 3.2) label = "Mixed / Continuum";
+      else if (mean <= 4.0) label = "Rather Pragmatic";
+      else label = "Strongly Pragmatic";
+
+      document.getElementById("overallTendency").textContent = label;
+    }
+
+    // Save Current Assessment
+    function saveCurrentAssessment(notify = false) {
+      const doc = state.assessments[state.currentId];
+      if (!doc) return;
+
+      doc.title = document.getElementById("trialTitle").value.trim() || "Untitled Assessment";
+      doc.reviewer = document.getElementById("trialReviewer").value.trim();
+      doc.description = document.getElementById("trialDescription").value.trim();
+      doc.abstract = document.getElementById("trialAbstract").value.trim();
+      doc.updatedAt = new Date().toISOString();
+
+      saveToStorage();
+      renderAssessmentSelect();
+
+      const timeStr = new Date(doc.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById("lastSavedTimestamp").textContent = "Last saved: " + timeStr;
+
+      if (notify) {
+        showToast("💾 Assessment saved successfully!");
+      }
+    }
+
+    // Debounced Auto-save
+    let saveTimeout = null;
+    function autoSaveDebounced() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveCurrentAssessment(false);
+      }, 500);
+    }
+
+    // Export Standalone Single-Page Self-Contained HTML
+    function exportSinglePageHTML() {
+      saveCurrentAssessment(false);
+      const doc = state.assessments[state.currentId];
+      if (!doc) return;
+
+      // Create a clean standalone clone with the active doc hardcoded as default
+      const currentHTML = document.documentElement.outerHTML;
+      // Bake the active doc directly so opening it offline loads this exact trial immediately
+      const injectionScript = `
+        <script>
+          window.addEventListener('DOMContentLoaded', () => {
+            const bakedDoc = ${JSON.stringify(doc)};
+            state.assessments = { [bakedDoc.id]: bakedDoc };
+            state.currentId = bakedDoc.id;
+            saveToStorage();
+            renderAssessmentSelect();
+            loadAssessmentIntoUI(bakedDoc.id);
+          });
+        <\/script>
+      `;
+
+      const finalHTML = currentHTML.replace("</body>", `${injectionScript}</body>`);
+      const blob = new Blob([finalHTML], { type: "text/html;charset=utf-8" });
+      const filename = (doc.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'precis2_wheel') + ".html";
+      downloadBlob(blob, filename);
+      showToast("📄 Exported standalone single-page HTML report!");
+    }
+
+    // Export JSON Backup
+    function exportJSON() {
+      saveCurrentAssessment(false);
+      const doc = state.assessments[state.currentId];
+      const dataStr = JSON.stringify(doc, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json;charset=utf-8" });
+      const filename = (doc.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'precis2_wheel') + ".json";
+      downloadBlob(blob, filename);
+      showToast("📤 Exported assessment JSON!");
+    }
+
+    // Export High-Res PNG of Wheel
+    function exportWheelPNG() {
+      const svg = document.getElementById("precisWheelSvg");
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+
+      // Add namespaces
+      if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+
+      const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+      const img = new Image();
+
+      img.onload = function() {
+        const canvas = document.getElementById("exportCanvas");
+        // High-res retina scale 2x
+        const scale = 2;
+        canvas.width = 520 * scale;
+        canvas.height = 520 * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.scale(scale, scale);
+
+        // White background
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, 520, 520);
+        ctx.drawImage(img, 0, 0);
+
+        URL.revokeObjectURL(url);
+        canvas.toBlob((blob) => {
+          const doc = state.assessments[state.currentId];
+          const filename = (doc.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'precis2') + "_wheel.png";
+          downloadBlob(blob, filename);
+          showToast("🖼️ PRECIS-2 Wheel PNG downloaded!");
+        }, "image/png");
+      };
+
+      img.src = url;
+    }
+
+    // Print preparation for single-pager output
+    function prepareAndPrint() {
+      saveCurrentAssessment(false);
+      // Auto-resize textareas so printing captures their entire content
+      document.querySelectorAll('textarea').forEach(el => {
+        el.style.height = 'auto';
+        el.style.height = (el.scrollHeight + 4) + 'px';
+      });
+      setTimeout(() => {
+        window.print();
+      }, 100);
+    }
+
+    // Handle importing assessment JSON
+    function handleImportJSON(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported || !imported.scores) {
+            throw new Error("Invalid PRECIS-2 assessment JSON format");
+          }
+          const id = imported.id || ("p2_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5));
+          imported.id = id;
+          state.assessments[id] = imported;
+          state.currentId = id;
+          saveToStorage();
+          renderAssessmentSelect();
+          loadAssessmentIntoUI(id);
+          showToast("📥 Successfully imported evaluation!");
+        } catch (err) {
+          alert("Could not import file: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    // Download Helper
+    function downloadBlob(blob, filename) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Toast UI
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    // Start App
+    window.addEventListener("DOMContentLoaded", () => {
+      initData();
+    });
+  </script>
+</body>
+</html>
