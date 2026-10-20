@@ -3,5 +3,6 @@
 **/.*_cache
 .vscode
 .idea
-Applied Epidemiology - Theory to practice/*
 *.out
+books/
+**/*.docx
