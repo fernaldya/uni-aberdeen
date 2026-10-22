@@ -82,9 +82,12 @@ admissions_plot = ggplot(data=three_areas, mapping=aes(
   scale_x_continuous(breaks=seq(2010, 2019, 2)) + # 8a
   scale_y_continuous(limits=c(0, 1600)) + # 8b
   theme_minimal() + # Q8c
-  theme(legend.position='bottom') +
+  theme(
+    legend.position='bottom',
+    plot.caption = element_text(hjust = 0.5) # Center caption
+  ) +
   labs(
-    x='Year', y='Measure (per 100,000 people)', title='Alcohol Related Hospital Admission',
+    x='Year', y='Hospital admissions (per 100,000 people)', title='Alcohol Related Hospital Admission',
     caption='Source: Scottish Public Health Observatory. Rates are age-sex standardised.',
     colour=NULL, linetype=NULL
   ) # Q8
