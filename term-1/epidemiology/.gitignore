@@ -6,3 +6,4 @@
 *.out
 books/
 **/*.docx
+images/
