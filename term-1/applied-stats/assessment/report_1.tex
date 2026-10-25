@@ -1,0 +1,245 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\captionsetup{textfont=small, labelfont=bf}
+
+
+\title{Applied Statistics - Assessment 1}
+\author{Fernaldy Aristo Wirjowerdojo}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Task 1}
+
+
+\pagebreak
+\section*{Task 2}
+\subsection*{a. Does Thyroid-stimulating hormone differ between male and female participants?}
+Thyroid-stimulating hormone \textit{TSH} is a continuous variable while \textit{gender} is binary. So, the
+independent t-test will be used and the assumptions for that test will be checked first. The following
+hypothesis is considered:
+\begin{itemize}
+    \item $H_0$: There is no difference in the mean thyroid-stimulating hormone levels between male and female participants in the population
+    \item $H_0$: There is a difference in the mean thyroid-stimulating hormone levels between male and female participants in the population
+\end{itemize}
+
+The assumptions to check are:
+\begin{itemize}
+    \item Independent groups
+    \item TSH levels are normally distributed in both groups
+    \item Variance of the TSH levels are equal between both groups
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2a-1.png}
+    \caption{Distribution of TSH between male and female}
+    \label{fig:2a-1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2a-2.png}
+    \caption{Levene's test for equality of variance of TSH}
+    \label{fig:2a-2}
+\end{figure}
+
+All the assumptions are met, both groups are independent of one another, the TSH variable is normally distributed
+in both groups, and the Levene's test ($p = 0.579 > 0.05$) indicates that the variance is homogeneous.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2a-3.png}
+    \caption{Independent t-test result}
+    \label{fig:2a-3}
+\end{figure}
+
+Since the p-value is significant ($p < 0.001$), the $H_0$ is rejected. There is a difference in the mean
+thyroid-stimulating hormone levels between male and female participants in the population.
+\\
+\textbf{In conclusion}, female participants had lower thyroid-stimulating hormone levels with an average difference
+of $0.886 \ mg/dL$. Furthermore, the 95\% confidence interval ($-0.899, -0.873$) indicates that mean
+thyroid-stimulating hormone levels in the female population is between 0.873 and 0.899 lower than that of the
+male population.
+
+
+% 2b. Kruskal-Wallis
+\pagebreak
+\subsection*{b. Does the level of Triglycerides differ among different levels of physical activity?}
+Triglycerides \textit{triglycerides} is a continuous variable while physical activity
+\textit{physical\_activity} is a categorical variable. The hypothesis for this question are the following:
+\begin{itemize}
+    \item $H_0$: There is no difference in the distribution of triglycerides across all physical activity groups in the population
+    \item $H_1$: There is a difference in the distribution of triglycerides across all physical activity groups in the population
+\end{itemize}
+Initially, the first test to consider is ANOVA. So the following three assumptions are checked.
+\begin{itemize}
+    \item The three physical activity groups are independent
+    \item The distribution of \textit{triglycerides} is normal in the three groups
+    \item The variance of \textit{triglycerides} is equal between the three groups
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2b-1.png}
+    \caption{Distribution of triglycerides between the three physical activity groups}
+    \label{fig:2b-1}
+\end{figure}
+
+The first assumption is met but the figure above shows that the second assumption fails because the
+distribution of triglycerides for all the three groups are not normal and instead are right-skewed.
+Instead of the regular ANOVA, the Kruskal-Wallis test is used and the hypothesis is adjusted for non-parametric.
+Before the test results, the median and the IQR can be considered.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Activity Levels} & \textbf{Median} & \textbf{Lower Quartile} & \textbf{Upper Quartile} \\ \hline
+\textbf{No Activity}        & 153.50 & 104.00 & 228.00 \\ \hline
+\textbf{Moderate Activity}  & 137.50 & 97.00  & 192.00 \\ \hline
+\textbf{Strenuous Activity} & 130.00 & 97.00  & 178.00 \\ \hline
+\end{tabular}
+\caption{Median and IQR of triglycerides levels across physical activity}
+\label{tab:2b-descriptive-stats}
+\end{table}
+
+The median from the three groups show that the triglycerides levels are generally lower as the level of
+physical activity gets more strenuous. But the Kruskal-Wallis test will be used to determine its significance.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2b-2.png}
+    \caption{Kruskal-Wallis test result}
+    \label{fig:2b-2}
+\end{figure}
+The test result shows that the difference is significant ($p < 0.001$). The null hypothesis is rejected.
+\\~\\
+\textbf{In conclusion}, the distribution of triglycerides is different across the physical activity groups of no activity,
+moderate activity, and strenuous activity in the population. The triglycerides levels are lower as more intense
+the physical activity is.
+
+
+
+
+
+\pagebreak
+\subsection*{c. Is there an association between physical activity and gender?}
+
+
+% 2d. ANOVA
+\pagebreak
+\subsection*{d. Does low-density lipoprotein differ among different BMI categories?}
+Low-density lipoprotein \textit{LDL} is a continuous variable while BMI categories \textit{BMI\_cat} is a categorical
+variable. The hypothesis for this question are the following:
+\begin{itemize}
+    \item $H_0$: There is no difference in the mean of low-density lipoprotein levels between the BMI categories: under \& normal weight, overweight, and obese in the population
+    \item $H_1$: There is a difference in the mean of low-density lipoprotein levels between the BMI categories: under \& normal weight, overweight, and obese in the population
+\end{itemize}
+
+Since this is a continuous against a categorical variable, ANOVA will be used to determine the significance. But,
+the assumptions will be checked first for ANOVA:
+\begin{itemize}
+    \item The BMI categories are independent
+    \item The distribution of ldl is normal for the three BMI categories
+    \item The variance of ldl is equal for the three BMI categories
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2d-1.png}
+    \caption{Distribution of ldl between the three BMI categories}
+    \label{fig:2d-1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{2d-2.png}
+    \caption{Levene's test for equality of variance of ldl}
+    \label{fig:2d-2}
+\end{figure}
+
+The first assumption is immediately met. Figure 4 shows that the distribution of LDL across the three BMI categories
+are normal and Figure 5 for the result of Levene's test of homogeneity of variance $(p = 0.228 > 0.05)$ indicates
+that the variance is equal across the three BMI categories. All three assumptions for ANOVA is met.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2d-3.png}
+    \caption{ANOVA results}
+    \label{fig:2d-3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2d-4.png}
+    \caption{Post-hoc Scheffe test}
+    \label{fig:2d-4}
+\end{figure}
+
+
+\textbf{In conclusion}, The ANOVA test $(p < 0.001)$ indicates that the $H_0$ is rejected.
+Thus, there is a difference in the mean of low-density lipoprotein across
+the three BMI categories under \& normal weight, overweight, and obese in the population. Furthermore, the
+post-hoc test shows the significant difference in the mean between the groups:
+\begin{itemize}
+    \item Under \& normal weight and overweight is around $19.3$
+    \item Under \& normal weight and obese is around $19.8$
+\end{itemize}
+While the difference between the overweight and obese groups is not statistically significant.
+
+
+\pagebreak
+\subsection*{e. Is there an association between smoking and CAD?}
+
+
+\pagebreak
+\subsection*{f. Is there an association between congenital anomalies and CAD?}
+
+
+% 2g. Paired t-test
+\pagebreak
+\subsection*{g. Is there a change in Total cholesterol between baseline and after intervention?}
+Total cholesterol base and after (\textit{Tchol\_base} and \textit{Tchol\_after}) are continuous variables
+and since it wants to know if the change between baseline and after, the paired t-test will be considered and
+the assumption \textit{The difference between total cholesterol at baseline and after intervention
+is normally distributed} will be checked first and the following hypothesis will be used:
+\begin{itemize}
+    \item $H_0$: The mean total cholesterol between baseline and after intervention is the same in the population
+    \item $H_1$: The mean total cholesterol between baseline and after intervention is not the same in the population
+\end{itemize}
+
+The new variable \textit{diff\_tchol} is introduced by subtracting \textit{Tchol\_base} from \textit{Tchol\_after}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2g-1.png}
+    \caption{Difference in total cholesterol at baseline and after intervention}
+    \label{fig:2g-1}
+\end{figure}
+The figure above shows the new variable is normally distributed. So, the assumption is met.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{2g-2.png}
+    \caption{Paired t-test}
+    \label{fig:2g-2}
+\end{figure}
+
+The t-test result ($p < 0.001$) shows that it is significant and that the $H_0$ should be rejected.
+
+\textbf{In conclusion}, the mean total cholesterol between baseline and after intervention is
+different in the population. The average total cholesterol after intervention is around $40 \ mg/dL$
+lower. Whereas the 95\% confidence interval for the mean difference is ($39.97, 40.85$) indicating
+that the mean total cholesterol after intervention in the population is between $39.97 \ mg/dL$ lower
+or $40.85 \ mg/dL$ higher.
+
+
+\end{document}

@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+
+\title{Week 3 Example 4}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{ANOVA}
+Scenario: A student trying to get some practice in carrying out ANOVA in SPSS decided to
+compare weights (kg) between three independent groups (A, B \& C) with a null hypothesis
+(H0) that there is no difference in mean weight between groups in the population.
+The student first plotted histograms of weight for the 3 groups
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/distribution.png}
+    \caption{Histograms of weight for the 3 groups}
+    \label{fig:histograms}
+\end{figure}
+
+\subsection*{Q1 - Comment on the distribution of weight in the 3 groups. Which assumption is being
+checked here?}
+The assumption being checked is for the normality in the distribution.
+\newline
+The distribution of weights in the three groups are roughly normal.
+
+\subsection*{Q2a - What was the sample size? Comment on the size of the sample with respect to carrying
+out ANOVA.}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/descriptives.png}
+    \caption{Descriptive stats of weight for the 3 groups}
+    \label{fig:summary table}
+\end{figure}
+
+The total sample size (all three groups) is 236, with
+\begin{itemize}
+    \item 81 samples from group A
+    \item 88 samples from group B
+    \item 67 samples from group C
+\end{itemize}
+Furthermore, the sample size is also roughly balanced and each group has more than enough sample.
+
+\subsection*{Q2b - Which descriptives should be presented? Write them out}
+The mean, sample size, and standard deviation should be presented for each group and the overall.
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+      & N   & Mean  & SD    \\ \hline
+A     & 81  & 70.13 & 11.04 \\ \hline
+B     & 88  & 69.28 & 13.03 \\ \hline
+C     & 67  & 68.01 & 12.87 \\ \hline
+Total & 236 & 69.21 & 12.31 \\ \hline
+\end{tabular}
+\newline
+
+\subsection*{Q3a - What is the purpose of the test whose result is shown in the table below?}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/levene.png}
+    \caption{Levene's Test}
+    \label{fig:levene test}
+\end{figure}
+
+The Levene's test for homogeneity of variance is to check whether there is a significant
+difference in variance between the sample groups and this test is used as part of ANOVA.
+
+
+\subsection*{Q3b - Interpret the results of the table}
+The value of \textit{Sig.} is 0.462. So, we can accept the null hypothesis and conclude
+that there is \textbf{no significant difference} in the variances between the groups A, B, and C.
+\\~\\
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/anova.png}
+    \caption{ANOVA results}
+    \label{fig:anova}
+\end{figure}
+
+\textit{The student decided that the above table showed evidence that there is a difference in weight
+between groups.}
+\subsection*{Q4a - Is this statement correct?}
+Incorrect, since the value of \textit{Sig.} is 0.579, we fail to reject the null hypothesis.
+There is no
+significant difference in the weight between the three groups.
+
+\subsection*{Q4b - Interpret in full the results of the table.}
+Since the null hypothesis is not rejected, we can conclude that there is no significant difference
+in weight between the three groups.
+\\~\\
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/post-hoc.png}
+    \caption{Post-hoc results}
+    \label{fig:post-hoc}
+\end{figure}
+
+\subsection*{Q5 - What is your comment on this next step of the analysis? Was this an appropriate step
+bearing in mind the ANOVA results?}
+Since the result of the ANOVA test showed that there is no significant difference in weight
+between the three groups $p > 0.05$ the post-hoc test is redundant and inappropriate.
+
+
+\end{document}
