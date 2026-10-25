@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology\\Week 3\\Cohort Study}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Definition and Method}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w3-1.png}
+    \caption{Summary of the three studies differences}
+    \label{fig:w3-1}
+\end{figure}
+
+As the image above says, starting from choosing people \textbf{WITHOUT} the outcome of interest the study population then follow-up splitting them into either the exposed or not exposed group and ending up with the outcome or no outcome from both groups.
+\\
+Conducting a cohort study follows these steps:
+\begin{enumerate}
+    \item Research question - Think about how exposure is associated with the outcome(s)
+    \item Identify the study population - This depends on how common the exposure of interest is
+    \item Measure the exposure
+    \item Follow-up participants and determine their outcome status
+    \item Data analysis
+    \item Interpret the results
+    \item Assess possible sources of error
+\end{enumerate}
+
+\subsection*{Measure the exposure}
+Measuring the exposure can be gathered from a number of sources:
+\begin{itemize}
+    \item Medical records / tests
+    \item Measures of blood
+    \item Physical measurements, e.g. height, weight, etc.
+    \item Direct questioning to the subject of interest, questionnaires
+    \item Environmental measures, e.g. water sampling
+\end{itemize}
+
+It is highly important to define the exposure, such as \textit{how has epxosure been ascertained?} or \textit{how often has exposure been measured?} to avoid boundary (a maybe situation) cases. Confounding variables also need to be measured.
+
+\subsection*{Follow up participants and determine their outcome status}
+Just like defining the exposure, outcome also needs to be defined clearly and its ascertainment for the same reason to avoid boundary cases. Furthermore, things like \textit{do all the population have similar risk of outcome?} or whether the population at risk has changed over time needs to be thought out thoroughly.
+
+\subsection*{Data analysis}
+Cohort study calculates \textbf{incidence} as a risk or rate, which can then be compared to get the risk / rate ratio. The difference in calculating risk or rate is typically on whether the follow-up time is identical (or nearly) for the cohort members, risk is for when the follow-up time is identical, while rate is when there's variation between the follow-up time of the cohort members.
+\\~\\
+Analysis should also allow for the changing nature of exposure and for the differences in groups (by using standardisation, multivariate adjustments, Poisson regression, or Cox regression). One thing to note is \textbf{Effect modification}, it is when the effect of an exposure or treatment of an outcome changes depending on the level of a third variable, i.e. \textit{A third variable distorts the exposure, outcome, or both}
+
+\subsubsection*{Calculating risk}
+When the follow-up time is \textbf{identical} (or nearly) identical for all cohort members.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w3-2.png}
+    \caption{Calculate risk}
+    \label{fig:w3-2}
+\end{figure}
+\\
+The formulas for the risks are:
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{2.0}
+\begin{tabularx}{\textwidth}{|X|X|}
+\textbf{Risk in exposed}, $r_e = \dfrac{a}{a + b}$ & \textbf{Risk in unexposed}, $r_0 = \dfrac{c}{c + d}$ \\ 
+\textbf{Risk ratio} = $\dfrac{r_e}{r_0}$             & \textbf{Risk difference} = $r_e - r_0$ \\ 
+\end{tabularx}
+\caption{Calculating risk in cohort studies}
+\label{tab:risk-calculation}
+\end{table}
+
+\subsubsection*{Calculating rate}
+When there is \textbf{variation} between cohort members in the duration of follow-up time.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w3-3.png}
+    \caption{Calculate rate}
+    \label{fig:w3-3}
+\end{figure}
+\\
+The formulas for the rates are:
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{2.0}
+\begin{tabularx}{\textwidth}{|X|X|}
+\textbf{Rate in exposed}, $r_e = \dfrac{a}{y_e}$ & \textbf{Risk in unexposed}, $r_0 = \dfrac{c}{y_0}$ \\ 
+\textbf{Risk ratio} = $\dfrac{r_e}{r_0}$             & \textbf{Risk difference} = $r_e - r_0$ \\ 
+\end{tabularx}
+\caption{Calculating rate in cohort studies}
+\label{tab:rate-calculation}
+\end{table}
+
+\subsection*{Interpret results}
+Interpreting the results follows these 3 principles:
+\begin{itemize}
+    \item RR = 1 -$>$ No association
+    \item RR $>$ 1 -$>$ Risk in exposed is greater than risk in not exposed
+    \item RR $<$ 1 -$>$ Risk in exposed is less than risk in not exposed
+\end{itemize}
+Where RR is the risk / rate ratio
+
+\subsection*{Assess possible sources of error}
+Errors in studies can come from multiple sources, but primarily they may come from bias, confounding variables, or even chance. Examples of bias are information bias or attrition bias that came due to cohort members not available for the follow-up. It is highly important to collect information about possible confounders.
+
+\subsection*{Pros and cons of cohort study}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Temporal sequence of events can be established  &  Slow and usually expensive \\ \hline
+\textbf{Rare exposures} can be studied   & Inefficient for \textbf{rare disease} \\ \hline
+Can examine multiple outcomes   & Differential loss to follow up can lead to attrition /information bias \\ \hline
+Can provide information about the time course of outcome (natural history) & Exposure stats can change \\ \hline
+Can measure incidence rate directly & Can become historical \\ \hline
+\end{tabularx}
+\caption{Pros and cons of cohort study}
+\label{tab:pros-cons-cohort-study}
+\end{table}
+
+\pagebreak
+\section{Types of Cohort Studies}
+
+\end{document}
