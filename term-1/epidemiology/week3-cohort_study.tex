@@ -123,8 +123,8 @@ Errors in studies can come from multiple sources, but primarily they may come fr
 \textbf{Advantage} & \textbf{Disadvantage} \\ \hline
 Temporal sequence of events can be established  &  Slow and usually expensive \\ \hline
 \textbf{Rare exposures} can be studied   & Inefficient for \textbf{rare disease} \\ \hline
-Can examine multiple outcomes   & Differential loss to follow up can lead to attrition /information bias \\ \hline
-Can provide information about the time course of outcome (natural history) & Exposure stats can change \\ \hline
+Can examine multiple outcomes   & Differential loss to follow up can lead to attrition / information bias \\ \hline
+Can provide information about the time course of outcome (natural history) & Exposure status can change \\ \hline
 Can measure incidence rate directly & Can become historical \\ \hline
 \end{tabularx}
 \caption{Pros and cons of cohort study}
@@ -133,5 +133,186 @@ Can measure incidence rate directly & Can become historical \\ \hline
 
 \pagebreak
 \section{Types of Cohort Studies}
+Cohort studies are divided into three based on how the participants are followed in time.
+\begin{itemize}
+    \item \textbf{Prospective} (Concurrent)
+    \item \textbf{Retrospective} (Historical)
+    \item \textbf{Ambidirectional}
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.2\textwidth]{w3-4.png}
+    \caption{Cohort study types}
+    \label{fig:w3-4}
+\end{figure}
+
+\subsection{Prospective cohort study}
+This study follows the cohort members forward in time. The pros and cons are
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Temporal sequence of events can be established  &  Slow and usually expensive \\ \hline
+\textbf{Rare exposures} can be studied   & Inefficient for \textbf{rare disease} \\ \hline
+Can examine multiple outcomes   & Differential loss to follow up can lead to attrition / information bias \\ \hline
+Can provide information about the time course of outcome (natural history) & Exposure status can change \\ \hline
+Can measure incidence rate directly & Can become historical \\ \hline
+\textbf{Investigators define exposure and outcome} &  \\ \hline
+\end{tabularx}
+\caption{Pros and cons of prospective cohort study}
+\label{tab:pros-cons-prospective-cohort-study}
+\end{table}
+
+\subsection{Retrospective cohort study}
+This study reconstructs past exposure history and track subsequent health outcome using existing records. The pros and cons are
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+\textbf{Rare exposures} can be studied   & Inefficient for \textbf{rare disease} \\ \hline
+Can examine multiple outcomes   & Differential loss to follow up can lead to attrition / information bias \\ \hline
+Can provide information about the time course of outcome (natural history) & Exposure status can change \\ \hline
+Can measure incidence rate directly & Can become historical \\ \hline
+Temporal sequence of events can be established  & \textbf{Investigator has no control over how data was collected} \\ \hline
+\textbf{Efficient}, take less time to conduct and thus less expensive than prospective cohort & \textbf{Might lack information about potential confounders} \\ \hline
+Useful for \textbf{occupational exposures} & \textbf{Can be difficult to identify appropriate exposed and not exposed groups} \\ \hline
+\end{tabularx}
+\caption{Pros and cons of retrospective cohort study}
+\label{tab:pros-cons-retrospective-cohort-study}
+\end{table}
+
+\subsection{Ambidirectional cohort study}
+This study combines both elements from prospective and retrospective cohort study. It works by looking at past records to identify the cohort, determining their past exposures then follow them into the future to determine their health outcome.
+
+\pagebreak
+\section{Exercise on calculating risk and rates in cohort studies}
+\subsection{Example 1}
+A cohort study began in 1990 and followed participants to determine
+whether poor sleep quality was associated with risk of incident stroke. At
+study recruitment, 9936 participants agreed to take part and completed
+the Pittsburgh Sleep Quality Index. 8040 people had good sleep quality.
+After 10 years of follow-up, 145 strokes had occurred in people with
+good sleep quality and 87 strokes had occurred in people with poor sleep
+quality.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+& \multicolumn{2}{c|}{\textbf{Outcome}} & \\ \cline{2-3}
+\textbf{Exposure} & \textbf{Stroke} & \textbf{No Stroke} & \textbf{Total} \\ \hline
+\textbf{Exposed - Poor Sleep} & 87 & 1809 & 1896 \\ \hline
+\textbf{Not exposed - Good Sleep} & 145 & 7895 & 8040 \\ \hline
+\end{tabularx}
+\caption{Example 1}
+\label{tab:example-1}
+\end{table}
+
+Since the follow-up is on the same time, the risk is calculated here instead of the rate.
+\begin{itemize}
+    \item Risk in exposed group, $r_e = \dfrac{87}{1896} = 0.046$
+    \item Risk in not exposed group, $r_0 = \dfrac{145}{8040} = 0.018$
+    \item Risk ratio = $\dfrac{0.046}{0.018} = 2.56$
+\end{itemize}
+In conclusion, people with poor sleep quality had 2.56 times the risk of stroke than people with good sleep quality.
+
+\subsection{Example 2}
+During 1995-2014, a cohort study followed 1,879,227 women aged 15
+to 49 living in Denmark to investigate the relationship between use of
+hormonal contraceptives and risk of ovarian cancer. Women were
+followed until either: first ovarian cancer, death, emigration, age 50 or
+end of follow-up. The total follow-up time in the study was 21,494,781
+person-years, of which 13,344,531 person-years occurred in users of
+hormonal contraceptives. 1249 ovarian cancers were registered, most
+of which were in women who did not use hormonal contraceptives
+(n=771 cancers).
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+& \multicolumn{2}{c|}{\textbf{Outcome}} \\ \cline{2-3}
+\textbf{Exposure} & \textbf{Ovarian Cancer} & \textbf{Person-years} \\ \hline
+\textbf{Exposed - HC user} & 478 & 13,344,531 \\ \hline
+\textbf{Not exposed - HC non-user} & 771 & 8,150,250 \\ \hline
+\textbf{Total} & 1249 & 21,494,781 \\ \hline
+\end{tabularx}
+\caption{Example 2}
+\label{tab:example-2}
+\end{table}
+
+The rate is calculated here since the follow-up time varies between the cohort members.
+\begin{itemize}
+    \item Rate in exposed group, $r_e = \dfrac{478}{1,334,4531} = 0.000035824$ or 3.58 per 100,000 person-years
+    \item Rate in non-exposed group, $r_0 = \dfrac{771}{8,150,250} = 0.0000946$ or 9.46 per 100,000 person-years
+    \item Rate ratio = $\dfrac{3.58 \text{ per 100,000 person-years}}{9.46 \text{ per 100,000 person-years}} \approx 0.38$
+\end{itemize}
+In conclusion, women who used hormonal contraceptives had 0.38 times the rate of ovarian cancer compared to non-users.
+
+\subsection{More on Person-time}
+For an individual, person-time accounts for the total time period during which an individual could develop or is at risk of the outcome of interest.
+\\~\\
+For a population / cohort study, total person-time at risk is the sum of all individuals person-time, the total time during which outcomes could occur and would be considered events in the population of interest.
+
+\subsubsection{Example - Person-time}
+A cohort study recruits from January 1995 and follows members until lung cancer or death from another cause or end of study in December 2014.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+\textbf{Exposure status} & \textbf{Date of entry} & \textbf{Event} & \textbf{Event date} \\ \hline
+Smoker & Jan 1995 & Lung cancer & Mar 2006 \\ \hline
+Non-Smoker & Feb 1995 & Death & June 2014 \\ \hline
+Non-Smoker & Apr 1995 & End of study & Dec 2014 \\ \hline
+Non-Smoker & Jan 1995 & Lung cancer & Aug 2000 \\ \hline
+Smoker & Feb 1995 & Lung cancer & Jul 2002 \\ \hline
+Smoker & Jun 1995 & End of study & Dec 2014 \\ \hline
+Smoker & Mar 1995 & Death & Nov 2001 \\ \hline
+Non-Smoker & Jan 1995 & End of study & Dec 2014 \\ \hline
+Non-Smoker & Mar 1995 & End of study & Dec 2014 \\ \hline
+Smoker & Jan 1995 & Lung cancer & Feb 2012 \\ \hline
+\end{tabularx}
+\caption{Person-time example}
+\label{tab:example-person-time}
+\end{table}
+Calculate the person-years and the rates.
+\\
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+\hline
+\textbf{Exposure status} & \textbf{Date of entry} & \textbf{Event} & \textbf{Event date} & \textbf{Person-years} \\ \hline
+Smoker & Jan 1995 & Lung cancer & Mar 2006 & 11.25 \\ \hline
+Non-Smoker & Feb 1995 & Death & June 2014 & 19.42 \\ \hline
+Non-Smoker & Apr 1995 & End of study & Dec 2014 & 19.75 \\ \hline
+Non-Smoker & Jan 1995 & Lung cancer & Aug 2000 & 5.67 \\ \hline
+Smoker & Feb 1995 & Lung cancer & Jul 2002 & 7.50 \\ \hline
+Smoker & Jun 1995 & End of study & Dec 2014 & 19.58 \\ \hline
+Smoker & Mar 1995 & Death & Nov 2001 & 6.75 \\ \hline
+Non-Smoker & Jan 1995 & End of study & Dec 2014 & 20.00 \\ \hline
+Non-Smoker & Mar 1995 & End of study & Dec 2014 & 19.83 \\ \hline
+Smoker & Jan 1995 & Lung cancer & Feb 2012 & 17.17 \\ \hline
+\end{tabularx}
+\caption{Person-time example calculated}
+\label{tab:example-person-time-calc}
+\end{table}
+The first row gives 11.25 person-years because you just take the difference between March 2006 and January 1995 which would be 11 years and 3 months or 11.25. The rates are as follows,
+\begin{itemize}
+    \item Rate in exposed, 
+        $\!\begin{aligned}[t]
+            r_e &= \dfrac{\text{Total smokers with lung cancer}}{\text{Total person-years from all smokers}} \\[1.5ex]
+                &= \dfrac{3}{11.25 + 7.50 + 19.58 + 6.75 + 17.17} \\[1.5ex]
+                &\approx 0.0482 \text{ or 4.82 per 100 person-years}
+        \end{aligned}$ 
+    \item Rate in non-exposed,
+        $\!\begin{aligned}[t]
+            r_0 &= \dfrac{\text{Total non-smokers with lung cancer}}{\text{Total person-years from all non-smokers}} \\[1.5ex]
+                &= \dfrac{1}{19.42 + 19.75 + 5.67 + 20.00 + 19.83} \\[1.5ex]
+                &\approx 0.0118 \text{ or 1.18 per 100 person}
+        \end{aligned}$ 
+    \item Rate ratio = $\dfrac{4.82 \text{ per 100 person-years}}{1.18 \text{ per 100 person-years}} = 4.08$
+\end{itemize}
+
 
 \end{document}
