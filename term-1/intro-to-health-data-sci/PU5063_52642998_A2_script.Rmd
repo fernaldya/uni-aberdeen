@@ -1,0 +1,196 @@
+---
+title: "Introduction to Health Data Science (PU5058/PU5063): Assessment 2"
+author: "Student ID: 52642998"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    number_sections: false
+---
+
+<!--
+HOW TO USE THIS TEMPLATE (this block does not appear in your HTML file)
+
+Setting up
+- Use an RStudio Project for this assessment and keep this .Rmd file at the
+  top level of the Project.
+- Put the supplied datasets, with their original file names, in a folder
+  called data inside the Project.
+- Read the data with relative paths, for example 'data/Baseline_Data.csv'.
+  Never use setwd() or an absolute path.
+
+Structure
+- Keep the main (#) section headings. They match the sections of the brief
+  and the rows of the marking rubric.
+- You may add lower-level (## or ###) headings where they help.
+- The text in italics is guidance. Delete it as you replace it with your own
+  work.
+- Every table, figure or piece of output should be followed by a sentence or
+  two saying what it shows and, where relevant, what you did as a result.
+
+Reproducibility
+- All data preparation, cleaning, linkage and analysis must be done in code.
+  Never edit the CSV/TSV files by hand.
+- Markers will render this file with the supplied datasets, so it must run
+  from start to finish without errors and without manual changes.
+
+Clean-run checklist (before you submit)
+- No setwd(), no absolute paths and no install.packages() in this file.
+- Every object your code uses is created in this file, not only in your
+  console.
+- In RStudio choose Session > Restart R, then knit. It renders without errors.
+- Your HTML file was produced from the final version of this file.
+- Both files are named CourseCode_StudentID_A2_script.Rmd and
+  CourseCode_StudentID_A2_script.html.
+-->
+
+```{r setup, include = FALSE}
+# Do NOT delete this code chunk. Warnings are shown on purpose.
+# During data cleaning they often tell you something important,
+# for example that values were turned into NA.
+knitr::opts_chunk$set(
+  eval = TRUE, echo = TRUE, message = FALSE, warning = TRUE,
+  fig.width = 7, fig.height = 4.5, fig.align = "center"
+)
+```
+
+```{r packages}
+# Load the packages you use here, and only here. Do not use install.packages().
+
+
+```
+
+
+# Research question
+
+*State one clinically meaningful research question using the outcome allocated to your group. It should name your outcome measured over visits 0 to 6, one baseline characteristic or exposure of interest, and any other baseline characteristics that should be taken into account. It should make use of the repeated measurements and be worded as a question about association, not cause.*
+
+*One pattern you may find helpful is "Among adults aged 60 to 75 in primary care, is [baseline characteristic] associated with [outcome] over six months of follow-up, taking account of [other baseline characteristics]?"*
+
+**Research question:**
+Potential RQs:
+- Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, while also taking into account their usual level of physical activity?
+
+*Then explain, in around 100 to 200 words, why the question is clinically relevant and why it suits these data. Limitations belong in the final section, not here.*
+
+
+# Data import and structure
+
+*Import both datasets with relative paths. Examine their structure and contents and compare them with the data dictionary. Check the number of rows and participants in each dataset, how many visits each participant has, whether each variable is stored as the right type and whether values and category labels match the dictionary. Where you change a variable's type, create a new variable (for example `Fsex`) rather than overwriting the original.*
+
+
+```{r import}
+# Import the baseline and the visits data
+baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t', stringsAsFactors = TRUE)
+visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t', stringsAsFactors = TRUE)
+```
+
+
+# Data quality assessment and cleaning
+
+*Check each variable against the data dictionary and against clinically plausible values. For each problem, show the evidence, decide whether it is a clear error, an uncertain value or a genuine but unusual value, and handle it accordingly. Report how many values or rows each decision affects.*
+
+## Baseline data
+
+
+```{r clean-baseline}
+# Include R code you use to assess the quality and identify issues with the baseline data.
+# Clean the data to address these issues
+str(baseline)
+str(visits)
+```
+
+## Visits data
+
+```{r clean-visits}
+# Include R code you use to assess the quality and identify issues with the visit data
+# Clean the data to address these issues
+
+```
+
+## Data cleaning log
+
+*Based on your code above, add one row for every cleaning decision. The first row is a worked example from the Exercise 4 cardiac data. Delete it and replace it with your own.*
+
+| No. | Dataset and variable | Problem found | Evidence | Kind of problem | Decision | Justification | Values or rows affected |
+|:---|:---|:---|:---|:---|:---|:---|:---|
+| 1 | cardiac, bmi | One BMI of 514.6 | `summary()` shows a maximum of 514.6 | Clear error | Set to NA | A BMI above about 60 is essentially impossible. 51.46 is a likely correction but cannot be confirmed | 1 value (patient 1630L) |
+| 2 | | | | | | | |
+| 3 | | | | | | | |
+
+
+# Missing data
+
+*Once you prepare the cleaned data, count the missing values for each variable in both datasets and for the outcome at each visit. Look for patterns, for example whether participants with certain baseline characteristics are more likely to have missing follow-up measurements, and whether missing information increases over follow-up. Remember that some missing values may be recorded in other ways than NA. Discuss what the missing information could mean for your research question and how you would handle it.*
+
+```{r missing}
+# Include R code you use to summarise and present the missing values
+
+
+```
+
+
+# Data linkage
+
+*Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.*
+
+```{r linkage}
+# Include R code you use to link baseline and visits data
+
+
+```
+
+
+# Exploratory analysis and visualisation
+
+*Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
+
+
+```{r summaries1}
+# R code to summarise data
+
+
+```
+
+```{r outcome-over-visits1, fig.cap = 'Replace with a caption describing this figure.'}
+# R plot to summarise data
+
+```
+
+
+# Summary and limitations
+
+*About 500 words in total across the two parts below, written for research scientists.*
+
+## Summary of findings
+
+*Describe what your exploration suggests in relation to your research question, using cautious language appropriate to an observational study.*
+
+## Limitations
+
+*Discuss the limitations of the data and of your analysis, such as data-quality problems and the decisions you made about them, missing information and the observational design. Explain how each might affect what can be concluded.*
+
+Potential limitation:
+- Study participants only for age 60-75 years old
+
+
+## GenAI Declaration
+
+<!--
+
+If you used generative AI in your assessment, you need to provide:
+- Written acknowledgement of which generative AI tools have been used and to what extent.
+- A description of how the information was generated (including the prompts used).
+- Citing and referencing using the most relevant source types in the style being used (e.g. non-recoverable sources, personal communication).
+
+If you did not use GenAI, provide a declaration that you did not use GenAI tools in completing the assignment.
+
+-->
+
+
+# Session information
+
+```{r session-info}
+# Records the R and package versions used to produce this report
+sessionInfo()
+```
