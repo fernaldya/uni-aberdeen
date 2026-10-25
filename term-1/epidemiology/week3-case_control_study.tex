@@ -1,0 +1,195 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology\\Week 3\\Case-Control Study}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Definition and Method}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w3-5.png}
+    \caption{Case-control study design}
+    \label{fig:w3-5}
+\end{figure}
+The image above shows the study design case-control study, the biggest difference compared to cohort study is the direction of inquiry. Instead of starting from exposure, case-control study starts from the cases (people with health outcome) and the controls (people without health outcome) and then it looks backwards to the exposure. Conducting a case-control study follows these steps:
+\begin{enumerate}
+    \item Research question and population
+    \item Select the cases
+    \item Select the controls
+    \item Measure exposure
+    \item Data analysis
+    \item Interpret results
+    \item Assess possible sources of error
+\end{enumerate}
+
+\subsection*{Selecting the cases}
+The most important is the case definition, whether it could be histological or clinical or any other method to define a clear boundary of cases (identification) and the unit of analysis. It is also important to have a homogeneous group so confounding is minimised. The source of cases could be incident (new) or prevalent (both new and old) cases.
+
+\subsection*{Selecting the controls}
+The most important in selecting the controls is that they must be representative of the population that also produced the cases. There could also be more than one control groups. A method to control possible confounding variables when random assignment is not possible is by \textbf{matching}, it is a technique to pair participants in the case / treatment group with identical or similar counterparts and put them in the control group. This is done to eliminate bias by ensuring the case and control groups are identical.
+\\~\\
+Controls can be sourced from \textbf{hospital} or just from the \textbf{population} itself, however some downsides may exist on either choice. Selecting controls from the hospital is convenient but the distribution of exposure(s) might not reflect the distribution among the population that produced the cases, \textit{highly susceptible to selection bias}. While selecting just from the population itself is likely to be more representative of the population that produced the cases but it is generally more expensive to identify and collect information from, the quality of exposure information could differ and refusal to participate is typically higher.
+\\
+\textbf{\textit{TLDR:}} 
+\begin{itemize}
+    \item Hospital -$>$ You don't really find healthy people in hospitals
+\end{itemize}
+Alternatively, finding controls from neighbourhoods, friends, or family of the cases can also be considered.
+\\~\\
+In an ideal setting, having one control group is enough but sometimes it may be difficult. So, multiple control groups can be done, this is done to possibly isolate and combat different biases, or confounding variables that a single control group may miss or introduce.
+\\~\\
+The most optimal scenario is having the same number of controls as cases, case-to-control ratio 1:1. More than 4:1 is rarely worth having because the gains in statistical power become smaller.
+
+\subsection*{More on matching}
+It is a way to balance the number of cases and controls within strata for the analysis. \textbf{NEVER match on exposure of interest} because it introduces an inverse, the selection bias is introduced and it artificially forces the exposure distribution in the case and control to be identical.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+More efficient study & Difficult and expensive to find matched controls \\ \hline
+Useful for when cases are limited & Cannot evaluate the effect of a matched variable \\ \hline
+Useful when there are complex variables & Possibility of overmatching \\ \hline
+& An individually matched study needs to control for the matching factor(s) \\ \hline
+\end{tabularx}
+\caption{Pros and cons of matching}
+\label{tab:pros-cons-matching}
+\end{table}
+
+\subsubsection*{Types of matching}
+Matching is done by taking the matched variable(s) or a factor from the case and finding a control with a similar variable(s).
+\begin{itemize}
+    \item \textbf{Individual}: For each case selected, a control is selected that is similar to the case in terms of the matched variable(s)
+    \item \textbf{Group}: Control group as a group are similar to the cases in terms of the matched variable(s)
+\end{itemize}
+For example, matching on age where the cases are people between 25-35 years old, then the matched controls should also be people between 25-35 years old.
+
+\subsection*{Measuring epxosure}
+Measuring exposure can be done in many ways, such as:
+\begin{itemize}
+    \item Subjects: by interview or questionnaire
+    \item Surrogates: by interview or questionnaire
+    \item Medical records: diagnoses, prescriptions
+    \item Occupational records: exposure to chemical in workplace
+    \item Biological samples
+\end{itemize}
+
+Important things to note when measuring exposures:
+\begin{itemize}
+    \item Minimise information bias
+    \item Use objective records instead of subjective measures
+    \item Exposure information recorded before outcome occurred
+    \item Blinding and same ascertainment method for cases and controls
+    \item Relevant time period
+    \item Clear boundary and definitions
+\end{itemize}
+
+\subsection*{Data analysis}
+Analysis in case-control studies is typically done by comparing the frequency of exposure among the cases against the frequency of exposure among the controls. It is important to note that case-control study \textbf{CANNOT estimate incidence}. The outcome of analysis is the \textbf{\textit{Odds Ratio (OR)}}.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+& \multicolumn{2}{c|}{\textbf{Case / Control Status}}  \\ \cline{2-3}
+\textbf{Exposure} & \textbf{Cases} & \textbf{Controls} \\ \hline
+\textbf{Exposed} & a & b  \\
+\textbf{Not exposed} & c & d \\ \hline
+\textbf{Total} & $a + c$ & $b + d$ \\ \hline
+\end{tabularx}
+\caption{Calculating odds ratio}
+\label{tab:odds-ratio-table}
+\end{table}
+
+The odds can be calculated by,
+\begin{itemize}
+    \item Odds of exposure (Cases) = $\dfrac{a}{c}$
+    \item Odds of exposure (Controls) = $\dfrac{b}{d}$
+    \item Odds ratio = 
+        $\!\begin{aligned}[t]
+            \dfrac{\text{Odds of exposure (cases)}}{\text{Odds of exposure (controls)}}
+            &= \dfrac{\dfrac{a}{c}}{\dfrac{b}{d}} = \dfrac{ad}{bc}
+        \end{aligned}$
+\end{itemize}
+
+\subsection*{Assess possible sources of error}
+Possible sources of error could come from many sources such as bias, confounding, or chance, selection bias in cases and controls, or even information bias in obtaining exposure information (for example when measuring exposure is done via questionnaire or survey and the participants had to recall from memory; Recall bias), as well as misclassification of cases.
+
+\subsubsection*{More on misclassification}
+Misclassification is split into two: non-differential or differential.
+\begin{itemize}
+    \item \textbf{Non-differential}: Proportion of misclassified is the same across all study groups (cases and controls)
+    \item \textbf{Differential}: Proportion of misclassified is different between study groups (cases and controls)
+\end{itemize}
+The effects on either of these two are also different. \textbf{Non-differential} misclassification results in an underestimate of the association, while \textbf{differential} misclassification can overestimate or underestimate the association.
+
+\subsubsection*{Reverse causality}
+Reverse causality is when the exposure is actually the conseequence of the outcome. Instead of
+\begin{equation*}
+    \text{Exposure} \implies \text{Outcome}
+\end{equation*}
+it is
+\begin{equation*}
+    \text{Exposure} \Longleftarrow \text{Outcome}
+\end{equation*}
+Which is why, it is important to define exposure time period of interest. This is because having the exposure time period of interest ensures temporal sequence, there is a clear sequence between exposure and outcome.
+
+\subsection*{Pros and cons}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Quick and inexpensive, relatively small sample & Selection bias \\ \hline
+Useful for studying \textbf{rare outcomes} & Not suitable for \textbf{rare exposures} (unless nested case-control study) \\ \hline
+Useful for studying diseases with long latent periods & Possibility of reverse causality \\ \hline
+Can study multiple exposures & Information bias \\ \hline
+& Cannot estimate disease incidence or prevalence \\ \hline
+\end{tabularx}
+\caption{Pros and cons of case-control study}
+\label{tab:pros-cons-case-control-study}
+\end{table}
+
+\pagebreak
+\section{Exercise on calculatign odds ratio in case-control studies}
+\subsection{Example 1}
+Imagine a case-control study where we are investigating the relationship between cigarette smoking and lung cancer, with 709 cases and 709 controls. 688 of the cases are smokers, 650 of the controls are smokers. Calculate the odds ratio associated with smoking.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+& \multicolumn{2}{c|}{\textbf{Case / Control Status}}  \\ \cline{2-3}
+\textbf{Exposure} & \textbf{Cases} & \textbf{Controls} \\ \hline
+\textbf{Smoker} & 688 & 650  \\
+\textbf{Non-smoker} & 21 & 59 \\ \hline
+\textbf{Total} & 709 & 709 \\ \hline
+\end{tabularx}
+\caption{Example 1}
+\label{tab:example-1}
+\end{table}
+
+\begin{itemize}
+    \item Odds of exposure (cases) = $\dfrac{688}{21} = 32.76$
+    \item Odds of exposure (controls) = $\dfrac{650}{59} = 11.02$
+    \item Odds ratio = $\dfrac{32.76}{11.02} = 2.97$
+\end{itemize}
+In conclusion, cases (lung cancer) had 2.97 times the odds of being smokers than controls.
+Alternatively, individuals with lung cancer have 2.97 times higher odds of having a history of smoking compared to individuals without lung cancer.
+
+
+\end{document}
