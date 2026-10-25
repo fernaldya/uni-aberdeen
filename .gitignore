@@ -8,6 +8,5 @@
 **/*.fls
 **/*.log
 **/*.synctex.gz
-**/*.tex
 **/*.nav
 term-1/applied-stats/worksheet/**/*.png
