@@ -1,0 +1,350 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float} % Required for [H]
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology - Week 5 - Measuring Disease Occurrence \& Effect}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Measurement of Occurrence}
+\subsection{Incidence}
+\textbf{Incidence Rate} is the number of \textbf{\textit{new}} cases of a disease occurring
+in the \textbf{\textit{population at risk}} over a time period.
+
+\subsection{Prevalence}
+Prevalence indicates the total disease burden since it calculates both old and new cases.
+\begin{itemize}
+    \item \textbf{Point Prevalence Rate} is the number of cases of a disease at \textit{one point in time} (point)
+    \item \textbf{Period Prevalence Rate} is the number of cases (both old and new) occurring at any point over a specified longer period in the \textbf{\textit{population at risk}}
+\end{itemize}
+
+\subsection{Population at Risk}
+In a nutshell for incidence rate, population at risk just means it's the people that could potentially develop the disease / outcome of interest.
+\\
+The criterias are:
+\begin{itemize}
+    \item A member of the population (time, place, person)
+    \item Without the disease of interest at the beginning of follow-up
+    \item Biologically at risk of developing the disease of interest
+\end{itemize}
+
+\subsubsection*{Example Case: Hip Fracture}
+Estimate for Scotland in 2024 for over 50s is 2,293,574. Incident cases were 8426. The incident rate would therefore be,
+\begin{equation}
+    \frac{8426}{2293574} \times 1000 = 3.7 \text{ cases per 1000 population at risk}
+\end{equation}
+\\
+The formal formula for the rate is (Specify the time period, e.g. 1 year):
+\begin{equation}
+    Rates = \frac{Numerator}{Denominator}
+\end{equation}
+where
+\begin{itemize}
+    \item Numerator - Cases of interest
+    \item Denominator - Population at risk
+\end{itemize}
+The rate itself is typically expressed per 1000 or 100,000.
+\\
+\subsection{Incidence Rate}
+Incidence rate can then be calculated with the following formula:
+\begin{equation}
+    \text{Incidence Rate} = \frac{\text{New cases of disease (n)}}{\text{Population at risk}}
+\end{equation}
+
+\paragraph{There were 500 cases of disease X in region Y in 2024. The population of said region is 500,000 in 2024.
+The annual incidence of disease X is 500. Calculate the incidence rate.}
+\begin{equation*}
+    \text{Incidence Rate} = \frac{500}{500000} = \text{1 case per 1000 population at risk}
+\end{equation*}
+Therefore, the incidence rate of disease X in region Y in 2024 is 1 case per 1000 population at risk.
+
+\subsection{Prevalence Rate}
+Since prevalence is a combination of all cases (old and new), the prevalence rate can then be calculated by
+\begin{equation}
+    \text{Prevalence Rate} = \frac{\text{All cases}}{Population}
+\end{equation}
+
+
+\subsubsection*{Example Case:}
+On a particular day there were 5000 people already diagnosed with disease X living in region Y (Total population 500,000).
+Calculate the prevalence of disease X on that day.
+\begin{equation*}
+    \text{Prevalence Rate} = \frac{5000}{500000} = 0.1 \text{ or 10 cases per 1000 population at risk}
+\end{equation*}
+
+\subsubsection{Point Prevalence}
+Point prevalence is the measure of proportion of people in a population who have a disease at \textbf{a particular time}
+(such as a particular date). Alternatively, it can be identified as a snapshot of the disease in time. The rate
+can be calculated by
+\begin{equation*}
+    \textit{Point Prevalence} = \frac{\text{Number of existing cases on a specific date}}{\text{Number of people in the population at this date}}
+\end{equation*}
+
+\subsubsection{Period Prevalence}
+Period prevalence on the other hand is the measure of proportion of people in a population with a disease \textbf{over a
+specific period of time}. For example, the amount of people who had flu in winter 2006. The rate can be calculated by
+\begin{equation*}
+    \textit{Period Prevalence} = \frac{\text{Number of cases that occurred in a given period}}{\text{Number of people in the population during this period}}
+\end{equation*}
+
+
+\pagebreak
+\section{Crude and Standardised Rates}
+\subsection{Crude Rates}
+The crude rate is typically expressed per 1000 or 10,000 of population and can be calculated by
+\begin{equation}
+    \text{Crude Rate} = \frac{\text{Number of events}}{\text{Total people in the population}}
+\end{equation}
+However, when measuring crude rates, population structure is typically not taken into account which could
+blur the interpretation of said crude rates. But it is still useful for knowing the overall picture.
+
+\subsubsection*{Example Case:}
+Town A and B have both the population count of 20,000. The crude annual mortality rate is both 25 per 1000.
+But 50\% of Town A are over 65 years old while only 20\% of Town B are over 65 years old. Both towns have
+the crude annual mortality rate of 25 per 1000 but more specifically in Town B, younger people are dying
+more than in Town A. The crude rate doesn't take into account the population structure (age distribution of
+each towns' population).
+
+\subsection{Standardised Rates}
+Standardised Rates however does take into account the downside of Crude Rates by 2 possible methods:
+\textbf{Direct Standardisation} or \textbf{Indirect Standardisation}
+
+\subsubsection{Direct Standardisation}
+Direct Standardisation compares the two by standardising the population. To do this, it introduces a
+third population (or a reference population) such as \textit{The European Standard Population, ESP}.
+
+\subsubsection*{Example:}
+\begin{itemize}
+    \item Town A: 40,000 of $<$65 y.o. and 60,000 of $\geq$65 y.o.; 1300 deaths per 100,000 people
+    \item Town B: 80,000 of $<$65 y.o. and 20,000 of $\geq$65 y.o.; 1100 deaths per 100,000 people
+\end{itemize}
+From this information itself, we can see the mortality rate is higher in Town A than Town B. However,
+Town A has a much higher proportion of elderly residents. Direct Standardisation can be used here to
+determine which town has worse outcome after taking into account the age distribution.
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Age Group}   & \textbf{Town A Population} & \textbf{Town A Deaths} & \textbf{Town A Rate (per 1,000)} \\ \hline
+\textbf{Young ($<$65)} & 40,000            & 80            & 2.0                     \\ \hline
+\textbf{Old ($\geq$65)}  & 60,000            & 1220          & 20.33                   \\ \hline
+\textbf{Total}       & 100,000           & 1300          & 13.0 \textbf{(Crude)}            \\ \hline
+\end{tabular}
+\caption{Town A}
+\label{tab:town-a}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Age Group}   & \textbf{Town B Population} & \textbf{Town B Deaths} & \textbf{Town B Rate (per 1,000)} \\ \hline
+\textbf{Young ($<$65)} & 80,000            & 240            & 3.0                     \\ \hline
+\textbf{Old ($\geq$65)}  & 20,000            & 410          & 20.5                   \\ \hline
+\textbf{Total}       & 100,000           & 650          & 6.5 \textbf{(Crude)}            \\ \hline
+\end{tabular}
+\caption{Town B}
+\label{tab:town-b}
+\end{table}
+
+Choosing the Standard (Reference) Population of 100,000 people with an even split 50\:50 of young and old.
+We can calculate the deaths in both Town A and B as if it had the standard population by the following,
+\\~\\
+Town A
+\begin{itemize}
+    \item Young ($<$65): $50,000 \times \frac{2.0}{1,000} = 100 \text{ deaths}$
+    \item Old ($\geq65$): $50,000 \times \frac{20.33}{1,000} = 1016.5 \text{ deaths}$
+    \item Total expected deaths: $100 + 1016.5 = 1116.5 \text{ deaths}$
+\end{itemize}
+
+Town B
+\begin{itemize}
+    \item Young ($<$65): $50,000 \times \frac{3.0}{1,000} = 150 \text{ deaths}$
+    \item Old ($\geq65$): $50,000 \times \frac{20.5}{1,000} = 1025 \text{ deaths}$
+    \item Total expected deaths: $150 + 1025 = 1175 \text{ deaths}$
+\end{itemize}
+
+Then we can calculate the \textit{Age-Standardised Rate (ASR)} by dividing by the total standard population,
+followed with converting to a per 1000 rate.
+\begin{itemize}
+    \item Town A: $\frac{1116.5}{100,000} \times 1000 = 11.17 \text{ per 1000}$
+    \item Town B: $\frac{1175}{100,000} \times 1000 = 11.75 \text{ per 1000}$
+\end{itemize}
+
+We can then summarise the comparison of the two towns' crude rate and standardised rate
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Metric                     } & \textbf{Town A}         & \textbf{Town B}         \\ \hline
+\textbf{Crude Rate                 } & 13.0 per 1000  & 11.17 per 1000 \\ \hline
+\textbf{Age-Standardised Rate (ASR)} & 11.17 per 1000 & 11.75 per 1000 \\ \hline
+\end{tabular}
+\caption{Comparison of both town's crude and standardised rate}
+\label{tab:comparison-metric}
+\end{table}
+
+The interpretation of both now becomes:
+\begin{itemize}
+    \item Crude Rate: Unadjusted and misleading due to differing population structure (age)
+    \item ASR: Adjusted by age; Town B has slightly higher mortality risk
+\end{itemize}
+
+\subsubsection{Indirect Standardisation}
+Indirect Standardised is instead used to compare the observed number of events within a population
+of interest to those which would be expected if the standard population's event rates were applied
+to the study population's age and sex structure.
+\\~\\
+When comparing mortality ratio, the \textbf{ Standardised Mortality Ratio (SMR) } is produced and the
+SMR of a population is 100.
+\begin{itemize}
+    \item SMR $<$ 100 means there are fewer deaths than expected in the study population
+    \item SMR $>$ 100 means there are more deaths than expected in the study population
+\end{itemize}
+
+\noindent This is typically used when
+\begin{itemize}
+    \item The age-specific event / death rates in the study population is unknown or unreliable; E.g. small sample, rare disease
+    \item Only the total observed cases / deaths and the population size by age group is known for the study population
+\end{itemize}
+and can be calculated by
+\begin{equation}
+    \text{SMR} = \frac{\text{Observed Cases in Study Population}}{\text{Expected Cases if Study Population had Standard Rates}} \times 100
+\end{equation}
+Some conventions don't multiply by 100 and keep it at baseline 1.0 instead.
+\\~\\
+Where the expected cases is calculated by
+\begin{equation}
+\begin{split}
+    \text{Expected Cases} = {} & \sum (\text{Study Population in Age Group } i \\
+    & \times \text{Standard Population Rate in Age Group } i)
+\end{split}
+\end{equation}
+
+
+\pagebreak
+\section{Measures of Effect \& Difference}
+What's typically measured here are two types: \textbf{Effect} or \textbf{Difference}.
+
+\subsection{Effect}
+\begin{itemize}
+    \item Risk ratio (Relative Risk)
+    \item Rate ratio
+    \item Odds ratio
+\end{itemize}
+
+\subsubsection{Risk Ratio (Relative Risk)}
+Risk ratio is the ratio of the probability of an outcome in an exposed group vs the probability of an outcome
+in the unexposed group. Risk ratio is appropriate for fixed follow-up periods.
+
+\subsubsection*{Example:}
+The table below is a (hypothetical) prospective cohort study of lung cancer in people who smoke vs those
+who don't smoke, followed up for 15 years.
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l|l|}
+\cline{2-4}
+                                 & Lung Cancer     & No Lung Cancer  & Risk           \\ \hline
+\multicolumn{1}{|l|}{Smoker}     & 40 \textbf{ (a)} & 60 \textbf{ (b)} & 40\% (40 / 100) \\ \hline
+\multicolumn{1}{|l|}{Non-Smoker} & 5 \textbf{(c)}  & 95 \textbf{(d)} & 5\% (5 / 100)   \\ \hline
+\end{tabular}
+\label{tab:lung-cancer}
+\caption{Lung Cancer}
+\end{table}
+Where the smoker (exposed) or non-smoker (unexposed) are the groups and lung cancer status is the outcome of interest.
+\\
+The calculations for the data above is:
+\begin{itemize}
+    \item $\text{Risk for smokers} = \frac{40}{40 + 60} = 40\% $
+    \item $\text{Risk for non-smokers} = \frac{5}{5 + 95} = 5\% $
+    \item $\text{Risk Ratio} = \frac{40\%}{5\%} = 8 \text{ over 15 years}$
+\end{itemize}
+In other words: \textit{Over a 15 year period, smokers are 8 times more likely to develop lung cancer
+compared to non-smokers.}
+
+
+\subsubsection{Odds Ratio}
+Odds ratio is the ratio of the probability of an event occurring vs the probability of it not occurring.
+Using the table from the \textit{Risk Ratio} section, the odds ratio can be calculated by:
+\begin{itemize}
+    \item $\text{Odds of smoker developing lung cancer:} = \frac{40}{60} = 0.67$
+    \item $\text{Odds of non-smoker developing lung cancer:} = \frac{5}{95} = 0.05$
+    \item $\text{Odds Ratio} = \frac{40 \times 95}{60 \times 5} = 12.67$
+\end{itemize}
+In other words: \textit{The odds of developing lung cancer among smokers is 12.67 times the odds of
+developing lung cancer among the non-smokers over the 15 year period.}
+\\
+However, odds ratio tend to over-estimate risk. Furthermore, odds ratio can be used when the
+denominator is not known, such as in a case-control study. When there is a low number of events,
+the odds ratio tend to be similar to the risk ratio.
+
+
+\subsubsection{Rate Ratio}
+Rate ratio is the comparison of the incidence rate in one group vs the incidence rate in another group
+of the same event. The measure differs from risk ratio by its denominator, instead of the individuals at risk
+it uses the total-person time at risk. The rate ratio is typically used when there's a time aspect in the study,
+such as when participants are followed-up at different times.
+
+
+
+\subsection{Difference}
+\begin{itemize}
+    \item Risk difference
+    \item Rate difference
+\end{itemize}
+
+\subsubsection{Risk Difference}
+Risk difference (Attributable risk or excess risk) is the absolute difference in risk of an outcome
+between the exposed an unexposed group. Using the same \hyperref[tab:lung-cancer]{lung cancer table},
+the risk difference can be calculated by subtracting the risk of lung cancer in non-smokers from the
+risk of lung cancer in smokers.
+\begin{equation*}
+    \text{Risk Difference} = 40\% - 5\% = 35\%
+\end{equation*}
+
+The purpose of risk difference is to quantify the amount of risk that can be attributed to the exposure.
+In other words: \textit{Smoking leads to an absolute increase of 35\% points in the risk of developing
+lung cancer over a 15 year period.}
+
+
+\subsubsection{Rate Difference}
+Rate difference compares two incidence rates. Take the following example:
+
+\paragraph{If an exposed group had an incidence rate of 40 new cases per 1,000 person-years and the
+unexposed group had an incidence rate of 15 new cases per 1,000 person-years. Calculate the rate difference.}
+\begin{equation*}
+    \text{Rate Difference} = 40 - 15 = 25 \text{ new cases per 1,000 person-years}
+\end{equation*}
+
+The purpose of rate difference is to calculate the burden of disease attributable to factor. What this means
+given the example above is, 15 cases would have happened anyway (baseline risk). However, the remaining 25 cases
+can be directly attributed to the exposure.
+
+\pagebreak
+\subsection{Risk Factors and Protective Factors}
+Risk factor is any condition, behaviour, or characteristic that increases the probability of a particular disease
+or outcome occurring. This factor can be biological, behavioural, environmental, or genetic.
+
+Protective factor is the opposite of risk factor where instead of increasing the probability, it reduces the
+disease or outcome from occurring.
+
+
+\subsection{Statistical Association}
+Statistical association is the relationship / link between two or more variables where their patterns of variation
+are related. For example smoking is related to lung cancer, when the smoking prevalence in a population increases
+the incidence of lung cancer also increases.
+
+\end{document}

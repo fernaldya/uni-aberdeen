@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float} % Required for [H]
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+
+\title{Epidemiology - Week 1 - Introduction to Epidemiology}
+\author{Fernaldy}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\section*{What is Epidemiology?}
+It is the study of the \textbf{frequency and distribution of health-related states or events in specific populations},
+including the study of determinants influencing such states, and the application of this study to control health problems.
+\\~\\
+Basically, studying the frequency or distribution of health-related outcomes within specific populations
+alongside its causation and correlation with the goal of translating the insight into public health actions.
+
+\subsection*{Role of Epidemiology}
+\begin{itemize}
+    \item \textbf{DESCRIBE} - the patterns of health outcome and disease within populations
+    \item \textbf{INTERPRET} - the differences
+    \item \textbf{APPLY} - the results to public health practice
+    \item \textbf{EVALUATE} - the effect of the application / intervention
+\end{itemize}
+
+\subsection*{Cases and Populations}
+Quantification needs a clear case definition and a defined study population.
+\begin{itemize}
+    \item \textbf{CASE}: A set of standard criteria to decide whether a person has a specific disease, syndrome, or health condition
+    \item \textbf{STUDY POPULATION}: The population who could become or have become cases, AKA \textbf{population at risk}
+\end{itemize}
+
+\subsection*{Exposure and Outcome}
+\begin{itemize}
+    \item \textbf{EXPOSURE}: Risk factor or determinant -> Any factor that may influence the outcome
+    \item \textbf{OUTCOME}: Disease, event, or health related state of interest, or risk factor / precursor to a disease
+\end{itemize}
+
+\subsection*{Types of Epidemiological Investigation / Study Design}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w1-1.png}
+    \caption{Types of epidemiological investigation}
+    \label{fig:w1-1}
+\end{figure}
+
+
+\subsubsection*{Observational Epidemiology}
+This type of epidemiology is based on examining the distribution and determinants of an outcome \textbf{without any
+attempt to influence it}, and is split into two further subtypes.
+\begin{itemize}
+    \item \textbf{DESCRIPTIVE}: Designed to describe the distribution of an exposure or outcome without attempting to explain (or influence) the distribution -$>$ \textit{Who, what, were, when?}
+    \item \textbf{ANALYTICAL}: Designed to examine \textbf{association} with the aim of identifying causes for an outcome -$>$ \textit{Why?}
+\end{itemize}
+
+\pagebreak
+\section*{Outbreaks and Epidemics}
+Some definitions of disease occurrence
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{w1-2.png}
+    \caption{Disease occurrence types}
+    \label{fig:w1-2}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{ENDEMIC}: Common at baseline level in a given area / population
+    \item \textbf{OUTBREAK}:
+        \begin{itemize}
+            \item Excess of cases of a disease compared with \textit{expected} number
+            \item Limited to a local increase in disease (often infectious) incidence; e.g. Town, village, institution
+        \end{itemize}
+    \item \textbf{EPIDEMIC}:
+        \begin{itemize}
+            \item Excess of cases of a disease compared with \textit{expected} number
+            \item Generalised, cases distributed across wider area / time period
+        \end{itemize}
+    \item \textbf{PANDEMIC}: Affects large numbers of people and crosses international boundaries
+\end{itemize}
+
+\subsection*{Examples of Types of Epidemics}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Type}          & \textbf{Description}                                             & \textbf{Example}              \\ \hline
+\textbf{Common-source} & Individuals are exposed to the same source of infection / hazard & Food contamination at wedding \\ \hline
+\textbf{Propagated}    & Disease spreads from person-to-person                            & Measles outbreak at school    \\ \hline
+\textbf{Mixed}         & A combination of common-source followed with propagation          & Cholera outbreak that started from a contaminated water source followed with household transmission \\ \hline
+\end{tabularx}
+\caption{Example of types of epidemics}
+\label{tab:example-epi}
+\end{table}
+
+\subsection*{Clusters}
+An aggregation of some relatively uncommon disease or event which can include infectious and non-communicable
+conditions. Often unknown / multiple aetiological factors with low exposure level over number of years.
+
+
+\pagebreak
+\section*{Pandemics}
+A pandemic is an epidemic that \textit{spreads across multiple countries or continents} and \textit{affects large numbers of people}, \textit{involving a novel pathogen or population susceptibility}. Examples,
+\begin{itemize}
+    \item 1918-1919 Influenza pandemic
+    \item Covid-19
+\end{itemize}
+
+\subsection*{Strategy against Pandemics}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{w1-3.png}
+    \caption{Pandemic strategy choices}
+    \label{fig:w1-3}
+\end{figure}
+
+\subsubsection*{Elimination vs Mitigation}
+Eliminate literally just means trying to eliminate / stop the community transmission of the disease, while mitigation
+aims to slow the transmission down to a manageable level so healthcare systems don't get overwhelmed.
+
+
+\end{document}

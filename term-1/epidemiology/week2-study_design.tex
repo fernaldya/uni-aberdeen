@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology\\Week 2\\Epidemiological Study Design}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Epidemiological Study Design}
+It is usually categorised into
+\begin{itemize}
+    \item Descriptive vs Analytical
+    \item Interventional vs Observational
+    \item Prospective vs Retrospective
+    \item Unit of observation
+        \begin{itemize}
+            \item Individuals
+            \item Group
+            \item Other studies
+        \end{itemize}
+\end{itemize}
+
+\subsection{Cross-Sectional Study}
+Describes the distribution / risk factor of a disease in the population. It is not primarily aimed at
+testing causal hypothesis. The focus of this study are the Person, Place, and Time
+\begin{itemize}
+    \item \textbf{Person} (Who is affected / exposed?) -$>$ Age / sex / ethnicity / occupation / lifestyle factors
+    \item \textbf{Place} (Where is the disease / exposure occurring?) -$>$ Countries / neighbourhoods / workplaces
+    \item \textbf{Time} (When is the disease / exposure occuring?) -$>$ Trends over time / seasonal patterns / epidemic curves
+\end{itemize}
+
+\subsection{Case-Control Study}
+Participants are selected because they have the disease of interest (case) or they don't (control). The direction of inquiry is backwards in time (Start with case / control, then determine exposure status; Retrospective).
+
+\subsection{Cohort Study}
+Participants at risk of the outcome of interest are selected because they are exposed or not. The direction of inquiry is forwards in time (Start with exposure status, follow-up to determine outcome; Prospective).
+
+\subsection{Randomised Trials - Not covered in this course FYI, feel free to skip}
+Participants (with disease of interest) are radomised to the exposure / intervention (treatment) or not.
+
+\subsection*{Summary of the three studies differences}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w2-1.png}
+    \caption{Summary of the three studies differences}
+    \label{fig:w2-1}
+\end{figure}
+
+\subsection{Group-Level Study}
+
+\subsubsection{Ecological Study}
+The unit of analysis is a group or population, not individuals. The data collected (and analysed) are at an aggregate level, e.g. countries, regions, schools, cities. The analysis done usually looks for associations between exposures and outcomes at a group level.
+
+\subsubsection{Migrant Study}
+Migrant study is a sub-type of ecological study where it uses the fact that groups of individuals have migrated. Its aim is to determine genetic or environmental as a factor of the outcome. It typically examines at a group level, the difference between migrants and host country (origin).
+\\~\\
+There are other study types too where individuals or groups of individuals are not the study population and instead other scientific papers are the study population. Examples of such are systematic reviews or meta-analysis.
+
+\subsubsection*{Systematic Review}
+A structured, comprehensive search and synthesis of all available studies on a specific research question with the aim of summarising the existing evidence on a topic and determining overall strength and its consistency.
+
+\subsubsection*{Meta-Analysis}
+Uses statistical methods to combine results quantitatively from multiple studies. Its advantages are that it increases statistical power, helps control for individual study idiosyncrasies, and it produces a pooled or summary estimate.
+
+
+\pagebreak
+\section{A Dive on Ecological, Migrant, and Cross-Sectional Study}
+\subsection{Ecological Study}
+Ecological study compares the occurrence of disease between different \textbf{\textit{groups}} of individuals. The purpose of this study is that it may give potential clue regarding the aetiology of the disease.
+\\~\\
+A common error that occurs in ecological study is the \textbf{Ecological Fallacy}. It is a logic error when conclusions about individuals are drawn based on group-level data.
+\\~\\
+The pros and cons of ecological studies are:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Rely (almost always) on secondary data & Alternative explanations for results cannot be tested \\ \hline
+Relatively simple and inexpensive & No individual-level data and cannot adjust for other factors \\ \hline
+Analysis (association) is generally simple to present and understand & Ecological fallacy \\ \hline
+Good for hypothesis generation           & Cannot examine causality \\ \hline
+\end{tabularx}
+\caption{Pros and cons of ecological study}
+\label{tab:pros-cons-eco-study}
+\end{table}
+
+\subsubsection{Time-Trend Ecological Study}
+Instead of studying different populations at the same time, a time-trend ecological study instead studies the same population but at different points in time. E.g. Deaths due to Ischeaemic Heart Disease in the UK from 2001 to 2019.
+
+\subsection{Migrant Study}
+This study focuses on the fact that the movement of people has occurred. The main purpose is to investigate gene-environment aetiology.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{w2-2.png}
+    \caption{Example 1 of migrant study}
+    \label{fig:w2-2}
+\end{figure}
+
+Given the example above, if among the migrants, incidence of Disease X \textbf{increases} then this would suggest an \textbf{environmental} aetiology. While if Disease X \textbf{remains} low, then this would suggest a genetic aetiology.
+\\
+The pros and cons of migrant study:
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Relatively simple and inexpensive & Differences in disease identification between location \\ \hline
+Can utilise secondary data & Healthy migrant effect \\ \hline
+Good for hypothesis generation & Migration $\neq$ Acculturation \\ \hline
+\end{tabularx}
+\caption{Pros and cons of migrant study}
+\label{tab:pros-cons-migrant-study}
+\end{table}
+
+\subsection{Cross-Sectional Study}
+It is observational and descriptive, focusing on a single point in time, and measures prevalence following outcomes and exposures. The data is person-based (individual-level).
+\\
+The target population of a cross-sectional study will depend on the research question and the target population also influences choice of source population.
+\begin{itemize}
+    \item \textbf{Target population}: (Theoretical) population to which is to be extrapolated
+    \item \textbf{Source population}: Actual population from which participants are selected, which ideally should represent the target population
+\end{itemize}
+
+Once the source population is known, sampling from said population should be done using either non-probability sampling or probability sampling.
+\\~\\
+\textbf{Non-probability sampling}
+\begin{itemize}
+    \item Convenience sampling: Choosing a person in the street
+    \item Purposive sampling: Predefined specific groups
+    \item Snowball sampling: Subject-to-subject
+\end{itemize}
+
+\textbf{Probability sampling}
+\begin{itemize}
+    \item Element of chance in participant selection
+    \item Random sampling -$>$ Minimises sampling bias and each member has equal chance of being selected
+\end{itemize}
+
+Cross-Sectional studies also have lots of advantages and disadvantages.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Quick and simple & Cannot measure incidence nor examine temporal relationships \\ \hline
+Generalisable findings & Can be susceptible to bias (selection and information bias) \\ \hline
+Can measure prevalence and can have multiple exposures or outcomes & Not good for rare disease, high fatality or quick fatality diseases \\ \hline
+\end{tabularx}
+\caption{Pros and cons of cross-sectioal study}
+\label{tab:pros-cons-cross-sec-study}
+\end{table}
+
+\end{document}
