@@ -1,0 +1,313 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology\\Week 4\\Routinely Collected Data}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Definition and Examples}
+Routinely collected data is data collected regularly for purposes other than research. It is typically collected by government bodies or public health institutions and follows a strictly defined protocol or template. Routine data usually focuses on economic status, infections / chronic disease, births, mortality, or socio demographic status. Examples of routinely collected data: Census, birth registry, race, educational attainment.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w4-1.png}
+    \caption{Routinely collected data examples}
+    \label{fig:w4-1}
+\end{figure}
+
+\subsection*{Sources on some routine data}
+\textbf{Demographic data}
+\begin{itemize}
+    \item Census
+    \item Demographic surveillance
+    \item Community Health Index (Chi) register
+    \item Survey
+\end{itemize}
+\textbf{Circumstantial data}
+\begin{itemize}
+    \item Education
+    \item Employment
+    \item Housing
+    \item Environmental
+\end{itemize}
+\textbf{National reference data}
+\begin{itemize}
+    \item Deprivation index
+    \item Health Poverty index
+    \item GINI coefficient
+\end{itemize}
+\textbf{Health event data}
+\begin{itemize}
+    \item Birth and death registration
+    \item Disease registries
+    \item Hospital admissions
+    \item Global Burden of Disease study
+\end{itemize}
+
+\subsubsection*{Census}
+Census is a procedure of systematically enumerating, acquiring, and recording information about the members of a given population, and is usually done every 10 years. It is compulsory for everyone and the grain of the data is both at an individual and household. In some countries instead of census, a population register is used.
+
+\section{Use and Challenges}
+Data evaluation of routine data is evaluated with the acronym CART.
+\begin{itemize}
+    \item C: Completeness
+    \item A: Accuracy
+    \item R: Representativeness
+    \item T: Timeliness
+\end{itemize}
+While analysis is evaluated with the acronym PACO.
+\begin{itemize}
+    \item P: Precision -$>$ How big is the database?
+    \item A: Accessibility -$>$ How is the data accessed?
+    \item C: Confidentiality -$>$ Can individuals be identified?
+    \item O: Original Purpose -$>$ Why was the data collected?
+\end{itemize}
+Routine data can be used for
+\begin{itemize}
+    \item \textbf{Summary statistics}: Measuring prevalence or incidence
+    \item \textbf{Trend analysis}: Time series of disease rates
+    \item \textbf{Spatial analysis}: Mapping disease by region
+    \item \textbf{Exposure group analysis}: Comparing outcomes by risk factors
+    \item \textbf{Hypothesis testing}: Observational studies using linked data
+\end{itemize}
+Disease occurrence is measured by
+\begin{itemize}
+    \item \textbf{Numerator}: Number of cases
+    \item \textbf{Denominator}: Population at risk
+    \item \textbf{Mortality measures}:
+        \begin{itemize}
+            \item Age-specific mortality, typically expressed per 1,000 or 100,000 people
+            \item Cause-specific mortality, typically expressed per 100,000 people
+            \item Crude mortality, typically expressed per 100,000 people
+            \item Infant mortality, typically expressed per 1,000 live births
+            \item Maternal mortality, typically expressed per 100,000 live births
+        \end{itemize}
+\end{itemize}
+
+\pagebreak
+\subsection*{Population pyramids}
+Population pyramid is a graphical representation of age and sex distribution and is used to identify demographic trends, aging populations, and birth rates. The types are shown below
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{w4-2.png}
+    \caption{Population pyramid types}
+    \label{fig:w4-2}
+\end{figure}
+
+\subsection{Sources of bias in routine data}
+\textbf{Selection bias}
+\begin{itemize}
+    \item When data collection systematically excludes a population group
+    \item E.g. illegal immigrants, socially deprived groups
+\end{itemize}
+\textbf{Information bias}
+\begin{itemize}
+    \item When self reported data systematically under or over-reports, e.g. Smoking status
+    \item Can be caused by non-standardisation of variables, e.g. Different scales to measure deprivation
+\end{itemize}
+
+\subsection{Linkage studies}
+Linkage study is the act of combining multiple datasets, such as routine data, using unique identifiers (like NHS number, names, DOB) to track individuals across different systems.
+\begin{itemize}
+    \item To \textbf{follow individuals over time} across different health services
+    \item To \textbf{study associations} between exposures and outcomes
+    \item To \textbf{enhance data completeness} and reduce bias
+    \item To \textbf{enable longitudinal research} without needing new data collection
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Advantage} & \textbf{Disadvantage} \\ \hline
+Large sample size / whole population & No researcher input, linited variables \\ \hline
+Baseline data, useful for initial assessment & Data quality being incomplete or inaccurate \\ \hline
+Long term follow-up & Availability timing \\ \hline
+Reduced risk of recall bias & Occasionally subject to manipulation or political influence \\ \hline
+Readily available and cost-effective & Subject to privacy and consent \\ \hline
+Richer and possibly more accurate & Complex (in analysis and approvals) \\ \hline
+\end{tabularx}
+\caption{Pros and cons of linkage study}
+\label{tab:pros-cons-linkage-study}
+\end{table}
+
+\pagebreak
+\section{Epidemics}
+\begin{itemize}
+    \item Endemic: Commonly present at baseline level in given geographical area or population
+    \item Epidemic:
+        \begin{itemize}
+            \item Excess cases of a disease compared with expected number
+            \item Generalised, cases distributed across wider area / time period
+        \end{itemize}
+    \item Outbreaks:
+        \begin{itemize}
+            \item Excess cases of a disease compared with expected number
+            \item Limited to a localised increase in disease (often infectious) incidence, e.g. town, village, institution
+        \end{itemize}
+    \item Pandemic: Affects large numbers of people and crosses international boundaries
+\end{itemize}
+
+\subsection{Types of epidemics}
+Classified by source of infection and mode of transmission, epidemics can be divided into three
+\begin{itemize}
+    \item Common source outbreaks
+    \item Propagative or progressive epidemics
+    \item Mixed epidemics
+\end{itemize}
+
+\pagebreak
+\subsubsection*{Common source outbreaks}
+Group of individuals exposed to a common source pathogen, often at the same time or within a short period of time. \textbf{Point source outbreak} is a common source outbreak where exposure period is short, and all cases who fall ill have the same \textbf{incubation period}. Common source outbreaks have \textbf{tight temporal clustering} and the epidemic curve follows a sharp upslope with gentle downslope. An example is foodborne diarrhoeal illnesses.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{w4-3.png}
+    \caption{Example of common source outbreak epidemic curve}
+    \label{fig:w4-3}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Propagative or progressive}
+Propagative epidemic is when the infection spreads from person to person directly or indirectly via vectors (e.g. mosquitoes, food, water). Cases usually occur over more than one incubation period. The epidemic curve follows a gentle upslope and steeper tail with time period between peaks consistent with the disease's incubation period.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{w4-4.png}
+    \caption{Example of propagative epidemic curve}
+    \label{fig:w4-4}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Mixed epidemics}
+Has both characteristics of common source outbreaks and propagated epidemics. It often starts from a point source (common source) infectious agent followed with subsequence propagative spread. E.g. Shigella, typhoid.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{w4-5.png}
+    \caption{Example of mixed epidemic curve}
+    \label{fig:w5-4}
+\end{figure}
+
+\pagebreak
+\section{Epidemic Investigation}
+Investigation in epidemics follow these three process:
+\begin{enumerate}
+    \item Identification
+    \item Hypothesis generation and testing
+    \item Confirmation and control efforts
+\end{enumerate}
+Starting with identification, the body or person in charge of identifying is usually clinicians, local and national health agency for disease surveillance (e.g. Health Protection Scotland, Public Health England, CDC), or even the public.
+
+\subsection{Identification}
+\begin{itemize}
+    \item Determine existence of epidemic
+    \item Confirm diagnosis
+    \item Define and count cases
+    \item Orient data in terms of time, place, and person
+    \item Determine who is at risk
+\end{itemize}
+
+\subsection{Hypothesis generation and testing}
+\begin{itemize}
+    \item Develop and test hypothesis relating to the cause of epidemic
+    \item Compare hypothesis with current facts
+\end{itemize}
+Studies can be done by running a case-control study or a cohort study. However, when time is tight, a cohort study might not be possible.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Case-Control Study} & \textbf{Cohort Study} \\ \hline
+Identifies people with disease and compare against people without disease & Identifies people \textbf{exposed} to a particular factor and compares against people not exposed to the factor \\ \hline
+Cases and controls compared in terms of frequency of one or more past exposures & Measures and compares incidence of disease \\ \hline
+If cases have \textbf{higher odds} of exposure to factor than controls (odds ratio), this would suggest association & Magnitude of association expressed as risk ratio \\ \hline
+Good choice if source population is \textbf{large} and ill-defined, and disease \textbf{uncommon} & Good choice if small, relatively well-defined source population, and disease fairly \textbf{common} \\ \hline
+\end{tabularx}
+\caption{Case-control vs cohort study}
+\label{tab:case-control-vs-cohort}
+\end{table}
+
+\subsection{Confirmation}
+Once the study is done, an action can be done which is usually in the form of control and prevention activity which may:
+\begin{itemize}
+    \item Control / modify host response to exposure, e.g. Vaccination
+    \item Interrupt transmission
+    \item Control source of pathogen, e.g. Isolate and treaet infected people, remove source of contamination
+\end{itemize}
+Furthermore, a clear plan and execution of a systematic study with a detailed report.
+
+\subsection*{Biases and challenges in epidemic investigation}
+\begin{itemize}
+    \item \textbf{Sampling bias}; People may not wish to cooperate with the study, loss at follow-up, difficulty in contacting people
+    \item \textbf{Measurement bias}; Lab confirmation may not be possible, misclassification of cases
+    \item \textbf{Small sample size}; Lack of sample size affects statistical power
+    \item \textbf{Publicity}; Can encourage participation and uptake of control measure but may also lead to preconceptions about causes
+    \item \textbf{Lack of public health infrastructure}
+\end{itemize}
+
+\pagebreak
+\section{Cluster}
+Cluster is an aggregation of \textit{`relatively uncommon events / diseases in space and/or time in amounts that are believed or perceived ot be greater than could be expected by chance`}. This can include infectious or non-communicable conditions such as cancer, spontaneous abortions. It often has unknown or multiple aetiological factors, low exposure level over number of years. It may come from environmental or occupational causes. Examples of cluster investigations:
+\begin{itemize}
+    \item Rare diseases: Pneumocystis jirovecii pneumonia and HIV
+    \item Birth defects: Thalidomide and limb defects
+    \item Cancers: Asbestos and mesothelioma, hydrocarbons (soot) and scrotal cancer
+\end{itemize}
+
+\subsection{Initial investigation}
+The steps taken for the initial investigation are
+\begin{enumerate}
+    \item Initial contact and response
+        \begin{itemize}
+            \item Is it worth following up?
+            \item Does it meet the definition of a cluster?
+            \item Is there a biological possibility that the reported disease could share a common aetiology
+        \end{itemize}
+    \item Assessment
+        \begin{itemize}
+            \item Case ascertainment and case definition refinement
+            \item Define population at risk
+            \item Calculate standardised incident ratio $\dfrac{\text{No of expected cases}}{\text{No of observed cases}}$
+        \end{itemize}
+    \item Determine feasibility of conducting an epidemiological study
+    \item Conduct the study
+\end{enumerate}
+
+\subsection{Challenges of cluster investigation}
+\begin{itemize}
+    \item Rare health events
+    \item Lack of population base for rate calculation
+    \item Weak association and multiple risk factors
+    \item Long induction periods
+    \item Multiple comparisons
+    \item Low level, long term, heterogeneous exposures
+    \item Intense publicity
+\end{itemize}
+
+\subsection{Role of public health agencies}
+\begin{itemize}
+    \item Maintain objectivity
+    \item Develop effective communciation strategies and strong leadership
+    \item Conduct a robust scientific investigation where appropriate
+    \item Sensitive to public concerns
+    \item Respond to community suspicions and demands
+    \item Recognise the role of the media
+    \item Aware of potential adverse social and economic ramifications
+    \item Aware of potential legal ramifications of the investigation
+\end{itemize}
+
+
+
+\end{document}
