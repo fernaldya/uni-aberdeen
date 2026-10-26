@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float} % Required for [H]
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Epidemiology - Assessment Short Answer Question Example}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\paragraph{Q1 - A local news outlet claims that ‘Epidemiology is just counting sick people’. Critically evaluate this statement and in your own words, explain how the concepts of distribution and determinants distinguish professional epidemiology from simple census-taking.} \mbox{} \\
+
+Epidemiology is more than just counting sick people. Counting sick people is a small part of it, what we know and what we can do after is also a part of epidemiology. Another part of epidemiology is knowing who gets sick, how people get sick, and how often they get sick, from those ideas we can find out how a disease works, we can find out what the cause is, and quantify the likelihood of it happening to you. An epidemiology study can show the hidden pattern in a disease and it can also show how it relates to an exposure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assessent-example-q2.png}
+    \caption{Daily cigarette consumption per smoker}
+    \label{fig:assessent-example-q2}
+\end{figure}
+\paragraph{Q2 - This figure from Our World in Data shows daily cigarette consumption per smoker over time for
+three nations. In your own words, describe the key trends shown in the figure for daily cigarette consumption
+amongst each of the three nations. In your own words describe two limitations which may impact the interpretation of the graph.} \mbox{} \\
+Trends:
+\begin{itemize}
+    \item Guyana: The trend for Guyana starts with a steady decline from around 25 cigarettes daily at 1980 but after 1990 it starts a steady rise until 2012 with around 32 cigarettes daily
+    \item Greece: The overall trend for Greece is a slight decline from about 26 cigarettes daily at 1980 until around 21 cigarettes daily in 2012
+    \item India: India is roughly steady starting at about 11 cigarettes daily at 1980 for about 10 years then declines steadily until 2012 with around 8 cigarettes daily
+    \item Overall, Guyana shows a rise in the daily cigarette consumption while Greece and India show a decrease in daily cigarette consumption
+\end{itemize}
+Limitations:
+\begin{itemize}
+    \item Possible ecological fallacy because the data is aggregated to all age and both sexes combined
+    \item Survivorship bias may play into effect here for countries that have anti-smoking campaigns where the numbers are pulled higher by heavy smoker addicts and the light or social smokers have quit smoking
+\end{itemize}
+
+\paragraph{Q3 - An epidemiology student calculates the occurrence of disease X in the general population using
+only hospital records as the population base, rather than the general community.
+Explain in your own words how this data choice affects the prevalence estimate and why.
+Provide an example of both incidence and prevalence in your response} \mbox{} \\
+
+Using hospital records as the population base to calculate the occurrence of a disease will significantly skew the result and overestimate the prevalence of the disease. Because healthy people that may also be at risk will automatically be excluded.
+\begin{itemize}
+    \item Incidence of disease X: Take only the new cases of disease X that appeared in the hospital when the student is there then divide by the population at risk
+    \item Prevalence of disease X: Take all the record of cases both new and old of disease X in a specific period of time from the hospital then divide by the population at risk at the specific time
+\end{itemize}
+
+\paragraph{Q4 - To study the 2026 incidence of an extremely rare bone cancer (1 in 1,000,000), a researcher plans to conduct a bespoke cross-sectional survey of 10,000 people. In your own words, describe if this study design is appropriate or not. If yes, explain why, and if not, to describe a more suitable source and/or study design} \mbox{} \\
+
+A cross-sectional study may not be appropriate here because the disease only occurs in 1 in 1,000,000. By surveying only 10,000 people, it will be highly unlikely that the researcher may even find any cases. Furthermore, the researcher wants to find the incidence whereas a cross sectional study calculates prevalence. A better study would be case-control, the data can be collected from a national health registry or from a cancer registry.
+
+\paragraph{Q5 - You suspect that vaping is a risk factor for a new type of lung inflammation that has been observed by health professionals over the last year, but vaping is not currently recorded in routinely collected hospital admission records. Explain in your own words why bespoke data collection is necessary here to address the routine data limitation} \mbox{} \\
+
+Since there is a new health outcome related to vaping, a bespoke data collection is crucial here since not much studies on vaping has been done. Typical hospital routine data collection will only ask about smoking status and frequency, specifically on cigarettes. 
+
+\paragraph{Q6 - An epidemiologist wants to study the long-term health effects of a rare chemical solvent used only in one specialized microchip factory. They propose a Case-Control study by recruiting people with lung disease from the local hospital. In your own words identify the flaw in this design choice, name an observational study design suitable for this research, and provide the reason why.} \mbox{} \\
+
+A Case-control study here is not appropriate because the main focus of the study is the long-term health effects of a rare chemical solvent, the best choice would be a prospective cohort study by starting at the baseline conditions then following-up in the future to see the outcome.
+
+\paragraph{Q7 - A researcher studies if a factory solvent causes non-fatal skin rashes using National Occupational Mortality Records. Identify the flaw in this choice in your own words, and explain the principle behind this limitation, proposing a better alternative} \mbox{} \\
+
+The critical flaw in this study is the data source, since the outcome is a non-fatal skin rash, finding data from the National Occupational Mortality Records will be pointless since there is no deaths. The better alternative would be from a regular occupational record incidents.
+
+\paragraph{Q8 - After the 2026 ‘obesity’ definition expands, a researcher compares 2024 and 2026 National Routine Prevalence Data to claim a biological epidemic. In your own words identify the flaw in this choice, explain the principle behind this limitation, and propose a better alternative.} \mbox{} \\
+
+Calling this a biological epidemic would be flawed because all that changed was the definition of obesity, people who previously were not cases suddenly became cases. A possible alternative would be to apply a standardisation to the 2024 data by applying the 2026 criteria to the 2024 data then compare the recalculated prevalence against the old prevalence.
+
+\end{document}
