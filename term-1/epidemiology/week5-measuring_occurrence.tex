@@ -22,14 +22,34 @@
 \section{Measurement of Occurrence}
 \subsection{Incidence}
 \textbf{Incidence Rate} is the number of \textbf{\textit{new}} cases of a disease occurring
-in the \textbf{\textit{population at risk}} over a time period.
+in the \textbf{\textit{population at risk}} over a time period. Incidence expresses the risk of becoming ill and is useful for studying causation. Incidence starts with the population that is at risk but disease-free. Incidence is generally calculated by
+\begin{equation*}
+    \text{Incidence} = \dfrac{\text{Number of new events in a specified period}}{\text{Number of persons exposed to risk during this period}}
+\end{equation*}
+\subsubsection*{Cumulative incidence}
+Cumulative incidence, like incidence but differs on the denominator where it instead takes the number of people at the beginning of the study.
+\begin{equation*}
+    \text{Incidence} = \dfrac{\text{Number of new events in a specified period}}{\substack{\text{Number of people free of the disease in the}\\\text{population at risk at the beginning of the period}}}
+\end{equation*}
 
 \subsection{Prevalence}
-Prevalence indicates the total disease burden since it calculates both old and new cases.
+Prevalence indicates the total disease burden since it calculates both old and new cases. Prevalence estimates the probability of the population being ill at the period of study. It is useful to study how much burden the disease carries on the population at risk. Prevalence is generally calculated as follows,
+\begin{equation*}
+    \text{Prevalence} = \dfrac{\text{Number of people with the outcome at a specified time}}{\text{Number of people in the population at risk at the specified time}}
+\end{equation*}
+Furthermore, there are two types of prevalence rates:
 \begin{itemize}
     \item \textbf{Point Prevalence Rate} is the number of cases of a disease at \textit{one point in time} (point)
     \item \textbf{Period Prevalence Rate} is the number of cases (both old and new) occurring at any point over a specified longer period in the \textbf{\textit{population at risk}}
 \end{itemize}
+
+\subsubsection*{Interrelationships of prevalence and incidence}
+Prevalence is dependent on both incidence and disease duration. If prevalence is low and does not vary significantly with time, it can be calculated by:
+\begin{equation*}
+    \text{Prevalence} = \text{Incidence} \times \text{Average duration of disease}
+\end{equation*}
+A keyword that may be found on cases like this is usually \textit{\textbf{steady-state conditions}}, which means the rate at which new cases appear (incidence) is roughly equal to the rate at which cases disappear / finish (recover or mortality). This explains why long-term diseases can have high prevalence despite low
+incidence.
 
 \subsection{Population at Risk}
 In a nutshell for incidence rate, population at risk just means it's the people that could potentially develop the disease / outcome of interest.
@@ -110,6 +130,12 @@ The crude rate is typically expressed per 1000 or 10,000 of population and can b
 \end{equation}
 However, when measuring crude rates, population structure is typically not taken into account which could
 blur the interpretation of said crude rates. But it is still useful for knowing the overall picture.
+
+\subsubsection*{Crude mortality rate}
+Crude mortality rate (or the death rate) for all deaths or a specific cause of death is calculated as follows:
+\begin{equation*}
+    \text{Crude mortality rate} = \dfrac{\text{Number of deaths during a specified period}}{\text{Number of persons at risk of dying during the same period}}
+\end{equation*}
 
 \subsubsection*{Example Case:}
 Town A and B have both the population count of 20,000. The crude annual mortality rate is both 25 per 1000.
@@ -316,7 +342,7 @@ risk of lung cancer in smokers.
 \end{equation*}
 
 The purpose of risk difference is to quantify the amount of risk that can be attributed to the exposure.
-In other words: \textit{Smoking leads to an absolute increase of 35\% points in the risk of developing
+In other words: \textit{Smoking leads to an absolute increase of 35\% in the risk of developing
 lung cancer over a 15 year period.}
 
 
@@ -328,12 +354,10 @@ unexposed group had an incidence rate of 15 new cases per 1,000 person-years. Ca
 \begin{equation*}
     \text{Rate Difference} = 40 - 15 = 25 \text{ new cases per 1,000 person-years}
 \end{equation*}
-
-The purpose of rate difference is to calculate the burden of disease attributable to factor. What this means
-given the example above is, 15 cases would have happened anyway (baseline risk). However, the remaining 25 cases
+The purpose of rate difference is to calculate the burden of disease attributable to factor. What this means is
+given the example above, 15 cases would have happened anyway (baseline risk). However, the remaining 25 cases
 can be directly attributed to the exposure.
 
-\pagebreak
 \subsection{Risk Factors and Protective Factors}
 Risk factor is any condition, behaviour, or characteristic that increases the probability of a particular disease
 or outcome occurring. This factor can be biological, behavioural, environmental, or genetic.
@@ -346,5 +370,104 @@ disease or outcome from occurring.
 Statistical association is the relationship / link between two or more variables where their patterns of variation
 are related. For example smoking is related to lung cancer, when the smoking prevalence in a population increases
 the incidence of lung cancer also increases.
+
+\pagebreak
+\section{Examples on Calculating Incidence and Prevalence}
+\subsection{Example 1}
+A district public health team wants to understand the burden of chronic obstructive
+pulmonary disease (COPD) in their community. They conduct a door-to-door health
+survey of 2,400 adults during March 2025. At the time of the survey, 192 respondents
+report a current clinical diagnosis of COPD (confirmed by their medical records).
+\\
+Calculate the point prevalence of COPD in this adult population.
+\\
+\begin{equation*}
+    \text{Prevalence} = \dfrac{192}{2400} = 0.08 \text{ or 8\%}
+\end{equation*}
+Interpretation: As of this time (March 2025), 8\% of the population has COPD.
+
+\subsection{Example 2}
+In 2024, an outbreak of norovirus occurred across three care homes. Researchers
+followed 600 residents from January to December to determine the risk of infection. By
+the end of the year, 90 residents had experienced at least one confirmed episode of
+norovirus.
+\\
+Calculate the cumulative incidence
+\\
+\begin{equation*}
+    \text{Cumulative incidence} = \dfrac{90}{600} = 0.15 \text{ or 15\%}
+\end{equation*}
+Interpretation: Over the course of 2024, the cumulative incidence (risk) of confirmed norovirus infection among care home residents was 15\%.
+
+\subsection{Example 3}
+A 2-year prospective study of 400 haemodialysis patients investigates the occurrence
+of bloodstream infections. During follow-up, some patients transfer or die, resulting in a
+total of 650 person-years of observation. There are 52 new bloodstream infections
+documented.
+\\
+Calculate the incidence rate per 1,000 person-years.
+\\
+\begin{equation*}
+    \text{Incidence rate} = \dfrac{52}{650} = 0.08 \text{ or 80 per 1,000 person-years}
+\end{equation*}
+
+\subsection{Example 4}
+A chronic neurological condition, multiple sclerosis (MS), affects adults in a stable
+regional population of 500,000 people. Epidemiologists estimate that 100 new cases
+occur each year. The average duration from diagnosis to death is 20 years.
+\\
+Estimate the prevalence of MS in this population under steady-state conditions (consistent per year).
+\\
+Since it is under steady-state conditions,
+\begin{equation*}
+    \text{Prevalence} = \dfrac{100}{500,000} \times 20 = 0.04 \text{ or 4\%}
+\end{equation*}
+
+\subsection{Example 5}
+A national initiative offers free blood pressure checks in pharmacies. Over 12 months,
+100,000 adults are screened. Among them, 8,000 are newly diagnosed with
+hypertension. However, many people already knew they had hypertension before the
+campaign began, an additional 12,000 participants report being on antihypertensive
+medication at baseline.
+\\
+Should we describe the finding as an incidence or prevalence estimate? What would
+the question look like for either of these?
+\\
+Both can be calculated, it would depend on the RQ
+\begin{itemize}
+    \item If the question is \textit{How many people currently have hypertension?}
+        \begin{equation*}
+            \text{Prevalence} = \dfrac{8000 + 12000}{100000} = 0.2 \text{ or 2\%}
+        \end{equation*}
+    \item If the question is \textit{How many new cases were detected during the screening?}
+        \begin{equation*}
+            \text{Incidence} = \dfrac{8000}{100000 - 12000} = 0.0909 \text{ or 9.1\%}
+        \end{equation*}
+\end{itemize}
+
+\subsection{Example 6}
+A mental health researcher surveys 2,000 first-year university students in October. At
+baseline, 300 students report symptoms consistent with major depression (PHQ-9 $\geq$ 10).
+A follow-up survey six months later finds 160 new cases among those who were
+symptom-free initially, while 200 of the original still meet criteria.
+\\
+Which measure(s) should be reported — prevalence, incidence, or both? Calculate the relevant values.
+\\
+Both can be calculated, it would depend on the RQ
+\begin{itemize}
+    \item Baseline
+        \begin{equation*}
+            \text{Prevalence} = \dfrac{300}{2000} = 0.15 \text{ or 15\%}
+        \end{equation*}
+    \item Cumulative incidence (6 months)
+        \begin{equation*}
+            \text{Cumulative incidence} = \dfrac{160}{2000 - 300} = 0.094 \text{ or 9.4\%}
+        \end{equation*}
+    \item Point prevalence (6 months)
+        \begin{equation*}
+            \text{Point prevalence} = \dfrac{160 + 200}{2000} = 0.18 \text{ or 18\%}
+        \end{equation*}
+
+\end{itemize}
 
 \end{document}
