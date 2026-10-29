@@ -66,7 +66,7 @@ ggplot(data=three_areas, mapping=aes(x=year, y=measure, colour=area_name)) +
 # Q7c
 ggplot(data=three_areas, mapping=aes(
     x=year, y=measure,
-    colour=area_name, line_type=area_name
+    colour=area_name
   )) +
   geom_line(linewidth=1) +
   scale_colour_manual(values=cols)
@@ -97,3 +97,28 @@ admissions_plot
 # Q9
 ggsave('output/Ex6-Q8.pdf', width=10, height=5.625, dpi=300)
 ggsave('output/Ex6-Q8.png', width=10, height=5.625, dpi=300)
+
+# Q10
+ggplot(data=three_areas, mapping=aes(
+    x=year, y=measure,
+    colour=area_name, linetype=area_name
+  )) +
+  geom_line(linewidth = 1) +
+  geom_errorbar(aes(ymin = lower_confidence_interval, ymax = upper_confidence_interval),
+    linetype = 'solid', width = 0.2) +
+  geom_point(size = 2) +
+  scale_colour_manual(values=cols) +
+  scale_x_continuous(breaks=seq(2010, 2019, 2)) +
+  scale_y_continuous(limits=c(0, 1600)) +
+  theme_minimal() +
+  theme(
+    legend.position='bottom',
+    plot.caption = element_text(hjust = 0.5) # Center caption
+  ) +
+  labs(
+    x='Year', y='Hospital admissions (per 100,000 people)', title='Alcohol Related Hospital Admission',
+    caption='Source: Scottish Public Health Observatory. Rates are age-sex standardised.',
+    colour=NULL, linetype=NULL
+  )
+
+ggsave('output/Ex6-Q10.png', width=10, height=5.625, dpi=300)
