@@ -21,7 +21,7 @@
 \section*{Task 1}
 % Summary and frequency statistics
 \subsection*{Summarise the data for all subjects overall and separately for those who did and did not have coronary artery disease (CAD)}
-Some initial checks show that the variables \textit{Total cholesterol at baseline, Total cholesterol after follow-up, and Low-density lipoprotein} are normally distributed while \textit{Triglycerides and Thyroid-stimulating hormone} are not normally distributed. Below is the 
+Some initial checks show that the variables \textit{Total cholesterol at baseline, Total cholesterol after follow-up, and Low-density lipoprotein} are normally distributed while \textit{Triglycerides and Thyroid-stimulating hormone} are not normally distributed.
 \begin{table}[H]
 \small
 \renewcommand{\arraystretch}{1.2}
@@ -143,7 +143,7 @@ male population.
 
 
 % 2b. Kruskal-Wallis
-\pagebreak
+
 \subsection*{b. Does the level of Triglycerides differ among different levels of physical activity?}
 Triglycerides (\textit{triglycerides}) is a continuous variable while physical activity
 (\textit{physical\_activity}) is a categorical variable. The hypothesis for this question are the following:
@@ -201,7 +201,7 @@ the physical activity is.
 
 
 % 2c. Chi-square Test for trend
-\pagebreak
+
 \subsection*{c. Is there an association between physical activity and gender?}
 Physical activity (\textit{physical\_activity}) is an ordinal variable and gender (\textit{gender}) is a binary variable. So, the Chi-square test for trend will be used to determine whether there is an association between physical activity and gender. The following are the null and alternate hypothesis:
 \begin{itemize}
@@ -219,8 +219,8 @@ The figure above show a similar trend in the level of physical activity between 
 \\~\\
 However, the assumptions will be checked first:
 \begin{itemize}
-    \item No more than 20\% of the cells have an expected count < 5
-    \item No cell has an expected count < 1
+    \item No more than 20\% of the cells have an expected count $<$ 5
+    \item No cell has an expected count $<$ 1
 \end{itemize}
 
 \begin{figure}[H]
@@ -229,11 +229,11 @@ However, the assumptions will be checked first:
     \caption{Chi-square test result of gender and physical activity}
     \label{fig:2c-2}
 \end{figure}
-Since the p-value from the linear-by-linear association show that it is not significant $(p = 0.057 \ge 0.05)$, the null hypothesis is not rejected. \textbf{Thus}, there is no association between gender and physical activity in the population.
+All the assumptions are met and since the p-value from the linear-by-linear association show that it is not significant $(p = 0.057 \ge 0.05)$, the null hypothesis is not rejected. \textbf{Thus}, there is no association between gender and physical activity in the population.
 
 
 % 2d. ANOVA
-\pagebreak
+
 \subsection*{d. Does low-density lipoprotein differ among different BMI categories?}
 Low-density lipoprotein (\textit{LDL}) is a continuous variable while BMI categories (\textit{BMI\_cat}) is a categorical
 variable. The hypothesis for this question are the following:
@@ -264,8 +264,8 @@ the assumptions will be checked first for ANOVA:
     \label{fig:2d-2}
 \end{figure}
 
-The first assumption is immediately met. The figure above shows that the distribution of LDL across the three BMI categories
-are normal and Figure 5 for the result of Levene's test of homogeneity of variance $(p = 0.228 > 0.05)$ indicates
+The first assumption is immediately met. The two figures above show that the distribution of LDL across the three BMI categories
+are normal and the result of Levene's test of homogeneity of variance $(p = 0.228 > 0.05)$ indicates
 that the variance is equal across the three BMI categories. All three assumptions for ANOVA is met.
 
 
@@ -296,7 +296,7 @@ While the difference between the overweight and obese groups is not statisticall
 
 
 % 2e. Chi square
-\pagebreak
+
 \subsection*{e. Is there an association between smoking and CAD?}
 Both variables smoking (\textit{smoking}) and CAD (\textit{CAD}) are binary, so the continuity corrected chi-square test will be used with the following hypothesis:
 \begin{itemize}
@@ -326,7 +326,7 @@ All the assumptions are met and the p-value shows that it is significant ($p < 0
 
 
 % 2f. Chi-square
-\pagebreak
+
 \subsection*{f. Is there an association between congenital anomalies and CAD?}
 Both variables congenital anomalies (\textit{cong\_ano}) and CAD (\textit{CAD}) are binary, so the continuity corrected chi-square test will be used if the assumptions are met, otherwise the Fisher's exact test will be used instead with the following hypothesis:
 \begin{itemize}
@@ -352,10 +352,10 @@ However the assumptions need to be checked first:
     \caption{Chi-square result between smoking and CAD}
     \label{fig:2f-2}
 \end{figure}
-The first assumption is not so the Fisher's exact test will be used. The p-value shows that it is not significant ($p = 0.495 \ge 0.05$), so the $H_0$ is not rejected. \textbf{Thus}, there is no association between congenital anomalies and coronary artery disease status in the population.
+The first assumption is not met, so the Fisher's exact test will be used. The p-value shows that it is not significant ($p = 0.495 \ge 0.05$), so the $H_0$ is not rejected. \textbf{Thus}, there is no association between congenital anomalies and coronary artery disease status in the population.
 
 % 2g. Paired t-test
-\pagebreak
+
 \subsection*{g. Is there a change in Total cholesterol between baseline and after intervention?}
 Total cholesterol base and after (\textit{Tchol\_base} and \textit{Tchol\_after}) are continuous variables
 and since it wants to know if there is a change between baseline and after, the paired t-test will be considered and
