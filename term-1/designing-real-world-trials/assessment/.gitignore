@@ -1,2 +1,7 @@
 REGAL.pdf
 Assessment 1_REGAL research proposal.docx
+*.bcf
+*.run.xml
+*blx.bib
+*.bbl
+*.blg
