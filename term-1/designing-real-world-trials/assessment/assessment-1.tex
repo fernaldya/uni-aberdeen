@@ -6,8 +6,8 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage[en-GB]{datetime2}
-\usepackage[style=vancouver, backend=bibtex]{biblatex}
-\addbibresource{references.bib}
+\usepackage[style=vancouver, autocite=superscript, sorting=none, backend=bibtex]{biblatex}
+\addbibresource{./references.bib}
 \DTMlangsetup[en-GB]{ord=omit}
 \graphicspath{{./images}}
 \captionsetup{textfont=small, labelfont=bf}
@@ -44,12 +44,18 @@ The trial design plans to randomise 400 women to 2 groups: intervention (use of 
 \end{equation*}
 
 \subsection{Informed consent and baseline measures}
-Clinical trial participation often carries potential risks for participants. While those in the intervention group receive the treatment that wants to be analysed, those in the control group may also receive some level of care which could be in the form of standard procedural care, both definitely has its own risks. So, it is highly important that the participants know and fully understand the risks involved at every stage of the trial before giving their informed consent.
+Clinical trial participation often carries potential risks for participants. While those in the intervention group receive the treatment that wants to be analysed, those in the control group may also receive some level of care which could be in the form of standard procedural care, both definitely has its own risks. So, it is highly important that the participants know and fully understand the risks involved in participating in the trial before giving their informed consent. Participants' informed consent should be obtained before any activity related to the trial is done so they understand the risks or benefits and enough time should be given to the participants before obtaining their consent.
 \\~\\
 Baseline measures act as the initial data collection before the intervention begins, it is important to know how the overall and individual measurement holds so that after treatment the effect of the intervention can be analysed by comparing a before and after measurement.
 
 \subsection{Exclusion criteria}
-According to \cite{exclusion-criteria},
+Alongside inclusion criteria, exclusion criteria acts as the boundary and standard of the study population. It can reduce the risk of the intervention potentially having an adverse effect on the participants by acting as a safeguard. However, excision criteria (and inclusion criteria) need to be clearly defined and there exists a trade off between having too many of either criterion, too many exclusion can negatively impact the external validity\autocite{exclusion-criteria}. This research has clearly defined the exclusion criterion so that there is a clear boundary of which participants are automatically not eligible.
+
+\subsection{Randomisation and treatment allocation}
+Randomisation protects against potential selection bias when assigning participants' groups by replacing the researcher preference with a randomly generated assignment. If the researcher manually assigns participants to the trial groups, they may subconciously assign the sickest participant to the intervention group to observe the most optimal results. Furthermore, randomisation should be coupled with allocation concealment by concealing which group the participants will be in from the participants themselves and the recruiter. Evidence suggests that trials that didn't have proper allocation concealment tend to overestimate the results of their findings\autocite{allocation-concealment}. Randomisation should always be done with allocation concealment to avoid any chance of selection bias. This trial mentions doing randomisation but does not mention how randomisation is done and no information on allocation concealment is provided.
+
+\subsection{Intervention and comparison}
+
 
 \pagebreak
 \printbibliography
