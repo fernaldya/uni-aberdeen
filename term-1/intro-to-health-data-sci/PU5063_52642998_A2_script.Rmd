@@ -55,7 +55,6 @@ knitr::opts_chunk$set(
 ```
 
 ```{r packages}
-# Load the packages you use here, and only here. Do not use install.packages().
 library(ggplot2)
 library(knitr)
 ```
@@ -68,8 +67,9 @@ library(knitr)
 *One pattern you may find helpful is "Among adults aged 60 to 75 in primary care, is [baseline characteristic] associated with [outcome] over six months of follow-up, taking account of [other baseline characteristics]?"*
 
 **Research question:**
-Potential RQs:
-- Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, taking into account their usual level of physical activity?
+
+Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, taking into account their usual level of physical activity?
+
 > It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many COPD exacerbations they had that required treatment in the previous 12 months and whether their usual level of physical activity also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.
 
 
@@ -80,10 +80,29 @@ Potential RQs:
 
 
 ```{r import}
-# Import the baseline and the visits data
-baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t', stringsAsFactors = TRUE)
-visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t', stringsAsFactors = TRUE)
+# Baseline data
+baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t')
+str(baseline)
+
+# Factors
+baseline_factor_columns = c(
+    'sex', 'smoker', 'phy_activity',
+    'diabetes', 'ethnicity', 'inhaler'
+)
+unique_baseline_list = list()
+for (col in baseline_factor_columns) {
+    unique_baseline_list[[col]] = unique(baseline[[col]])
+}
+kable(unique_baseline_list$sex, col.names = 'sex')
+
+
+# Visits data
+visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t')
+str(visits)
+summary(visits[, c('visit', 'walk6min')])
 ```
+The baseline data contains some errors on the variables:
+- Physical activity (__phy_activity__): One of the values is labeled `Hihg`, changing this to a factor type will invalidate the factor, this data needs to be cleaned first before converting it into factor type
 
 
 # Data quality assessment and cleaning
@@ -91,21 +110,31 @@ visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t', stringsAs
 *Check each variable against the data dictionary and against clinically plausible values. For each problem, show the evidence, decide whether it is a clear error, an uncertain value or a genuine but unusual value, and handle it accordingly. Report how many values or rows each decision affects.*
 
 ## Baseline data
-
-
 ```{r clean-baseline}
-# Include R code you use to assess the quality and identify issues with the baseline data.
-# Clean the data to address these issues
 str(baseline)
-str(visits)
+# Overall data
+colSums(is.na(baseline))
+
+# NA values are found in the variables: bmi, phy_activity, diabetes, and ethnicity
+baseline[is.na(baseline$bmi) | is.na(baseline$phy_activity), -1]
+
+# Categorical variable
+unique(baseline$phy_activity)
+
+
+# Continuous variables
+summary(baseline)
+
 ```
+
 
 ## Visits data
 
 ```{r clean-visits}
 # Include R code you use to assess the quality and identify issues with the visit data
 # Clean the data to address these issues
-
+str(visits)
+summary(visits)
 ```
 
 ## Data cleaning log
