@@ -56,8 +56,8 @@ knitr::opts_chunk$set(
 
 ```{r packages}
 # Load the packages you use here, and only here. Do not use install.packages().
-
-
+library(ggplot2)
+library(knitr)
 ```
 
 
@@ -69,9 +69,9 @@ knitr::opts_chunk$set(
 
 **Research question:**
 Potential RQs:
-- Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, while also taking into account their usual level of physical activity?
+- Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, taking into account their usual level of physical activity?
+> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many COPD exacerbations they had that required treatment in the previous 12 months and whether their usual level of physical activity also affected the distance they are able to walk. If there is, then a further investigation into whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.
 
-*Then explain, in around 100 to 200 words, why the question is clinically relevant and why it suits these data. Limitations belong in the final section, not here.*
 
 
 # Data import and structure
