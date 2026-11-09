@@ -74,96 +74,96 @@ Similar question but instead of **COPD exacerbations**, **smoking status** inste
 
 
 # Data import and structure
-
-*Import both datasets with relative paths. Examine their structure and contents and compare them with the data dictionary. Check the number of rows and participants in each dataset, how many visits each participant has, whether each variable is stored as the right type and whether values and category labels match the dictionary. Where you change a variable's type, create a new variable (for example `Fsex`) rather than overwriting the original.*
-
-
-```{r import}
+```{r import-baseline}
 # Baseline data
 baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t')
 str(baseline)
-
-# Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler
-unique(baseline$sex)
-unique(baseline$smoker)
-unique(baseline$phy_activity)
-unique(baseline$diabetes)
-unique(baseline$ethnicity)
-unique(baseline$inhaler)
-
-# Identifier and Numerical / continuous columns: ID, age, bmi, exacerbations
-numerical_baseline_cols = c('ID', 'age', 'bmi', 'exacerbations')
-summary(baseline[, numerical_baseline_cols])
-
-# NA values
-colSums(is.na(baseline))
+summary(baseline)
 
 # Visits data
 visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t')
 str(visits)
-table(visits$visit)
-summary(visits$walk6min)
+summary(visits)
+visits_per_id = aggregate(visit ~ ID, data = visits, FUN = length)
+unique(visits_per_id$visit)
+nrow(visits_per_id[visits_per_id$visit == 7, ])
+nrow(visits_per_id[visits_per_id$visit == 6, ])
 ```
-The baseline data type and valid data contains some mismatches and some NA values, but before converting these data types from their respective type during import they need to be cleaned first to provide a valid factor with the appropriate label and ordering:
-
-**Categorical / Factor variables**
-
-| Variable | Issue | Action plan | Total NA rows |
-|:---|:---|:---|:---|
-| Sex (*sex*) | Has the value `12` with no corresponding map in the dictionary | Will be checked further before applying any changes | 0 |
-| Smoker (*smoker*) | Has the value `-999` with no corresponding map in the dictionary | Will be checked further before applying any changes | 0 |
-| Physical activity (*phy_activity*) | Has the label `Hihg` which assumed should be `High` | Will be cleaned first before converting it into factor type | 14 |
-| Diabetes (*diabetes*) | No invalid labels, only found NA data |  | 10 |
-| Ethnic group (*ethnicity*) | Has the value `4` with no corresponding map in the dictionary | Will be checked further before applying any changes | 12 |
-
-**Numerical / Continuous variables**
-
-| Variable | Issue | Action plan | Total NA rows |
-|:---|:---|:---|:---|
-| BMI (*bmi*) | The maximum bmi in this data is 295.00 which is not possible | Will be checked further before applying any changes | 7 |
+The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), with 20 participants only having 6 visits while 478 participants have 7 visits.
 
 
 # Data quality assessment and cleaning
-
-*Check each variable against the data dictionary and against clinically plausible values. For each problem, show the evidence, decide whether it is a clear error, an uncertain value or a genuine but unusual value, and handle it accordingly. Report how many values or rows each decision affects.*
-
 ## Baseline data
 ```{r clean-baseline}
-str(baseline)
-# Overall data
-colSums(is.na(baseline))
+# Duplicates
+baseline[duplicated(baseline$ID), 'ID']
+baseline[baseline$ID == 'COPD000078', ] # Exact same row, index 78 and 501
 
-# NA values are found in the variables: bmi, phy_activity, diabetes, and ethnicity
-baseline[is.na(baseline$bmi) | is.na(baseline$phy_activity), -1]
+# Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler
+# Sex
+unique(baseline$sex)
+baseline[baseline$sex == 12, ] # 1 row
 
-# Categorical variable
+# Smoker
+unique(baseline$smoker)
+baseline[baseline$smoker == -999, ] # 3 rows; By convention -999 is typically used to denote NA or missing
+
+# phy_activity
 unique(baseline$phy_activity)
+baseline[baseline$phy_activity == 'Hihg' & !is.na(baseline$phy_activity), ] # 6 rows; Clear typo 'Hihg' instead of 'High'
 
+# Diabetes
+unique(baseline$diabetes) # No issues
 
-# Continuous variables
-summary(baseline)
+# Ethnicity
+unique(baseline$ethnicity)
+baseline[baseline$ethnicity == 4 & !is.na(baseline$ethnicity), ] # 4 rows; Unclear error
+
+# Inhaler
+unique(baseline$inhaler) # No issues
+
+# Numerical / continuous columns: age, bmi
+numerical_baseline_cols = c('age', 'bmi')
+summary(baseline[, numerical_baseline_cols])
+irregular_bmi = baseline[
+    baseline$bmi > quantile(baseline$bmi, probs = 0.75, na.rm = TRUE) &
+        !is.na(baseline$bmi),
+    c('ID', 'bmi')
+]
+head(irregular_bmi[order(irregular_bmi$bmi, decreasing = TRUE), ], n = 5) # Irregular BMI values of 288, 295
+
+# Exacerbations
+unique(baseline$exacerbations) # No issues
+
+# Fixing data issues
+baseline = baseline[-501, ] # Duplicate
+baseline$sex  # Sex
+baseline$smoker[baseline$smoker == -999] = NA # Smoker
+baseline$phy_activity[baseline$phy_activity == 'Hihg'] = 'High' # Physical activity
+baseline$ethnicity  # Ethnicity
+baseline$bmi[baseline$bmi == 288 | baseline$bmi == 295] = NA # BMI
 
 ```
-
 
 ## Visits data
 
 ```{r clean-visits}
-# Include R code you use to assess the quality and identify issues with the visit data
-# Clean the data to address these issues
 str(visits)
-summary(visits)
+visits[duplicated(visits[, c('ID', 'visit')]), c('ID', 'visit')] # No duplicates found in visits data
 ```
 
 ## Data cleaning log
 
-*Based on your code above, add one row for every cleaning decision. The first row is a worked example from the Exercise 4 cardiac data. Delete it and replace it with your own.*
+*Kind of problem: clear error, an uncertain value or a genuine but unusual value*
 
 | No. | Dataset and variable | Problem found | Evidence | Kind of problem | Decision | Justification | Values or rows affected |
 |:---|:---|:---|:---|:---|:---|:---|:---|
-| 1 | cardiac, bmi | One BMI of 514.6 | `summary()` shows a maximum of 514.6 | Clear error | Set to NA | A BMI above about 60 is essentially impossible. 51.46 is a likely correction but cannot be confirmed | 1 value (patient 1630L) |
-| 2 | | | | | | | |
-| 3 | | | | | | | |
+| 1 | baseline, all variables | Fully duplicated row | `baseline[duplicated(baseline$ID), 'ID']` shows the duplicated ID | Clear error | Remove row 501 | Duplicate ID found with all the other columns having the same data | 1, participant `COPD000078` |
+| 2 | baseline, sex | Value of `12` found | `unique(baseline$sex)` shows the unique values of sex | Uncertain value |  |  | 1, participant `COPD000439`|
+| 3 | baseline, smoker | Value of `-999` found | `unique(baseline$smoker)` shows the unique values of smoker | Clear error | Update values to `NA` | By convention the value `-999` is typically used to denote missing data | 3 rows |
+| 4 | baseline, phy_activity | Label `Hihg` found | `unique(baseline$phy_activity)` shows the unique values of phy_activity | Uncertain value | Update label to `High` | The typo is obvious where instead of `High`, the label `Hihg` was given | 6 rows |
+| 5 | baseline, ethnicity | Value of `4` found | `unique(baseline$ethnicity)` shows the unique values of ethnicity | Uncertain value |  |  | 4 rows |
+| 6 | baseline, bmi | Irregular extreme values | `summary(baseline$bmi)` shows the max value of 295 and `baseline$bmi > quantile(baseline$bmi, probs = 0.75, na.rm = TRUE)` shows another improbable bmi value of 288 | Uncertain value | Update values to `NA` | The likeliest value is 29.5 and 28.8 but no way to confirm | 2 rows |
 
 
 # Missing data
@@ -171,8 +171,22 @@ summary(visits)
 *Once you prepare the cleaned data, count the missing values for each variable in both datasets and for the outcome at each visit. Look for patterns, for example whether participants with certain baseline characteristics are more likely to have missing follow-up measurements, and whether missing information increases over follow-up. Remember that some missing values may be recorded in other ways than NA. Discuss what the missing information could mean for your research question and how you would handle it.*
 
 ```{r missing}
-# Include R code you use to summarise and present the missing values
+# Baseline
+colSums(is.na(baseline))
 
+# Physical activity
+baseline[is.na(baseline$phy_activity), -1] # No clear pattern
+
+# Diabetes
+baseline[is.na(baseline$diabetes), -1] # No clear pattern
+
+# Ethnicity
+baseline[is.na(baseline$ethnicity), -1] # No clear pattern
+
+
+
+# Visits
+colSums(is.na(visits))
 
 ```
 
