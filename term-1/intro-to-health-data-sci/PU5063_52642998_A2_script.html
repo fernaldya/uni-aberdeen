@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Student ID: 52642998">
-<meta name="dcterms.date" content="2026-11-05">
+<meta name="dcterms.date" content="2026-11-09">
 
 <title>Introduction to Health Data Science (PU5058/PU5063): Assessment 2</title>
 <style>
@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 5, 2026</p>
+      <p class="date">November 9, 2026</p>
     </div>
   </div>
   
@@ -153,27 +153,22 @@ Clean-run checklist (before you submit)
 - Both files are named CourseCode_StudentID_A2_script.Rmd and
   CourseCode_StudentID_A2_script.html.
 -->
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 <section id="research-question" class="level1">
 <h1>Research question</h1>
-<p><em>State one clinically meaningful research question using the outcome allocated to your group. It should name your outcome measured over visits 0 to 6, one baseline characteristic or exposure of interest, and any other baseline characteristics that should be taken into account. It should make use of the repeated measurements and be worded as a question about association, not cause.</em></p>
-<p><em>One pattern you may find helpful is “Among adults aged 60 to 75 in primary care, is [baseline characteristic] associated with [outcome] over six months of follow-up, taking account of [other baseline characteristics]?”</em></p>
 <p><strong>Research question:</strong></p>
-<p>Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, taking into account their usual level of physical activity?</p>
+<p>Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of <strong>COPD exacerbations</strong> that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual <strong>level of physical activity</strong>?</p>
 <blockquote class="blockquote">
-<p>It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many COPD exacerbations they had that required treatment in the previous 12 months and whether their usual level of physical activity also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.</p>
+<p>It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many <strong>COPD exacerbations</strong> they had that required treatment in the previous 12 months and whether their usual <strong>level of physical activity</strong> also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.</p>
 </blockquote>
+<p>Similar question but instead of <strong>COPD exacerbations</strong>, <strong>smoking status</strong> instead.</p>
 </section>
 <section id="data-import-and-structure" class="level1">
 <h1>Data import and structure</h1>
 <p><em>Import both datasets with relative paths. Examine their structure and contents and compare them with the data dictionary. Check the number of rows and participants in each dataset, how many visits each participant has, whether each variable is stored as the right type and whether values and category labels match the dictionary. Where you change a variable’s type, create a new variable (for example <code>Fsex</code>) rather than overwriting the original.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baseline data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Baseline_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baseline data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Baseline_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   501 obs. of  10 variables:
  $ ID           : chr  "COPD000001" "COPD000002" "COPD000003" "COPD000004" ...
@@ -187,58 +182,148 @@ Clean-run checklist (before you submit)
  $ inhaler      : int  1 1 1 0 1 0 1 1 0 1 ...
  $ exacerbations: int  0 3 1 0 1 1 2 0 2 1 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factors</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>baseline_factor_columns <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sex'</span>, <span class="st">'smoker'</span>, <span class="st">'phy_activity'</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'diabetes'</span>, <span class="st">'ethnicity'</span>, <span class="st">'inhaler'</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>unique_baseline_list <span class="ot">=</span> <span class="fu">list</span>()</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> baseline_factor_columns) {</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    unique_baseline_list[[col]] <span class="ot">=</span> <span class="fu">unique</span>(baseline[[col]])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(unique_baseline_list<span class="sc">$</span>sex, <span class="at">col.names =</span> <span class="st">'sex'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;">sex</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">12</td>
-</tr>
-</tbody>
-</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  2 12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visits data</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Visits_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>smoker)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    1    2    0 -999</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>phy_activity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Very_high" "Low"       "High"      "Moderate"  NA          "Hihg"     </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>diabetes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0  1 NA</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>ethnicity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  3  2 NA  4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>inhaler)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identifier and Numerical / continuous columns: ID, age, bmi, exacerbations</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>numerical_baseline_cols <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'age'</span>, <span class="st">'bmi'</span>, <span class="st">'exacerbations'</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline[, numerical_baseline_cols])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         ID           age             bmi         exacerbations   
+ Length   :501   Min.   :60.00   Min.   : 17.20   Min.   :0.0000  
+ N.unique :500   1st Qu.:64.00   1st Qu.: 25.00   1st Qu.:0.0000  
+ N.blank  :  0   Median :67.00   Median : 27.30   Median :0.0000  
+ Min.nchar: 10   Mean   :67.57   Mean   : 28.46   Mean   :0.7625  
+ Max.nchar: 10   3rd Qu.:72.00   3rd Qu.: 30.18   3rd Qu.:1.0000  
+                 Max.   :75.00   Max.   :295.00   Max.   :6.0000  
+                                 NAs    :7                        </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA values</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(baseline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           ID           age           sex        smoker           bmi 
+            0             0             0             0             7 
+ phy_activity      diabetes     ethnicity       inhaler exacerbations 
+           14            10            12             0             0 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visits data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Visits_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   3466 obs. of  3 variables:
  $ ID      : chr  "COPD000001" "COPD000001" "COPD000001" "COPD000001" ...
  $ visit   : int  0 1 2 3 4 5 6 0 1 2 ...
  $ walk6min: num  498 499 518 509 513 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits[, <span class="fu">c</span>(<span class="st">'visit'</span>, <span class="st">'walk6min'</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(visits<span class="sc">$</span>visit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     visit          walk6min    
- Min.   :0.000   Min.   :203.9  
- 1st Qu.:1.000   1st Qu.:340.5  
- Median :3.000   Median :376.4  
- Mean   :3.001   Mean   :379.3  
- 3rd Qu.:5.000   3rd Qu.:418.2  
- Max.   :6.000   Max.   :581.0  
-                 NAs    :197    </code></pre>
+<pre><code>
+  0   1   2   3   4   5   6 
+498 490 495 497 498 491 497 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits<span class="sc">$</span>walk6min)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
+  203.9   340.5   376.4   379.3   418.2   581.0     197 </code></pre>
 </div>
 </div>
-<p>The baseline data contains some errors on the variables: - Physical activity (<strong>phy_activity</strong>): One of the values is labeled <code>Hihg</code>, changing this to a factor type will invalidate the factor, this data needs to be cleaned first before converting it into factor type</p>
+<p>The baseline data type and valid data contains some mismatches and some NA values, but before converting these data types from their respective type during import they need to be cleaned first to provide a valid factor with the appropriate label and ordering:</p>
+<p><strong>Categorical / Factor variables</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Issue</th>
+<th style="text-align: left;">Action plan</th>
+<th style="text-align: left;">Total NA rows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sex (<em>sex</em>)</td>
+<td style="text-align: left;">Has the value <code>12</code> with no corresponding map in the dictionary</td>
+<td style="text-align: left;">Will be checked further before applying any changes</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Smoker (<em>smoker</em>)</td>
+<td style="text-align: left;">Has the value <code>-999</code> with no corresponding map in the dictionary</td>
+<td style="text-align: left;">Will be checked further before applying any changes</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Physical activity (<em>phy_activity</em>)</td>
+<td style="text-align: left;">Has the label <code>Hihg</code> which assumed should be <code>High</code></td>
+<td style="text-align: left;">Will be cleaned first before converting it into factor type</td>
+<td style="text-align: left;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diabetes (<em>diabetes</em>)</td>
+<td style="text-align: left;">No invalid labels, only found NA data</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ethnic group (<em>ethnicity</em>)</td>
+<td style="text-align: left;">Has the value <code>4</code> with no corresponding map in the dictionary</td>
+<td style="text-align: left;">Will be checked further before applying any changes</td>
+<td style="text-align: left;">12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Numerical / Continuous variables</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Issue</th>
+<th style="text-align: left;">Action plan</th>
+<th style="text-align: left;">Total NA rows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">BMI (<em>bmi</em>)</td>
+<td style="text-align: left;">The maximum bmi in this data is 295.00 which is not possible</td>
+<td style="text-align: left;">Will be checked further before applying any changes</td>
+<td style="text-align: left;">7</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="data-quality-assessment-and-cleaning" class="level1">
 <h1>Data quality assessment and cleaning</h1>
@@ -246,7 +331,7 @@ Clean-run checklist (before you submit)
 <section id="baseline-data" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-data">Baseline data</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   501 obs. of  10 variables:
  $ ID           : chr  "COPD000001" "COPD000002" "COPD000003" "COPD000004" ...
@@ -260,16 +345,16 @@ Clean-run checklist (before you submit)
  $ inhaler      : int  1 1 1 0 1 0 1 1 0 1 ...
  $ exacerbations: int  0 3 1 0 1 1 2 0 2 1 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall data</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(baseline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall data</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(baseline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           ID           age           sex        smoker           bmi 
             0             0             0             0             7 
  phy_activity      diabetes     ethnicity       inhaler exacerbations 
            14            10            12             0             0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA values are found in the variables: bmi, phy_activity, diabetes, and ethnicity</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">is.na</span>(baseline<span class="sc">$</span>bmi) <span class="sc">|</span> <span class="fu">is.na</span>(baseline<span class="sc">$</span>phy_activity), <span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA values are found in the variables: bmi, phy_activity, diabetes, and ethnicity</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">is.na</span>(baseline<span class="sc">$</span>bmi) <span class="sc">|</span> <span class="fu">is.na</span>(baseline<span class="sc">$</span>phy_activity), <span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
 13   61   1      1 32.0         &lt;NA&gt;        1        NA       0             0
@@ -294,13 +379,13 @@ Clean-run checklist (before you submit)
 482  66   2      1 31.6         &lt;NA&gt;        1         3       1             0
 486  68   1      2   NA    Very_high        0         1       1             0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorical variable</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>phy_activity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorical variable</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>phy_activity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Very_high" "Low"       "High"      "Moderate"  NA          "Hihg"     </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Continuous variables</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Continuous variables</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         ID           age             sex             smoker        
  Length   :501   Min.   :60.00   Min.   : 1.000   Min.   :-999.000  
@@ -332,16 +417,16 @@ Clean-run checklist (before you submit)
 <section id="visits-data" class="level2">
 <h2 class="anchored" data-anchor-id="visits-data">Visits data</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to assess the quality and identify issues with the visit data</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean the data to address these issues</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to assess the quality and identify issues with the visit data</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean the data to address these issues</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   3466 obs. of  3 variables:
  $ ID      : chr  "COPD000001" "COPD000001" "COPD000001" "COPD000001" ...
  $ visit   : int  0 1 2 3 4 5 6 0 1 2 ...
  $ walk6min: num  498 499 518 509 513 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         ID           visit          walk6min    
  Length   :3466   Min.   :0.000   Min.   :203.9  
@@ -419,24 +504,24 @@ Clean-run checklist (before you submit)
 <h1>Missing data</h1>
 <p><em>Once you prepare the cleaned data, count the missing values for each variable in both datasets and for the outcome at each visit. Look for patterns, for example whether participants with certain baseline characteristics are more likely to have missing follow-up measurements, and whether missing information increases over follow-up. Remember that some missing values may be recorded in other ways than NA. Discuss what the missing information could mean for your research question and how you would handle it.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to summarise and present the missing values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to summarise and present the missing values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="data-linkage" class="level1">
 <h1>Data linkage</h1>
 <p><em>Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to link baseline and visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to link baseline and visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exploratory-analysis-and-visualisation" class="level1">
 <h1>Exploratory analysis and visualisation</h1>
 <p><em>Use numerical summaries and figures to explore the linked data <strong>in relation to your research question</strong>. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the <code>fig.cap</code> chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="summary-and-limitations" class="level1">
@@ -468,8 +553,8 @@ If you did not use GenAI, provide a declaration that you did not use GenAI tools
 <section id="session-information" class="level1">
 <h1>Session information</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.6.1 (2026-06-24)
 Platform: aarch64-apple-darwin23
@@ -489,15 +574,15 @@ attached base packages:
 [1] stats     graphics  grDevices datasets  utils     methods   base     
 
 other attached packages:
-[1] knitr_1.52    ggplot2_4.0.3
+[1] glue_1.8.1    knitr_1.52    ggplot2_4.0.3
 
 loaded via a namespace (and not attached):
  [1] digest_0.6.39      RColorBrewer_1.1-3 R6_2.6.1           fastmap_1.2.0     
- [5] xfun_0.62          farver_2.1.2       gtable_0.3.6       glue_1.8.1        
- [9] htmltools_0.5.9    rmarkdown_2.32     lifecycle_1.0.5    cli_3.6.6         
-[13] S7_0.2.2           scales_1.4.0       vctrs_0.7.3        grid_4.6.1        
-[17] withr_3.0.3        renv_1.2.4         compiler_4.6.1     tools_4.6.1       
-[21] evaluate_1.0.5     yaml_2.3.12        rlang_1.3.0        jsonlite_2.0.0    </code></pre>
+ [5] xfun_0.62          farver_2.1.2       gtable_0.3.6       htmltools_0.5.9   
+ [9] rmarkdown_2.32     lifecycle_1.0.5    cli_3.6.6          S7_0.2.2          
+[13] scales_1.4.0       vctrs_0.7.3        grid_4.6.1         withr_3.0.3       
+[17] renv_1.2.4         compiler_4.6.1     tools_4.6.1        evaluate_1.0.5    
+[21] yaml_2.3.12        rlang_1.3.0        jsonlite_2.0.0    </code></pre>
 </div>
 </div>
 </section>

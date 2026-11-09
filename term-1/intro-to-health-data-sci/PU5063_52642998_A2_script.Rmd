@@ -54,23 +54,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages}
+```{r packages, echo = FALSE}
 library(ggplot2)
 library(knitr)
+library(glue)
 ```
 
 
 # Research question
 
-*State one clinically meaningful research question using the outcome allocated to your group. It should name your outcome measured over visits 0 to 6, one baseline characteristic or exposure of interest, and any other baseline characteristics that should be taken into account. It should make use of the repeated measurements and be worded as a question about association, not cause.*
-
-*One pattern you may find helpful is "Among adults aged 60 to 75 in primary care, is [baseline characteristic] associated with [outcome] over six months of follow-up, taking account of [other baseline characteristics]?"*
-
 **Research question:**
 
-Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of COPD exacerbations that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured six times over 6 months, taking into account their usual level of physical activity?
+Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of **COPD exacerbations** that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual **level of physical activity**?
 
-> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many COPD exacerbations they had that required treatment in the previous 12 months and whether their usual level of physical activity also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.
+> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many **COPD exacerbations** they had that required treatment in the previous 12 months and whether their usual **level of physical activity** also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.
+
+Similar question but instead of **COPD exacerbations**, **smoking status** instead.
 
 
 
@@ -84,25 +83,44 @@ Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of
 baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t')
 str(baseline)
 
-# Factors
-baseline_factor_columns = c(
-    'sex', 'smoker', 'phy_activity',
-    'diabetes', 'ethnicity', 'inhaler'
-)
-unique_baseline_list = list()
-for (col in baseline_factor_columns) {
-    unique_baseline_list[[col]] = unique(baseline[[col]])
-}
-kable(unique_baseline_list$sex, col.names = 'sex')
+# Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler
+unique(baseline$sex)
+unique(baseline$smoker)
+unique(baseline$phy_activity)
+unique(baseline$diabetes)
+unique(baseline$ethnicity)
+unique(baseline$inhaler)
 
+# Identifier and Numerical / continuous columns: ID, age, bmi, exacerbations
+numerical_baseline_cols = c('ID', 'age', 'bmi', 'exacerbations')
+summary(baseline[, numerical_baseline_cols])
+
+# NA values
+colSums(is.na(baseline))
 
 # Visits data
 visits = read.table('data/Visits_Data.tsv', header = TRUE, sep = '\t')
 str(visits)
-summary(visits[, c('visit', 'walk6min')])
+table(visits$visit)
+summary(visits$walk6min)
 ```
-The baseline data contains some errors on the variables:
-- Physical activity (__phy_activity__): One of the values is labeled `Hihg`, changing this to a factor type will invalidate the factor, this data needs to be cleaned first before converting it into factor type
+The baseline data type and valid data contains some mismatches and some NA values, but before converting these data types from their respective type during import they need to be cleaned first to provide a valid factor with the appropriate label and ordering:
+
+**Categorical / Factor variables**
+
+| Variable | Issue | Action plan | Total NA rows |
+|:---|:---|:---|:---|
+| Sex (*sex*) | Has the value `12` with no corresponding map in the dictionary | Will be checked further before applying any changes | 0 |
+| Smoker (*smoker*) | Has the value `-999` with no corresponding map in the dictionary | Will be checked further before applying any changes | 0 |
+| Physical activity (*phy_activity*) | Has the label `Hihg` which assumed should be `High` | Will be cleaned first before converting it into factor type | 14 |
+| Diabetes (*diabetes*) | No invalid labels, only found NA data |  | 10 |
+| Ethnic group (*ethnicity*) | Has the value `4` with no corresponding map in the dictionary | Will be checked further before applying any changes | 12 |
+
+**Numerical / Continuous variables**
+
+| Variable | Issue | Action plan | Total NA rows |
+|:---|:---|:---|:---|
+| BMI (*bmi*) | The maximum bmi in this data is 295.00 which is not possible | Will be checked further before applying any changes | 7 |
 
 
 # Data quality assessment and cleaning
