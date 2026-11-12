@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Student ID: 52642998">
-<meta name="dcterms.date" content="2026-11-09">
+<meta name="dcterms.date" content="2026-11-12">
 
 <title>Introduction to Health Data Science (PU5058/PU5063): Assessment 2</title>
 <style>
@@ -69,23 +69,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="PU5063_52642998_A2_script_files/libs/clipboard/clipboard.min.js"></script>
 <script src="PU5063_52642998_A2_script_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="PU5063_52642998_A2_script_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="PU5063_52642998_A2_script_files/libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="PU5063_52642998_A2_script_files/libs/quarto-html/popper.min.js"></script>
 <script src="PU5063_52642998_A2_script_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="PU5063_52642998_A2_script_files/libs/quarto-html/anchor.min.js"></script>
 <link href="PU5063_52642998_A2_script_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="PU5063_52642998_A2_script_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="PU5063_52642998_A2_script_files/libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="PU5063_52642998_A2_script_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="PU5063_52642998_A2_script_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="PU5063_52642998_A2_script_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="PU5063_52642998_A2_script_files/libs/bootstrap/bootstrap-7a1ba01e1618e08d8f307002997fc2d6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="fullcontent quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -106,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 9, 2026</p>
+      <p class="date">November 12, 2026</p>
     </div>
   </div>
   
@@ -153,6 +154,10 @@ Clean-run checklist (before you submit)
 - Both files are named CourseCode_StudentID_A2_script.Rmd and
   CourseCode_StudentID_A2_script.html.
 -->
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <section id="research-question" class="level1">
 <h1>Research question</h1>
 <p><strong>Research question:</strong></p>
@@ -165,9 +170,9 @@ Clean-run checklist (before you submit)
 <section id="data-import-and-structure" class="level1">
 <h1>Data import and structure</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baseline data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Baseline_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baseline data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Baseline_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   501 obs. of  10 variables:
  $ ID           : chr  "COPD000001" "COPD000002" "COPD000003" "COPD000004" ...
@@ -181,7 +186,7 @@ Clean-run checklist (before you submit)
  $ inhaler      : int  1 1 1 0 1 0 1 1 0 1 ...
  $ exacerbations: int  0 3 1 0 1 1 2 0 2 1 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         ID           age             sex             smoker        
  Length   :501   Min.   :60.00   Min.   : 1.000   Min.   :-999.000  
@@ -208,16 +213,16 @@ Clean-run checklist (before you submit)
  Max.   :1.0000   Max.   :6.0000  
                                   </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visits data</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Visits_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visits data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">'data/Visits_Data.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   3466 obs. of  3 variables:
  $ ID      : chr  "COPD000001" "COPD000001" "COPD000001" "COPD000001" ...
  $ visit   : int  0 1 2 3 4 5 6 0 1 2 ...
  $ walk6min: num  498 499 518 509 513 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         ID           visit          walk6min    
  Length   :3466   Min.   :0.000   Min.   :203.9  
@@ -228,33 +233,33 @@ Clean-run checklist (before you submit)
                   Max.   :6.000   Max.   :581.0  
                                   NAs    :197    </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>visits_per_id <span class="ot">=</span> <span class="fu">aggregate</span>(visit <span class="sc">~</span> ID, <span class="at">data =</span> visits, <span class="at">FUN =</span> length)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(visits_per_id<span class="sc">$</span>visit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>visits_per_id <span class="ot">=</span> <span class="fu">aggregate</span>(visit <span class="sc">~</span> ID, <span class="at">data =</span> visits, <span class="at">FUN =</span> length)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(visits_per_id<span class="sc">$</span>visit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7 6</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(visits_per_id[visits_per_id<span class="sc">$</span>visit <span class="sc">==</span> <span class="dv">7</span>, ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(visits_per_id[visits_per_id<span class="sc">$</span>visit <span class="sc">==</span> <span class="dv">7</span>, ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 478</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(visits_per_id[visits_per_id<span class="sc">$</span>visit <span class="sc">==</span> <span class="dv">6</span>, ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(visits_per_id[visits_per_id<span class="sc">$</span>visit <span class="sc">==</span> <span class="dv">6</span>, ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20</code></pre>
 </div>
 </div>
-<p>The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), with 20 participants only having 6 visits while 478 participants have 7 visits.</p>
+<p>The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), with 20 participants only having 6 visits while 478 participants have 7 visits.</p>
 </section>
 <section id="data-quality-assessment-and-cleaning" class="level1">
 <h1>Data quality assessment and cleaning</h1>
 <section id="baseline-data" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-data">Baseline data</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Duplicates</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">duplicated</span>(baseline<span class="sc">$</span>ID), <span class="st">'ID'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Duplicates</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">duplicated</span>(baseline<span class="sc">$</span>ID), <span class="st">'ID'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "COPD000078"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>ID <span class="sc">==</span> <span class="st">'COPD000078'</span>, ] <span class="co"># Exact same row, index 78 and 501</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>ID <span class="sc">==</span> <span class="st">'COPD000078'</span>, ] <span class="co"># Exact same row, index 78 and 501</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            ID age sex smoker bmi phy_activity diabetes ethnicity inhaler
 78  COPD000078  62   1      1  30         Hihg        0         1       1
@@ -263,25 +268,25 @@ Clean-run checklist (before you submit)
 78              1
 501             1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor columns: sex, smoker, phy_activity, diabetes, ethnicity, inhaler</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1  2 12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>sex <span class="sc">==</span> <span class="dv">12</span>, ] <span class="co"># 1 row</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>sex <span class="sc">==</span> <span class="dv">12</span>, ] <span class="co"># 1 row</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            ID age sex smoker bmi phy_activity diabetes ethnicity inhaler
 439 COPD000439  75  12      1  28          Low        0         3       0
     exacerbations
 439             0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Smoker</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>smoker)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Smoker</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>smoker)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]    1    2    0 -999</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>smoker <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span>, ] <span class="co"># 3 rows; By convention -999 is typically used to denote NA or missing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>smoker <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span>, ] <span class="co"># 3 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            ID age sex smoker  bmi phy_activity diabetes ethnicity inhaler
 390 COPD000390  63   1   -999 23.2         High        0         2       0
@@ -292,12 +297,13 @@ Clean-run checklist (before you submit)
 416             2
 443             4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phy_activity</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>phy_activity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phy_activity</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>phy_activity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Very_high" "Low"       "High"      "Moderate"  NA          "Hihg"     </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>phy_activity <span class="sc">==</span> <span class="st">'Hihg'</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(baseline<span class="sc">$</span>phy_activity), ] <span class="co"># 6 rows; Clear typo 'Hihg' instead of 'High'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>phy_activity <span class="sc">==</span> <span class="st">'Hihg'</span> <span class="sc">&amp;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(baseline<span class="sc">$</span>phy_activity), ] <span class="co"># 6 rows; Typo 'Hihg'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            ID age sex smoker  bmi phy_activity diabetes ethnicity inhaler
 78  COPD000078  62   1      1 30.0         Hihg        0         1       1
@@ -314,37 +320,33 @@ Clean-run checklist (before you submit)
 365             1
 501             1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diabetes</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>diabetes) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diabetes</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>diabetes) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  0  1 NA</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ethnicity</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>ethnicity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ethnicity</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>ethnicity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1  3  2 NA  4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>ethnicity <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(baseline<span class="sc">$</span>ethnicity), ] <span class="co"># 4 rows; Unclear error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>baseline[baseline<span class="sc">$</span>ethnicity <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(baseline<span class="sc">$</span>ethnicity), <span class="sc">-</span><span class="dv">1</span>] <span class="co"># 4 rows; Unclear error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            ID age sex smoker  bmi phy_activity diabetes ethnicity inhaler
-40  COPD000040  60   2      2 35.2         High        0         4       1
-120 COPD000120  73   1      1 34.2     Moderate        0         4       0
-139 COPD000139  73   2      1 26.7         High        0         4       0
-457 COPD000457  70   1      1 29.6    Very_high        0         4       1
-    exacerbations
-40              0
-120             1
-139             0
-457             1</code></pre>
+<pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
+40   60   2      2 35.2         High        0         4       1             0
+120  73   1      1 34.2     Moderate        0         4       0             1
+139  73   2      1 26.7         High        0         4       0             0
+457  70   1      1 29.6    Very_high        0         4       1             1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inhaler</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>inhaler) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inhaler</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>inhaler) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Numerical / continuous columns: age, bmi</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>numerical_baseline_cols <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'age'</span>, <span class="st">'bmi'</span>)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline[, numerical_baseline_cols])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Numerical / continuous columns: age, bmi</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>numerical_baseline_cols <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'age'</span>, <span class="st">'bmi'</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(baseline[, numerical_baseline_cols])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      age             bmi        
  Min.   :60.00   Min.   : 17.20  
@@ -355,89 +357,69 @@ Clean-run checklist (before you submit)
  Max.   :75.00   Max.   :295.00  
                  NAs    :7       </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>irregular_bmi <span class="ot">=</span> baseline[</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    baseline<span class="sc">$</span>bmi <span class="sc">&gt;</span> <span class="fu">quantile</span>(baseline<span class="sc">$</span>bmi, <span class="at">probs =</span> <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        <span class="sc">!</span><span class="fu">is.na</span>(baseline<span class="sc">$</span>bmi),</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'bmi'</span>)</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(irregular_bmi[<span class="fu">order</span>(irregular_bmi<span class="sc">$</span>bmi, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ], <span class="at">n =</span> <span class="dv">5</span>) <span class="co"># Irregular BMI values of 288, 295</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BMI</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(baseline[<span class="fu">order</span>(baseline<span class="sc">$</span>bmi, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'bmi'</span>)]) <span class="co"># Irregular BMI values of 288.0, 295.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            ID   bmi
 237 COPD000237 295.0
 14  COPD000014 288.0
 401 COPD000401  38.4
 250 COPD000250  38.1
-149 COPD000149  36.7</code></pre>
+149 COPD000149  36.7
+86  COPD000086  36.5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exacerbations</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>exacerbations) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exacerbations</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(baseline<span class="sc">$</span>exacerbations) <span class="co"># No issues</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0 3 1 2 4 6 5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixing data issues</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> baseline[<span class="sc">-</span><span class="dv">501</span>, ] <span class="co"># Duplicate</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>sex  <span class="co"># Sex</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1]  1  2  1  2  2  2  2  2  2  2  2  2  1  1  1  1  2  2  2  2  1  1  2  2  1
- [26]  1  2  1  1  1  1  1  2  2  2  2  2  2  2  2  2  1  2  2  1  1  2  2  2  2
- [51]  2  2  2  1  1  1  1  2  2  2  1  2  2  1  1  1  1  1  1  2  2  2  2  1  1
- [76]  2  1  1  2  1  1  2  2  1  1  2  1  1  1  1  1  1  2  1  1  2  1  2  1  2
-[101]  2  2  1  2  1  2  1  2  2  2  1  1  1  1  1  1  1  2  1  1  1  2  2  2  2
-[126]  2  2  2  2  1  2  2  2  2  1  1  2  1  2  2  2  2  1  2  1  1  1  1  2  1
-[151]  2  2  2  2  1  2  2  1  1  2  1  1  2  2  1  1  2  1  2  2  2  1  1  2  1
-[176]  2  2  1  1  2  1  1  2  1  2  1  1  2  2  1  1  2  2  1  2  1  1  2  2  2
-[201]  2  2  1  1  2  1  1  2  2  1  1  1  1  1  1  2  2  2  1  1  2  2  2  2  1
-[226]  2  2  1  2  2  1  2  2  1  1  2  2  1  2  1  2  2  1  2  1  1  2  2  2  2
-[251]  2  1  1  2  1  1  1  1  1  2  2  1  1  2  2  1  2  2  2  1  1  1  2  2  2
-[276]  2  1  2  1  1  2  2  2  2  1  2  2  1  2  1  2  2  1  1  2  2  1  1  1  1
-[301]  1  2  2  2  2  2  1  1  1  1  2  2  1  2  2  2  2  1  1  1  1  2  1  1  2
-[326]  1  1  1  1  2  2  1  1  2  2  1  1  2  1  2  1  2  1  2  2  1  2  2  2  2
-[351]  1  1  2  2  1  2  1  1  2  2  2  2  1  2  1  2  2  1  1  2  1  2  1  1  1
-[376]  2  2  2  1  1  2  2  2  1  1  1  1  1  2  1  2  2  2  2  2  2  1  1  2  2
-[401]  1  2  2  2  2  1  2  2  1  1  2  2  1  1  1  1  2  2  1  2  2  1  2  1  2
-[426]  2  1  2  1  1  2  1  2  2  2  1  2  2 12  1  2  1  1  2  1  2  2  2  1  1
-[451]  1  1  2  2  2  2  1  2  2  2  2  1  1  2  2  1  2  2  1  2  1  2  1  1  1
-[476]  2  2  1  2  2  2  2  1  1  1  1  2  2  1  2  2  1  2  1  1  2  1  1  2  2</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>smoker[baseline<span class="sc">$</span>smoker <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span>] <span class="ot">=</span> <span class="cn">NA</span> <span class="co"># Smoker</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>phy_activity[baseline<span class="sc">$</span>phy_activity <span class="sc">==</span> <span class="st">'Hihg'</span>] <span class="ot">=</span> <span class="st">'High'</span> <span class="co"># Physical activity</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>ethnicity  <span class="co"># Ethnicity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1]  1  3  1  1  1  3  2  1  1  2  1  1 NA  1  1  1  1  1  2  1  3  1  1  1  2
- [26]  1  1  2  3  1  1  1  1  1  2  1  2  1 NA  4  3  1  1  1  1 NA  1  2  2  1
- [51]  1  1  3  2  1  1  1  1  1  2  1  1  2  3  1  1  3  1  1  2  1  1  1  1  1
- [76]  1 NA  1  1  2 NA  1  2  1  1  3  1  1  1  1  2  2  1  1  2  1  1  2  1  1
-[101]  1  3  1  1  1  1  3  3  1  2  3  1  1  2  1  1  3  1  1  4  1  1  1  2  1
-[126]  1  1  1  1  1  3  1  1  1  1  1  2  1  4  2  2  1  2  1  1  1  1  1  1  2
-[151]  1  3  3  1  1  2  2  2  1  1  1  1  1  2  1  1  1  1  1  1 NA  1  1  3  3
-[176]  1  3  1  1  1  1  1  1  1  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-[201]  1  2  1  1  2  1  2  1  1  1  1  1  1  2  2  1  3  1  1  1  1  1  2  2  2
-[226]  2  1  1  2  2  1  1 NA  1  2  1  2  1  1  1  3  2  2  1  1  1  1  1  1  1
-[251]  1  1  1 NA  2  1  1  1  1  2  1  3  2  1  2  1  1  2  2  2  1  1  2  1  1
-[276]  1  1  1  1  1  1  2  1  1  2  1  1  1  1  3  1  1  1  1  2  3  1  2  3  1
-[301]  1  1  1  1  1  1  2  1  1  1  1  1  1  2  1  1  3  1  2  2  3  1  2  1  1
-[326]  1  1  1  2  3  2  1  1  1  3  2  1  3  1  2  1  1  1  1  2  2  1  3  1  2
-[351]  1  1  1  1  1  1  1  1  1  1  1  1 NA  2  1  1  1  3  3  1  1  1  1  3  1
-[376]  1  3  1  1  1  3  1  1  1 NA  1  2  2  1  2  1  1  1  1  1  2  1  2  1  1
-[401]  1  1  1  1  1  2  1  1  1  1  1  1  1  3  2  1  2  1  1  1  2  1  3  1  1
-[426]  3  2  1  2  1  1  1  1  1  1  1  1  3  3  1  1  2  1  1  1  2  1  1 NA  1
-[451]  1  1  1  1  2  1  4  1  1  1  1  3  1  1  1  1  1  1  2  1  1  2  3  1  1
-[476]  1  1  1  1  1  1  3  1  1  1  1  1  2  1  1  2  3  2  3  1  3  1  1 NA  1</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>bmi[baseline<span class="sc">$</span>bmi <span class="sc">==</span> <span class="dv">288</span> <span class="sc">|</span> baseline<span class="sc">$</span>bmi <span class="sc">==</span> <span class="dv">295</span>] <span class="ot">=</span> <span class="cn">NA</span> <span class="co"># BMI</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixing data issues</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">=</span> baseline[<span class="sc">-</span><span class="dv">501</span>, ] <span class="co"># Duplicate</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>sex[baseline<span class="sc">$</span>sex <span class="sc">==</span> <span class="dv">12</span>] <span class="ot">=</span> <span class="cn">NA</span>  <span class="co"># Sex</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>smoker[baseline<span class="sc">$</span>smoker <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span>] <span class="ot">=</span> <span class="cn">NA</span> <span class="co"># Smoker</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>phy_activity[baseline<span class="sc">$</span>phy_activity <span class="sc">==</span> <span class="st">'Hihg'</span>] <span class="ot">=</span> <span class="st">'High'</span> <span class="co"># Physical activity</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>ethnicity[baseline<span class="sc">$</span>ethnicity <span class="sc">==</span> <span class="dv">4</span>] <span class="ot">=</span> <span class="cn">NA</span>  <span class="co"># Ethnicity</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>bmi[baseline<span class="sc">$</span>bmi <span class="sc">==</span> <span class="dv">288</span> <span class="sc">|</span> baseline<span class="sc">$</span>bmi <span class="sc">==</span> <span class="dv">295</span>] <span class="ot">=</span> <span class="cn">NA</span> <span class="co"># BMI</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create factor type of each categorical variables</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>fsex <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Female'</span>, <span class="st">'Male'</span>)</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>fsmoker <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>smoker, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Never smoked'</span>, <span class="st">'Ex smoker'</span>, <span class="st">'Current smoker'</span>)</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>fphy_activity <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>phy_activity,</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Low'</span>, <span class="st">'Moderate'</span>, <span class="st">'High'</span>, <span class="st">'Very_high'</span>)</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>fdiabetes <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>diabetes, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'No'</span>, <span class="st">'Yes'</span>)</span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>fethnicity <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>ethnicity, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Group1'</span>, <span class="st">'Group2'</span>, <span class="st">'Group3'</span>)</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>finhaler <span class="ot">=</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>inhaler, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Not receiving inhaler'</span>, <span class="st">'Receiving inhaler'</span>)</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visits-data" class="level2">
 <h2 class="anchored" data-anchor-id="visits-data">Visits data</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(visits)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   3466 obs. of  3 variables:
  $ ID      : chr  "COPD000001" "COPD000001" "COPD000001" "COPD000001" ...
  $ visit   : int  0 1 2 3 4 5 6 0 1 2 ...
  $ walk6min: num  498 499 518 509 513 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>visits[<span class="fu">duplicated</span>(visits[, <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'visit'</span>)]), <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'visit'</span>)] <span class="co"># No duplicates found in visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>visits[<span class="fu">duplicated</span>(visits), ] <span class="co"># No full duplicates</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ID       visit    walk6min
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>visits[<span class="fu">duplicated</span>(visits[, <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'visit'</span>)]),</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">'ID'</span>, <span class="st">'visit'</span>)] <span class="co"># No duplicates by ID and visit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] ID    visit
 &lt;0 rows&gt; (or 0-length row.names)</code></pre>
@@ -446,7 +428,6 @@ Clean-run checklist (before you submit)
 </section>
 <section id="data-cleaning-log" class="level2">
 <h2 class="anchored" data-anchor-id="data-cleaning-log">Data cleaning log</h2>
-<p><em>Kind of problem: clear error, an uncertain value or a genuine but unusual value</em></p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 12%">
@@ -487,8 +468,8 @@ Clean-run checklist (before you submit)
 <td style="text-align: left;">Value of <code>12</code> found</td>
 <td style="text-align: left;"><code>unique(baseline$sex)</code> shows the unique values of sex</td>
 <td style="text-align: left;">Uncertain value</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Update values to <code>NA</code></td>
+<td style="text-align: left;">It is not clear which label it’s originally meant to be</td>
 <td style="text-align: left;">1, participant <code>COPD000439</code></td>
 </tr>
 <tr class="odd">
@@ -517,15 +498,15 @@ Clean-run checklist (before you submit)
 <td style="text-align: left;">Value of <code>4</code> found</td>
 <td style="text-align: left;"><code>unique(baseline$ethnicity)</code> shows the unique values of ethnicity</td>
 <td style="text-align: left;">Uncertain value</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Update values to <code>NA</code></td>
+<td style="text-align: left;">It is not clear which label it’s originally meant to be</td>
 <td style="text-align: left;">4 rows</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
 <td style="text-align: left;">baseline, bmi</td>
 <td style="text-align: left;">Irregular extreme values</td>
-<td style="text-align: left;"><code>summary(baseline$bmi)</code> shows the max value of 295 and <code>baseline$bmi &gt; quantile(baseline$bmi, probs = 0.75, na.rm = TRUE)</code> shows another improbable bmi value of 288</td>
+<td style="text-align: left;"><code>summary(baseline$bmi)</code> shows the max value of 295 and ordering the data based on bmi in a descending order shows another improbable bmi value of 288</td>
 <td style="text-align: left;">Uncertain value</td>
 <td style="text-align: left;">Update values to <code>NA</code></td>
 <td style="text-align: left;">The likeliest value is 29.5 and 28.8 but no way to confirm</td>
@@ -537,18 +518,27 @@ Clean-run checklist (before you submit)
 </section>
 <section id="missing-data" class="level1">
 <h1>Missing data</h1>
-<p><em>Once you prepare the cleaned data, count the missing values for each variable in both datasets and for the outcome at each visit. Look for patterns, for example whether participants with certain baseline characteristics are more likely to have missing follow-up measurements, and whether missing information increases over follow-up. Remember that some missing values may be recorded in other ways than NA. Discuss what the missing information could mean for your research question and how you would handle it.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baseline</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(baseline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           ID           age           sex        smoker           bmi 
-            0             0             0             3             9 
+            0             0             1             3             9 
  phy_activity      diabetes     ethnicity       inhaler exacerbations 
-           14            10            12             0             0 </code></pre>
+           14            10            16             0             0 
+         fsex       fsmoker fphy_activity     fdiabetes    fethnicity 
+            1             3            14            10            16 
+     finhaler 
+            0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Physical activity</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">is.na</span>(baseline<span class="sc">$</span>phy_activity), <span class="sc">-</span><span class="dv">1</span>] <span class="co"># No clear pattern</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
+390  63   1     NA 23.2         High        0         2       0             0
+416  63   1     NA 30.2         High        0         1       1             2
+443  63   1     NA 27.3     Moderate        0         1       1             4
+      fsex fsmoker fphy_activity fdiabetes fethnicity              finhaler
+390 Female    &lt;NA&gt;           Low        No     Group2 Not receiving inhaler
+416 Female    &lt;NA&gt;           Low        No     Group1     Receiving inhaler
+443 Female    &lt;NA&gt;          High        No     Group1     Receiving inhaler</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
 13   61   1      1 32.0         &lt;NA&gt;        1        NA       0             0
@@ -564,10 +554,38 @@ Clean-run checklist (before you submit)
 235  65   1      1 31.8         &lt;NA&gt;        1         2       1             0
 255  73   1      1 30.5         &lt;NA&gt;        0         2       1             3
 371  64   1      2 31.9         &lt;NA&gt;        0         1       1             0
-482  66   2      1 31.6         &lt;NA&gt;        1         3       1             0</code></pre>
+482  66   2      1 31.6         &lt;NA&gt;        1         3       1             0
+      fsex        fsmoker fphy_activity fdiabetes fethnicity
+13  Female      Ex smoker          &lt;NA&gt;       Yes       &lt;NA&gt;
+17    Male Current smoker          &lt;NA&gt;       Yes     Group1
+29  Female   Never smoked          &lt;NA&gt;      &lt;NA&gt;     Group3
+42  Female      Ex smoker          &lt;NA&gt;        No     Group1
+101   Male      Ex smoker          &lt;NA&gt;        No     Group1
+108   Male      Ex smoker          &lt;NA&gt;        No     Group3
+186 Female      Ex smoker          &lt;NA&gt;        No     Group2
+208   Male      Ex smoker          &lt;NA&gt;        No     Group1
+211 Female Current smoker          &lt;NA&gt;        No     Group1
+214 Female   Never smoked          &lt;NA&gt;       Yes     Group2
+235 Female      Ex smoker          &lt;NA&gt;       Yes     Group2
+255 Female      Ex smoker          &lt;NA&gt;        No     Group2
+371 Female Current smoker          &lt;NA&gt;        No     Group1
+482   Male      Ex smoker          &lt;NA&gt;       Yes     Group3
+                 finhaler
+13  Not receiving inhaler
+17      Receiving inhaler
+29      Receiving inhaler
+42  Not receiving inhaler
+101 Not receiving inhaler
+108     Receiving inhaler
+186 Not receiving inhaler
+208     Receiving inhaler
+211 Not receiving inhaler
+214     Receiving inhaler
+235     Receiving inhaler
+255     Receiving inhaler
+371     Receiving inhaler
+482     Receiving inhaler</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diabetes</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">is.na</span>(baseline<span class="sc">$</span>diabetes), <span class="sc">-</span><span class="dv">1</span>] <span class="co"># No clear pattern</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
 14   73   1      1   NA    Very_high       NA         1       1             0
@@ -579,30 +597,89 @@ Clean-run checklist (before you submit)
 253  61   1      2 27.6         High       NA         1       1             0
 299  68   1      1 30.3         High       NA         3       0             0
 309  73   1      1 25.4          Low       NA         1       1             0
-352  74   1      0 18.4          Low       NA         1       0             0</code></pre>
+352  74   1      0 18.4          Low       NA         1       0             0
+      fsex        fsmoker fphy_activity fdiabetes fethnicity
+14  Female      Ex smoker     Very_high      &lt;NA&gt;     Group1
+23    Male      Ex smoker          High      &lt;NA&gt;     Group1
+29  Female   Never smoked          &lt;NA&gt;      &lt;NA&gt;     Group3
+76    Male      Ex smoker           Low      &lt;NA&gt;     Group1
+132   Male      Ex smoker           Low      &lt;NA&gt;     Group1
+200   Male      Ex smoker     Very_high      &lt;NA&gt;     Group1
+253 Female Current smoker           Low      &lt;NA&gt;     Group1
+299 Female      Ex smoker           Low      &lt;NA&gt;     Group3
+309 Female      Ex smoker      Moderate      &lt;NA&gt;     Group1
+352 Female   Never smoked      Moderate      &lt;NA&gt;     Group1
+                 finhaler
+14      Receiving inhaler
+23      Receiving inhaler
+29      Receiving inhaler
+76      Receiving inhaler
+132     Receiving inhaler
+200 Not receiving inhaler
+253     Receiving inhaler
+299 Not receiving inhaler
+309     Receiving inhaler
+352 Not receiving inhaler</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ethnicity</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>baseline[<span class="fu">is.na</span>(baseline<span class="sc">$</span>ethnicity), <span class="sc">-</span><span class="dv">1</span>] <span class="co"># No clear pattern</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    age sex smoker  bmi phy_activity diabetes ethnicity inhaler exacerbations
 13   61   1      1 32.0         &lt;NA&gt;        1        NA       0             0
 39   60   2      1 26.0          Low        0        NA       0             1
+40   60   2      2 35.2         High        0        NA       1             0
 46   71   1      2 23.9     Moderate        0        NA       1             1
 77   69   1      0 22.3     Moderate        0        NA       1             0
 81   67   1      1 24.2         High        0        NA       1             0
+120  73   1      1 34.2     Moderate        0        NA       0             1
+139  73   2      1 26.7         High        0        NA       0             0
 171  68   2      2 20.6          Low        0        NA       0             0
 233  75   2      1 27.2          Low        1        NA       1             1
 254  72   2      2 32.2          Low        0        NA       1             2
 363  66   1      1 24.3     Moderate        0        NA       0             1
 385  66   1      1 24.8          Low        0        NA       1             3
 449  63   1      2 32.1    Very_high        0        NA       1             1
-499  66   2      1 30.5     Moderate        0        NA       1             1</code></pre>
+457  70   1      1 29.6    Very_high        0        NA       1             1
+499  66   2      1 30.5     Moderate        0        NA       1             1
+      fsex        fsmoker fphy_activity fdiabetes fethnicity
+13  Female      Ex smoker          &lt;NA&gt;       Yes       &lt;NA&gt;
+39    Male      Ex smoker      Moderate        No       &lt;NA&gt;
+40    Male Current smoker           Low        No       &lt;NA&gt;
+46  Female Current smoker          High        No       &lt;NA&gt;
+77  Female   Never smoked          High        No       &lt;NA&gt;
+81  Female      Ex smoker           Low        No       &lt;NA&gt;
+120 Female      Ex smoker          High        No       &lt;NA&gt;
+139   Male      Ex smoker           Low        No       &lt;NA&gt;
+171   Male Current smoker      Moderate        No       &lt;NA&gt;
+233   Male      Ex smoker      Moderate       Yes       &lt;NA&gt;
+254   Male Current smoker      Moderate        No       &lt;NA&gt;
+363 Female      Ex smoker          High        No       &lt;NA&gt;
+385 Female      Ex smoker      Moderate        No       &lt;NA&gt;
+449 Female Current smoker     Very_high        No       &lt;NA&gt;
+457 Female      Ex smoker     Very_high        No       &lt;NA&gt;
+499   Male      Ex smoker          High        No       &lt;NA&gt;
+                 finhaler
+13  Not receiving inhaler
+39  Not receiving inhaler
+40      Receiving inhaler
+46      Receiving inhaler
+77      Receiving inhaler
+81      Receiving inhaler
+120 Not receiving inhaler
+139 Not receiving inhaler
+171 Not receiving inhaler
+233     Receiving inhaler
+254     Receiving inhaler
+363 Not receiving inhaler
+385     Receiving inhaler
+449     Receiving inhaler
+457     Receiving inhaler
+499     Receiving inhaler</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visits</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(visits))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      ID    visit walk6min 
        0        0      197 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
 </div>
 </div>
 </section>
@@ -610,17 +687,25 @@ Clean-run checklist (before you submit)
 <h1>Data linkage</h1>
 <p><em>Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include R code you use to link baseline and visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>linked_data <span class="ot">=</span> <span class="fu">merge</span>(baseline, visits, <span class="at">by =</span> <span class="st">'ID'</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(linked_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3466</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all.x -&gt; 3468</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># all.y -&gt; 3466</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># inner join -&gt; 3466</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Post data cleaning, baseline data ended up with 500 rows of data, while visits had 3466 rows of data but</p>
 </section>
 <section id="exploratory-analysis-and-visualisation" class="level1">
 <h1>Exploratory analysis and visualisation</h1>
 <p><em>Use numerical summaries and figures to explore the linked data <strong>in relation to your research question</strong>. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the <code>fig.cap</code> chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="summary-and-limitations" class="level1">
@@ -652,8 +737,8 @@ If you did not use GenAI, provide a declaration that you did not use GenAI tools
 <section id="session-information" class="level1">
 <h1>Session information</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.6.1 (2026-06-24)
 Platform: aarch64-apple-darwin23
@@ -673,15 +758,15 @@ attached base packages:
 [1] stats     graphics  grDevices datasets  utils     methods   base     
 
 other attached packages:
-[1] glue_1.8.1    knitr_1.52    ggplot2_4.0.3
+[1] knitr_1.52    ggplot2_4.0.3
 
 loaded via a namespace (and not attached):
  [1] digest_0.6.39      RColorBrewer_1.1-3 R6_2.6.1           fastmap_1.2.0     
- [5] xfun_0.62          farver_2.1.2       gtable_0.3.6       htmltools_0.5.9   
- [9] rmarkdown_2.32     lifecycle_1.0.5    cli_3.6.6          S7_0.2.2          
-[13] scales_1.4.0       vctrs_0.7.3        grid_4.6.1         withr_3.0.3       
-[17] renv_1.2.4         compiler_4.6.1     tools_4.6.1        evaluate_1.0.5    
-[21] yaml_2.3.12        rlang_1.3.0        jsonlite_2.0.0    </code></pre>
+ [5] xfun_0.62          farver_2.1.2       gtable_0.3.6       glue_1.8.1        
+ [9] htmltools_0.5.9    rmarkdown_2.32     lifecycle_1.0.5    cli_3.6.6         
+[13] S7_0.2.2           scales_1.4.0       vctrs_0.7.3        grid_4.6.1        
+[17] withr_3.0.3        renv_1.2.4         compiler_4.6.1     tools_4.6.1       
+[21] evaluate_1.0.5     yaml_2.3.12        rlang_1.3.0        jsonlite_2.0.0    </code></pre>
 </div>
 </div>
 </section>
@@ -766,7 +851,8 @@ loaded via a namespace (and not attached):
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -775,8 +861,69 @@ loaded via a namespace (and not attached):
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -790,6 +937,7 @@ loaded via a namespace (and not attached):
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -952,44 +1100,54 @@ loaded via a namespace (and not attached):
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -1087,6 +1245,9 @@ loaded via a namespace (and not attached):
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 
