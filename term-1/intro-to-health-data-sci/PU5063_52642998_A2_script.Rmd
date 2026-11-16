@@ -73,7 +73,7 @@ Similar question but instead of **COPD exacerbations**, **smoking status** inste
 
 
 # Data import and structure
-```{r import-baseline}
+```{r import}
 # Baseline data
 baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t')
 str(baseline)
@@ -88,7 +88,7 @@ unique(visits_per_id$visit)
 nrow(visits_per_id[visits_per_id$visit == 7, ])
 nrow(visits_per_id[visits_per_id$visit == 6, ])
 ```
-The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), with 20 participants only having 6 visits while 478 participants have 7 visits.
+The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), each participants are expected to have 7 visits total but 20 participants only having 6 visits while 478 participants have the full 7 visits.
 
 
 # Data quality assessment and cleaning
@@ -134,7 +134,7 @@ head(baseline[order(baseline$bmi, decreasing = TRUE),
 # Exacerbations
 unique(baseline$exacerbations) # No issues
 
-# Fixing data issues
+# Handling data issues
 baseline = baseline[-501, ] # Duplicate
 baseline$sex[baseline$sex == 12] = NA  # Sex
 baseline$smoker[baseline$smoker == -999] = NA # Smoker
@@ -142,7 +142,7 @@ baseline$phy_activity[baseline$phy_activity == 'Hihg'] = 'High' # Physical activ
 baseline$ethnicity[baseline$ethnicity == 4] = NA  # Ethnicity
 baseline$bmi[baseline$bmi == 288 | baseline$bmi == 295] = NA # BMI
 
-# Create factor type of each categorical variables
+# Factor type of each categorical variables as new variables
 baseline$fsex = factor(baseline$sex, levels = c(1, 2),
     labels = c('Female', 'Male')
 )
@@ -204,33 +204,45 @@ baseline[is.na(baseline$ethnicity), -1] # No clear pattern
 
 # Visits
 colSums(is.na(visits))
-nrow(visits[is.na(visits$walk6min) & visits$visit == 0, -1])
-# visit = 0 -> 24 rows
-# visit = 1 -> 25 rows
-# visit = 2 -> 24 rows
-# visit = 3 -> 22 rows
-# visit = 4 -> 24 rows
-# visit = 5 -> 43 rows
-# visit = 6 -> 35 rows
+table(visits[is.na(visits$walk6min), 'visit'])
+```
+
+Some of the participants have missing outcome on certain visits, summarised by
+
+| Visit Number | Total Missing |
+|:---|:---|
+| 0 (Baseline) | 24 |
+| 1 | 25 |
+| 2 | 24 |
+| 3 | 22 |
+| 4 | 24 |
+| 5 | 43 |
+| 6 | 35 |
+
+Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen. Moving on with the analysis, participants with missing baseline will be dropped as they are possibly invalid participants. For the participants with missing follow-up data they will still be analysed but only including the valid data (not NA).
+
+# Post cleaning data
+
+```{r post-clean}
 
 ```
 
 
 # Data linkage
 
+Since baseline data has 500 rows of data and visits had 3466 rows of data post data cleaning, after merging there should be 3466 rows of data assuming both datasets contains the same unique participant IDs.
+
 *Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.*
 
 ```{r linkage}
-linked_data = merge(baseline, visits, by = 'ID')
-nrow(linked_data)
-
-# all.x -> 3468
-# all.y -> 3466
-# inner join -> 3466
-
+linked_data = merge(baseline, visits, by = 'ID',
+    all.x = FALSE, all.y = FALSE
+)
+str(linked_data)
 ```
 
-Post data cleaning, baseline data ended up with 500 rows of data, while visits had 3466 rows of data but
+The total dataset after merging is 3466 as expected before the join. The inner join is used here because only valid data is needed for analysis, where valid data is participants (ID) that exist in both the baseline and visits dataset.
+
 
 
 # Exploratory analysis and visualisation
