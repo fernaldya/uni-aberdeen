@@ -204,22 +204,14 @@ baseline[is.na(baseline$ethnicity), -1] # No clear pattern
 
 # Visits
 colSums(is.na(visits))
-table(visits[is.na(visits$walk6min), 'visit'])
+kable(table(visits[is.na(visits$walk6min), 'visit']), col.names = c('Visit', 'Total NA'), align = 'l')
+
+invalid_participants = visits[which(visits$visit == 0 & is.na(visits$walk6min)), 'ID']
+invalid_participants
+nrow(visits[!visits$ID %in% invalid_participants,])
 ```
 
-Some of the participants have missing outcome on certain visits, summarised by
-
-| Visit Number | Total Missing |
-|:---|:---|
-| 0 (Baseline) | 24 |
-| 1 | 25 |
-| 2 | 24 |
-| 3 | 22 |
-| 4 | 24 |
-| 5 | 43 |
-| 6 | 35 |
-
-Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen. Moving on with the analysis, participants with missing baseline will be dropped as they are possibly invalid participants. For the participants with missing follow-up data they will still be analysed but only including the valid data (not NA).
+Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen. Moving on with the analysis, participants with missing baseline will be excluded as they are possibly invalid participants. For the participants with missing follow-up data they will still be analysed but only including the valid data (not NA).
 
 # Post cleaning data
 
@@ -241,7 +233,7 @@ linked_data = merge(baseline, visits, by = 'ID',
 str(linked_data)
 ```
 
-The total dataset after merging is 3466 as expected before the join. The inner join is used here because only valid data is needed for analysis, where valid data is participants (ID) that exist in both the baseline and visits dataset.
+The total dataset after merging is 3466 as expected before the join. The inner join is used here because only valid data is needed for analysis, where valid data is participants (ID) that exist in both the baseline and visits dataset. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, and as well as their baseline measure and all their follow-ups.
 
 
 
