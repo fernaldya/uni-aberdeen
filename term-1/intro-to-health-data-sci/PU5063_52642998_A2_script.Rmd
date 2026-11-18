@@ -186,7 +186,7 @@ visits[duplicated(visits[, c('ID', 'visit')]),
 
 # Missing data
 
-```{r missing, echo = FALSE}
+```{r missing, include = FALSE}
 # Baseline
 colSums(is.na(baseline))
 
