@@ -88,7 +88,7 @@ unique(visits_per_id$visit)
 nrow(visits_per_id[visits_per_id$visit == 7, ])
 nrow(visits_per_id[visits_per_id$visit == 6, ])
 ```
-The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), each participants are expected to have 7 visits total but 20 participants only having 6 visits while 478 participants have the full 7 visits.
+The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), each participants are expected to have 7 visits total but 20 participants only have 6 visits while 478 participants have the full 7 visits.
 
 
 # Data quality assessment and cleaning
