@@ -519,7 +519,50 @@ Clean-run checklist (before you submit)
 <h1>Missing data</h1>
 <section id="baseline-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-data-1">Baseline data</h2>
-<p>Missing data in the baseline data occured in the variables: <strong>smoking status, usual level of physical activity, diabetes status, and ethnicity</strong>. However, no clear patterns were found in these missing data. It is presumed that the missing data occurred completely at random.</p>
+<p>Missing data in the baseline data occured in the variables: <strong>smoking status, usual level of physical activity, diabetes status, and ethnicity</strong> with not very clear patterns on the missingness</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Total missing</th>
+<th style="text-align: left;">Pattern</th>
+<th style="text-align: left;">Type of missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Smoking status</td>
+<td style="text-align: left;">3 rows</td>
+<td style="text-align: left;">Too little data to find any missing patterns</td>
+<td style="text-align: left;">Missing completely at random</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Usual level of physical activity</td>
+<td style="text-align: left;">14 rows</td>
+<td style="text-align: left;">Majority of the missing occurred are participants receiving inhaler or ex smokers</td>
+<td style="text-align: left;">Missing completely at random</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Diabetes</td>
+<td style="text-align: left;">10 rows</td>
+<td style="text-align: left;">Majority of the missing occurred are participants receiving inhaler</td>
+<td style="text-align: left;">Missing completely at random</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethnicity</td>
+<td style="text-align: left;">16 rows</td>
+<td style="text-align: left;">Majority of the missing occurred are participants receiving inhaler</td>
+<td style="text-align: left;">Missing completely at random</td>
+</tr>
+</tbody>
+</table>
+<p>All the variables with missing data are presumed to be missing completely at random because while the majority of the missing data occurred on patients receiving inhaler, there is not enough data to draw a clear pattern.</p>
 </section>
 </section>
 <section id="visits-data-1" class="level1">
@@ -580,8 +623,9 @@ Clean-run checklist (before you submit)
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 168</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>valid_visits <span class="ot">=</span> visits[<span class="sc">!</span>visits<span class="sc">$</span>ID <span class="sc">%in%</span> invalid_participants, ] <span class="co"># Exclude all participants with no baseline measure</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(valid_visits) <span class="co"># 3298 rows left in the visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude all participants with no baseline measure</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>valid_visits <span class="ot">=</span> visits[<span class="sc">!</span>visits<span class="sc">$</span>ID <span class="sc">%in%</span> invalid_participants, ]</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(valid_visits) <span class="co"># 3298 rows left in the visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3298</code></pre>
 </div>

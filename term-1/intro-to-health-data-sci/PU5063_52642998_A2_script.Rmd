@@ -203,7 +203,16 @@ baseline[is.na(baseline$diabetes), -1] # No clear pattern
 baseline[is.na(baseline$ethnicity), -1] # No clear pattern
 ```
 
-Missing data in the baseline data occured in the variables: **smoking status, usual level of physical activity, diabetes status, and ethnicity**. However, no clear patterns were found in these missing data. It is presumed that the missing data occurred completely at random.
+Missing data in the baseline data occured in the variables: **smoking status, usual level of physical activity, diabetes status, and ethnicity** with not very clear patterns on the missingness
+
+| Variable | Total missing | Pattern | Type of missing
+| :-- | :-- | :-- | :-- |
+| Smoking status | 3 rows | Too little data to find any missing patterns | Missing completely at random |
+| Usual level of physical activity | 14 rows | Majority of the missing occurred are participants receiving inhaler or ex smokers | Missing completely at random |
+| Diabetes | 10 rows | Majority of the missing occurred are participants receiving inhaler | Missing completely at random |
+| Ethnicity | 16 rows | Majority of the missing occurred are participants receiving inhaler | Missing completely at random |
+
+All the variables with missing data are presumed to be missing completely at random because while the majority of the missing data occurred on patients receiving inhaler, there is not enough data to draw a clear pattern.
 
 # Visits data
 
@@ -214,7 +223,9 @@ kable(table(visits[is.na(visits$walk6min), 'visit']), col.names = c('Visit', 'To
 invalid_participants = visits[which(visits$visit == 0 & is.na(visits$walk6min)), 'ID']
 length(invalid_participants) # Total participants with no baseline measures
 nrow(visits[visits$ID %in% invalid_participants, ]) # Total rows with missing baseline measures
-valid_visits = visits[!visits$ID %in% invalid_participants, ] # Exclude all participants with no baseline measure
+
+# Exclude all participants with no baseline measure
+valid_visits = visits[!visits$ID %in% invalid_participants, ]
 nrow(valid_visits) # 3298 rows left in the visits data
 ```
 
