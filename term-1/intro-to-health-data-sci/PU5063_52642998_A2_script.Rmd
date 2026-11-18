@@ -64,12 +64,9 @@ library(knitr)
 
 **Research question:**
 
-Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of **COPD exacerbations** that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual **level of physical activity**?
+Among adults aged 60 to 75 in primary care diagnosed with COPD, does **smoking status** have any association with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual **level of physical activity**?
 
-> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many **COPD exacerbations** they had that required treatment in the previous 12 months and whether their usual **level of physical activity** also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.
-
-Similar question but instead of **COPD exacerbations**, **smoking status** instead.
-
+> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affected the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD.
 
 
 # Data import and structure
@@ -88,6 +85,7 @@ unique(visits_per_id$visit)
 nrow(visits_per_id[visits_per_id$visit == 7, ])
 nrow(visits_per_id[visits_per_id$visit == 6, ])
 ```
+
 The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), each participants are expected to have 7 visits total but 20 participants only have 6 visits while 478 participants have the full 7 visits.
 
 
@@ -186,7 +184,9 @@ visits[duplicated(visits[, c('ID', 'visit')]),
 
 # Missing data
 
-```{r missing, include = FALSE}
+## Baseline data
+
+```{r missing-baseline, include = FALSE}
 # Baseline
 colSums(is.na(baseline))
 
@@ -201,48 +201,44 @@ baseline[is.na(baseline$diabetes), -1] # No clear pattern
 
 # Ethnicity
 baseline[is.na(baseline$ethnicity), -1] # No clear pattern
+```
 
-# Visits
+Missing data in the baseline data occured in the variables: **smoking status, usual level of physical activity, diabetes status, and ethnicity**. However, no clear patterns were found in these missing data. It is presumed that the missing data occurred completely at random.
+
+# Visits data
+
+```{r missing-visits}
 colSums(is.na(visits))
 kable(table(visits[is.na(visits$walk6min), 'visit']), col.names = c('Visit', 'Total NA'), align = 'l')
 
 invalid_participants = visits[which(visits$visit == 0 & is.na(visits$walk6min)), 'ID']
-invalid_participants
-nrow(visits[!visits$ID %in% invalid_participants,])
+length(invalid_participants) # Total participants with no baseline measures
+nrow(visits[visits$ID %in% invalid_participants, ]) # Total rows with missing baseline measures
+valid_visits = visits[!visits$ID %in% invalid_participants, ] # Exclude all participants with no baseline measure
+nrow(valid_visits) # 3298 rows left in the visits data
 ```
 
-Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen. Moving on with the analysis, participants with missing baseline will be excluded as they are possibly invalid participants. For the participants with missing follow-up data they will still be analysed but only including the valid data (not NA).
-
-# Post cleaning data
-
-```{r post-clean}
-
-```
-
+Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen as it should have been done on enrolment. Moving on with the analysis, participants with missing baseline will be excluded as they may be invalid participants. The total data excluded is only 168 rows or around 1% which would not have a significant impact on the analysis. For the participants without missing baseline but missing follow-up they will still be analysed but only including the valid follow-ups (not NA). Furthermore, attrition grew slightly over the course of the follow-ups with the most lost happening at the fifth follow up at 43 missing, followed with the last follow up at 35 missing. The rest of the follow-ups had mostly around 24 lost to follow-ups.
 
 # Data linkage
 
-Since baseline data has 500 rows of data and visits had 3466 rows of data post data cleaning, after merging there should be 3466 rows of data assuming both datasets contains the same unique participant IDs.
-
-*Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.*
+Since baseline data has 500 rows of data and visits had 3298 rows of data post data cleaning, after merging there should be 3298 rows of data assuming both datasets contains the same unique participant IDs.
 
 ```{r linkage}
-linked_data = merge(baseline, visits, by = 'ID',
+linked_data = merge(baseline, valid_visits, by = 'ID',
     all.x = FALSE, all.y = FALSE
 )
-str(linked_data)
+nrow(linked_data)
 ```
 
-The total dataset after merging is 3466 as expected before the join. The inner join is used here because only valid data is needed for analysis, where valid data is participants (ID) that exist in both the baseline and visits dataset. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, and as well as their baseline measure and all their follow-ups.
-
-
+The total dataset after merging is 3298 rows. The **inner join** is used here because only participants that had their demographic characteristics and exposures taken and had their outcome measures taken are needed for the analysis, participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.
 
 # Exploratory analysis and visualisation
 
 *Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
 
 
-```{r summaries1}
+```{r summaries-characteristics}
 # R code to summarise data
 
 
@@ -268,10 +264,13 @@ The total dataset after merging is 3466 as expected before the join. The inner j
 
 Potential limitation:
 - Study participants only for age 60-75 years old
+- No statistical test means can't conclude a result with statistical significance
+- No models like regression means
 
 
 ## GenAI Declaration
 
+No generative AI tools was used in completing this assessment.
 <!--
 
 If you used generative AI in your assessment, you need to provide:

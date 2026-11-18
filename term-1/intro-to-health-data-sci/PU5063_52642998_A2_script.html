@@ -161,11 +161,10 @@ Clean-run checklist (before you submit)
 <section id="research-question" class="level1">
 <h1>Research question</h1>
 <p><strong>Research question:</strong></p>
-<p>Among adults aged 60 to 75 in primary care diagnosed with COPD, is the number of <strong>COPD exacerbations</strong> that require treatment during the previous 12 months associated with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual <strong>level of physical activity</strong>?</p>
+<p>Among adults aged 60 to 75 in primary care diagnosed with COPD, does <strong>smoking status</strong> have any association with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual <strong>level of physical activity</strong>?</p>
 <blockquote class="blockquote">
-<p>It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up with how many <strong>COPD exacerbations</strong> they had that required treatment in the previous 12 months and whether their usual <strong>level of physical activity</strong> also affected the distance they are able to walk. If there is, then a further investigation into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR). It is worth knowing the relationships between these variables as it could serve as a promoting point for having a better physical activity level despite having COPD.</p>
+<p>It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual <strong>level of physical activity</strong> also affected the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD.</p>
 </blockquote>
-<p>Similar question but instead of <strong>COPD exacerbations</strong>, <strong>smoking status</strong> instead.</p>
 </section>
 <section id="data-import-and-structure" class="level1">
 <h1>Data import and structure</h1>
@@ -518,52 +517,99 @@ Clean-run checklist (before you submit)
 </section>
 <section id="missing-data" class="level1">
 <h1>Missing data</h1>
-<p>Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen. Moving on with the analysis, participants with missing baseline will be excluded as they are possibly invalid participants. For the participants with missing follow-up data they will still be analysed but only including the valid data (not NA).</p>
+<section id="baseline-data-1" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-data-1">Baseline data</h2>
+<p>Missing data in the baseline data occured in the variables: <strong>smoking status, usual level of physical activity, diabetes status, and ethnicity</strong>. However, no clear patterns were found in these missing data. It is presumed that the missing data occurred completely at random.</p>
 </section>
-<section id="post-cleaning-data" class="level1">
-<h1>Post cleaning data</h1>
+</section>
+<section id="visits-data-1" class="level1">
+<h1>Visits data</h1>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(visits))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ID    visit walk6min 
+       0        0      197 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">table</span>(visits[<span class="fu">is.na</span>(visits<span class="sc">$</span>walk6min), <span class="st">'visit'</span>]), <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">'Visit'</span>, <span class="st">'Total NA'</span>), <span class="at">align =</span> <span class="st">'l'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Visit</th>
+<th style="text-align: left;">Total NA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>invalid_participants <span class="ot">=</span> visits[<span class="fu">which</span>(visits<span class="sc">$</span>visit <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(visits<span class="sc">$</span>walk6min)), <span class="st">'ID'</span>]</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(invalid_participants) <span class="co"># Total participants with no baseline measures</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(visits[visits<span class="sc">$</span>ID <span class="sc">%in%</span> invalid_participants, ]) <span class="co"># Total rows with missing baseline measures</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 168</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>valid_visits <span class="ot">=</span> visits[<span class="sc">!</span>visits<span class="sc">$</span>ID <span class="sc">%in%</span> invalid_participants, ] <span class="co"># Exclude all participants with no baseline measure</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(valid_visits) <span class="co"># 3298 rows left in the visits data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3298</code></pre>
+</div>
+</div>
+<p>Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen as it should have been done on enrolment. Moving on with the analysis, participants with missing baseline will be excluded as they may be invalid participants. The total data excluded is only 168 rows or around 1% which would not have a significant impact on the analysis. For the participants without missing baseline but missing follow-up they will still be analysed but only including the valid follow-ups (not NA). Furthermore, attrition grew slightly over the course of the follow-ups with the most lost happening at the fifth follow up at 43 missing, followed with the last follow up at 35 missing. The rest of the follow-ups had mostly around 24 lost to follow-ups.</p>
 </section>
 <section id="data-linkage" class="level1">
 <h1>Data linkage</h1>
-<p>Since baseline data has 500 rows of data and visits had 3466 rows of data post data cleaning, after merging there should be 3466 rows of data assuming both datasets contains the same unique participant IDs.</p>
-<p><em>Link the two datasets on the participant identifier. Before linking, work out how many rows you expect, and afterwards check that you have them. Check for identifiers that appear in one dataset but not the other, say which type of merge you used and why, and describe the linked dataset.</em></p>
+<p>Since baseline data has 500 rows of data and visits had 3298 rows of data post data cleaning, after merging there should be 3298 rows of data assuming both datasets contains the same unique participant IDs.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>linked_data <span class="ot">=</span> <span class="fu">merge</span>(baseline, visits, <span class="at">by =</span> <span class="st">'ID'</span>,</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">all.x =</span> <span class="cn">FALSE</span>, <span class="at">all.y =</span> <span class="cn">FALSE</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(linked_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>linked_data <span class="ot">=</span> <span class="fu">merge</span>(baseline, valid_visits, <span class="at">by =</span> <span class="st">'ID'</span>,</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">all.x =</span> <span class="cn">FALSE</span>, <span class="at">all.y =</span> <span class="cn">FALSE</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(linked_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   3466 obs. of  18 variables:
- $ ID           : chr  "COPD000001" "COPD000001" "COPD000001" "COPD000001" ...
- $ age          : int  67 67 67 67 67 67 67 67 67 67 ...
- $ sex          : int  1 1 1 1 1 1 1 2 2 2 ...
- $ smoker       : int  1 1 1 1 1 1 1 1 1 1 ...
- $ bmi          : num  17.9 17.9 17.9 17.9 17.9 17.9 17.9 25.4 25.4 25.4 ...
- $ phy_activity : chr  "Very_high" "Very_high" "Very_high" "Very_high" ...
- $ diabetes     : int  0 0 0 0 0 0 0 0 0 0 ...
- $ ethnicity    : int  1 1 1 1 1 1 1 3 3 3 ...
- $ inhaler      : int  1 1 1 1 1 1 1 1 1 1 ...
- $ exacerbations: int  0 0 0 0 0 0 0 3 3 3 ...
- $ fsex         : Factor w/ 2 levels "Female","Male": 1 1 1 1 1 1 1 2 2 2 ...
- $ fsmoker      : Factor w/ 3 levels "Never smoked",..: 2 2 2 2 2 2 2 2 2 2 ...
- $ fphy_activity: Factor w/ 4 levels "Low","Moderate",..: 4 4 4 4 4 4 4 2 2 2 ...
- $ fdiabetes    : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
- $ fethnicity   : Factor w/ 3 levels "Group1","Group2",..: 1 1 1 1 1 1 1 3 3 3 ...
- $ finhaler     : Factor w/ 2 levels "Not receiving inhaler",..: 2 2 2 2 2 2 2 2 2 2 ...
- $ visit        : int  0 1 2 3 4 5 6 0 1 2 ...
- $ walk6min     : num  498 499 518 509 513 ...</code></pre>
+<pre><code>[1] 3298</code></pre>
 </div>
 </div>
-<p>The total dataset after merging is 3466 as expected before the join. The inner join is used here because only valid data is needed for analysis, where valid data is participants (ID) that exist in both the baseline and visits dataset. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, and as well as their baseline measure and all their follow-ups.</p>
+<p>The total dataset after merging is 3298 rows. The <strong>inner join</strong> is used here because only participants that had their demographic characteristics and exposures taken and had their outcome measures taken are needed for the analysis, participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.</p>
 </section>
 <section id="exploratory-analysis-and-visualisation" class="level1">
 <h1>Exploratory analysis and visualisation</h1>
 <p><em>Use numerical summaries and figures to explore the linked data <strong>in relation to your research question</strong>. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the <code>fig.cap</code> chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.</em></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R code to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R plot to summarise data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="summary-and-limitations" class="level1">
@@ -576,11 +622,11 @@ Clean-run checklist (before you submit)
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
 <p><em>Discuss the limitations of the data and of your analysis, such as data-quality problems and the decisions you made about them, missing information and the observational design. Explain how each might affect what can be concluded.</em></p>
-<p>Potential limitation: - Study participants only for age 60-75 years old</p>
+<p>Potential limitation: - Study participants only for age 60-75 years old - No statistical test means can’t conclude a result with statistical significance - No models like regression means</p>
 </section>
 <section id="genai-declaration" class="level2">
 <h2 class="anchored" data-anchor-id="genai-declaration">GenAI Declaration</h2>
-<!--
+<p>No generative AI tools was used in completing this assessment. <!--
 
 If you used generative AI in your assessment, you need to provide:
 - Written acknowledgement of which generative AI tools have been used and to what extent.
@@ -589,14 +635,14 @@ If you used generative AI in your assessment, you need to provide:
 
 If you did not use GenAI, provide a declaration that you did not use GenAI tools in completing the assignment.
 
--->
+--></p>
 </section>
 </section>
 <section id="session-information" class="level1">
 <h1>Session information</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Records the R and package versions used to produce this report</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.6.1 (2026-06-24)
 Platform: aarch64-apple-darwin23
