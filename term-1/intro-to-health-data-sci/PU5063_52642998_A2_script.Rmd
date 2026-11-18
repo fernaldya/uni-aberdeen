@@ -66,7 +66,7 @@ library(knitr)
 
 Among adults aged 60 to 75 in primary care diagnosed with COPD, does **smoking status** have any association with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual **level of physical activity**?
 
-> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affected the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD.
+> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affects the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD. An initial assumption around this research question is that active smokers should have a lower distance walked in 6 minutes while participants with higher level of physical activity should have higher distance walked. However, the following analyses will prove or disprove this hypothesis.
 
 
 # Data import and structure
@@ -229,7 +229,7 @@ valid_visits = visits[!visits$ID %in% invalid_participants, ]
 nrow(valid_visits) # 3298 rows left in the visits data
 ```
 
-Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen as it should have been done on enrolment. Moving on with the analysis, participants with missing baseline will be excluded as they may be invalid participants. The total data excluded is only 168 rows or around 1% which would not have a significant impact on the analysis. For the participants without missing baseline but missing follow-up they will still be analysed but only including the valid follow-ups (not NA). Furthermore, attrition grew slightly over the course of the follow-ups with the most lost happening at the fifth follow up at 43 missing, followed with the last follow up at 35 missing. The rest of the follow-ups had mostly around 24 lost to follow-ups.
+Some missing follow-up data is expected and could possibly be because of lost to follow-up. However, missing baseline measure should not happen as it should have been done on enrolment. Moving on with the analysis, participants with missing baseline will be excluded as they may be invalid participants. The total data excluded is only 168 rows or around 1% which would not have a significant impact on the analysis. For the participants without missing baseline but missing follow-up they will still be analysed but only including the valid follow-ups (not NA). Furthermore, attrition grew slightly over the course of the follow-ups with the most lost happening at the fifth follow up at 43 missing, followed with the last follow up at 35 missing. The rest of the follow-ups had mostly around 24 lost to follow-ups. The total data left after excluding this data is 3298 rows.
 
 # Data linkage
 
@@ -242,18 +242,46 @@ linked_data = merge(baseline, valid_visits, by = 'ID',
 nrow(linked_data)
 ```
 
-The total dataset after merging is 3298 rows. The **inner join** is used here because only participants that had their demographic characteristics and exposures taken and had their outcome measures taken are needed for the analysis, participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.
+The total dataset after merging is 3298 rows. **Inner join** is used here because only participants that had their demographic characteristics and exposures taken and had their outcome measures taken are needed for the analysis. Participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa, patients that have a baseline or outcome measures but don't exist in the demographic characteristics and exposures dataset) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.
 
 # Exploratory analysis and visualisation
 
+Since the focus is smoking status and the participants usual level of physical activity on whether it affects how far they are able to walk in 6 minutes, the focus of the analysis will be on these two variables only.
 *Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
 
 
-```{r summaries-characteristics}
-# R code to summarise data
-
-
+```{r frequency-smoker, tab.cap = 'Total participants for each smoking status'}
+total_smokers = as.data.frame(table(baseline$fsmoker))
+total_smokers$total_pct = round(total_smokers$Freq / sum(total_smokers$Freq) * 100, 1)
+kable(total_smokers, align = 'l',
+    col.names = c('Smoking status', 'Total participants (n)', 'Total participants (%)')
+)
 ```
+
+370 of the participants or 74.4% are ex smokers, followed with 87 current smokers or 17.5%, and 4 who never smoked or 8% of the participants.
+
+```{r frequency-phyactivity, tab.cap = 'Total participants for each level of physical activity'}
+total_activity = as.data.frame(table(baseline$fphy_activity))
+total_activity$total_pct = round(total_activity$Freq / sum(total_activity$Freq) * 100, 1)
+kable(total_activity, align = 'l',
+    col.names = c('Level of physical activity', 'Total participants (n)', 'Total participants (%)')
+)
+```
+
+The majority of the participants have low physical activity level with 37%, then high level of physical activity with 29.8%, followed with moderate level of physical activity or 19.1%, and the least frequent is participants who have very high level of physical activity with only 14%.
+
+```{r distance-per-visit, fig.cap = 'Box plot of distance walked in 6 minutes per visit'}
+ggplot(data = linked_data, aes(x = factor(visit), y = walk6min)) +
+    geom_boxplot(na.rm = TRUE) +
+    labs(
+        title = 'Distance walked in 6 minutes per visit',
+        x = 'Visit',
+        y = 'Distance walked in 6 minutes'
+    ) +
+    theme(plot.title = element_text(hjust = 0.5))
+```
+
+Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes are consistent with a few outliers but not notable. The median and interquartile range of each visit is also similar. The spread of the distance for the baseline and follow-ups are also similar with a few consistent upper outliers. Only two lower outliers exist on the second and sixth follow-up.
 
 ```{r outcome-over-visits1, fig.cap = 'Replace with a caption describing this figure.'}
 # R plot to summarise data
@@ -274,9 +302,9 @@ The total dataset after merging is 3298 rows. The **inner join** is used here be
 *Discuss the limitations of the data and of your analysis, such as data-quality problems and the decisions you made about them, missing information and the observational design. Explain how each might affect what can be concluded.*
 
 Potential limitation:
-- Study participants only for age 60-75 years old
+- Study participants limited to 60-75 years old
 - No statistical test means can't conclude a result with statistical significance
-- No models like regression means
+- No regression model means can't quantify magnitude of predictor against the dependent variable
 
 
 ## GenAI Declaration
