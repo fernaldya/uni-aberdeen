@@ -8,6 +8,7 @@ output:
     number_sections: false
 ---
 
+```{=html}
 <!--
 HOW TO USE THIS TEMPLATE (this block does not appear in your HTML file)
 
@@ -43,6 +44,7 @@ Clean-run checklist (before you submit)
 - Both files are named CourseCode_StudentID_A2_script.Rmd and
   CourseCode_StudentID_A2_script.html.
 -->
+```
 
 ```{r setup, include = FALSE}
 # Do NOT delete this code chunk. Warnings are shown on purpose.
@@ -59,7 +61,6 @@ library(ggplot2)
 library(knitr)
 ```
 
-
 # Research question
 
 **Research question:**
@@ -68,8 +69,8 @@ Among adults aged 60 to 75 in primary care diagnosed with COPD, does **smoking s
 
 > It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affects the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD. An initial assumption around this research question is that active smokers should have a lower distance walked in 6 minutes while participants with higher level of physical activity should have higher distance walked. However, the following analyses will prove or disprove this hypothesis.
 
-
 # Data import and structure
+
 ```{r import}
 # Baseline data
 baseline = read.table('data/Baseline_Data.tsv', header = TRUE, sep = '\t')
@@ -88,9 +89,10 @@ nrow(visits_per_id[visits_per_id$visit == 6, ])
 
 The baseline data contains 501 rows of data with 10 columns (variables). Some of the data types from the baseline data are not automatically the correct data type according to the dictionary and also contain some NA values. Possible duplicate ID shown from the baseline summary with 501 observations but only 500 unique values. The visits data contains 3466 rows of data with 3 columns (variables), each participants are expected to have 7 visits total but 20 participants only have 6 visits while 478 participants have the full 7 visits.
 
-
 # Data quality assessment and cleaning
+
 ## Baseline data
+
 ```{r clean-baseline}
 # Duplicates
 baseline[duplicated(baseline$ID), 'ID']
@@ -173,14 +175,13 @@ visits[duplicated(visits[, c('ID', 'visit')]),
 ## Data cleaning log
 
 | No. | Dataset and variable | Problem found | Evidence | Kind of problem | Decision | Justification | Values or rows affected |
-|:---|:---|:---|:---|:---|:---|:---|:---|
+|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
 | 1 | baseline, all variables | Fully duplicated row | `baseline[duplicated(baseline$ID), 'ID']` shows the duplicated ID | Clear error | Remove row 501 | Duplicate ID found with all the other columns having the same data | 1, participant `COPD000078` |
-| 2 | baseline, sex | Value of `12` found | `unique(baseline$sex)` shows the unique values of sex | Uncertain value | Update values to `NA` | It is not clear which label it's originally meant to be | 1, participant `COPD000439`|
+| 2 | baseline, sex | Value of `12` found | `unique(baseline$sex)` shows the unique values of sex | Uncertain value | Update values to `NA` | It is not clear which label it's originally meant to be | 1, participant `COPD000439` |
 | 3 | baseline, smoker | Value of `-999` found | `unique(baseline$smoker)` shows the unique values of smoker | Clear error | Update values to `NA` | By convention the value `-999` is typically used to denote missing data | 3 rows |
 | 4 | baseline, phy_activity | Label `Hihg` found | `unique(baseline$phy_activity)` shows the unique values of phy_activity | Uncertain value | Update label to `High` | The typo is obvious where instead of `High`, the label `Hihg` was given | 6 rows |
 | 5 | baseline, ethnicity | Value of `4` found | `unique(baseline$ethnicity)` shows the unique values of ethnicity | Uncertain value | Update values to `NA` | It is not clear which label it's originally meant to be | 4 rows |
 | 6 | baseline, bmi | Irregular extreme values | `summary(baseline$bmi)` shows the max value of 295 and ordering the data based on bmi in a descending order shows another improbable bmi value of 288 | Uncertain value | Update values to `NA` | The likeliest value is 29.5 and 28.8 but no way to confirm | 2 rows |
-
 
 # Missing data
 
@@ -205,8 +206,8 @@ baseline[is.na(baseline$ethnicity), -1] # No clear pattern
 
 Missing data in the baseline data occured in the variables: **smoking status, usual level of physical activity, diabetes status, and ethnicity** with not very clear patterns on the missingness
 
-| Variable | Total missing | Pattern | Type of missing
-| :-- | :-- | :-- | :-- |
+| Variable | Total missing | Pattern | Type of missing |
+|:-----------------|:-----------------|:-----------------|:-----------------|
 | Smoking status | 3 rows | Too little data to find any missing patterns | Missing completely at random |
 | Usual level of physical activity | 14 rows | Majority of the missing occurred are participants receiving inhaler or ex smokers | Missing completely at random |
 | Diabetes | 10 rows | Majority of the missing occurred are participants receiving inhaler | Missing completely at random |
@@ -221,7 +222,7 @@ colSums(is.na(visits))
 kable(table(visits[is.na(visits$walk6min), 'visit']), col.names = c('Visit', 'Total NA'), align = 'l')
 
 invalid_participants = visits[which(visits$visit == 0 & is.na(visits$walk6min)), 'ID']
-length(invalid_participants) # Total participants with no baseline measures
+
 nrow(visits[visits$ID %in% invalid_participants, ]) # Total rows with missing baseline measures
 
 # Exclude all participants with no baseline measure
@@ -246,9 +247,7 @@ The total dataset after merging is 3298 rows. **Inner join** is used here becaus
 
 # Exploratory analysis and visualisation
 
-Since the focus is smoking status and the participants usual level of physical activity on whether it affects how far they are able to walk in 6 minutes, the focus of the analysis will be on these two variables only.
-*Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
-
+Since the focus is smoking status and the participants usual level of physical activity on whether it affects how far they are able to walk in 6 minutes, the focus of the analysis will be on these two variables only. *Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
 
 ```{r frequency-smoker, tab.cap = 'Total participants for each smoking status'}
 total_smokers = as.data.frame(table(baseline$fsmoker))
@@ -270,24 +269,45 @@ kable(total_activity, align = 'l',
 
 The majority of the participants have low physical activity level with 37%, then high level of physical activity with 29.8%, followed with moderate level of physical activity or 19.1%, and the least frequent is participants who have very high level of physical activity with only 14%.
 
+```{r frequency-smoker-activity, tab.cap = 'Crosstabulation of smoker status and level of physical activity'}
+total_smoker_activity = as.data.frame(table(linked_data[, c('fsmoker', 'fphy_activity')]))
+total_smoker_activity
+```
+
 ```{r distance-per-visit, fig.cap = 'Box plot of distance walked in 6 minutes per visit'}
+overall_median = median(linked_data$walk6min, na.rm = TRUE)
 ggplot(data = linked_data, aes(x = factor(visit), y = walk6min)) +
-    geom_boxplot(na.rm = TRUE) +
+    geom_boxplot(outlier.color = '#D55E00', na.rm = TRUE) +
+    geom_hline(aes(yintercept = overall_median), 
+       linetype = 'solid', linewidth = 0.8,
+       colour = '#CC79A7'
+    ) +
     labs(
         title = 'Distance walked in 6 minutes per visit',
         x = 'Visit',
-        y = 'Distance walked in 6 minutes'
+        y = 'Distance walked in 6 minutes (m)'
     ) +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme_minimal()
 ```
 
 Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes are consistent with a few outliers but not notable. The median and interquartile range of each visit is also similar. The spread of the distance for the baseline and follow-ups are also similar with a few consistent upper outliers. Only two lower outliers exist on the second and sixth follow-up.
 
-```{r outcome-over-visits1, fig.cap = 'Replace with a caption describing this figure.'}
-# R plot to summarise data
-
+```{r distance-for-smoker, fig.cap = 'Distance walked in 6 minutes per smoking status'}
+ggplot(data = subset(linked_data[!is.na(linked_data$fsmoker), ]), aes(x = fsmoker, y = walk6min)) +
+    geom_boxplot(outlier.color = '#D55E00', na.rm = TRUE) +
+    geom_hline(aes(yintercept = overall_median), 
+       linetype = 'solid', linewidth = 0.8,
+       colour = '#CC79A7'
+    ) +
+    labs(
+        title = 'Distance walked in 6 minutes per smoking status',
+        x = 'Smoking status',
+        y = 'Distance walked in 6 minutes (m)'
+    ) +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme_minimal()
 ```
-
 
 # Summary and limitations
 
@@ -301,26 +321,11 @@ Across all the visits including baseline, the distribution of how far the partic
 
 *Discuss the limitations of the data and of your analysis, such as data-quality problems and the decisions you made about them, missing information and the observational design. Explain how each might affect what can be concluded.*
 
-Potential limitation:
-- Study participants limited to 60-75 years old
-- No statistical test means can't conclude a result with statistical significance
-- No regression model means can't quantify magnitude of predictor against the dependent variable
-
+Potential limitation: - Study participants limited to 60-75 years old - No statistical test means can't conclude a result with statistical significance - No regression model means can't quantify magnitude of predictor against the dependent variable
 
 ## GenAI Declaration
 
 No generative AI tools was used in completing this assessment.
-<!--
-
-If you used generative AI in your assessment, you need to provide:
-- Written acknowledgement of which generative AI tools have been used and to what extent.
-- A description of how the information was generated (including the prompts used).
-- Citing and referencing using the most relevant source types in the style being used (e.g. non-recoverable sources, personal communication).
-
-If you did not use GenAI, provide a declaration that you did not use GenAI tools in completing the assignment.
-
--->
-
 
 # Session information
 
