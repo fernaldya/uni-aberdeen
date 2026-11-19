@@ -300,6 +300,7 @@ ggplot(data = subset(linked_data[!is.na(linked_data$fsmoker), ]), aes(x = fsmoke
        linetype = 'solid', linewidth = 0.8,
        colour = '#CC79A7'
     ) +
+    scale_y_continuous(limits = c(100, 600), breaks = seq(100, 600, 100)) +
     labs(
         title = 'Distance walked in 6 minutes per smoking status',
         x = 'Smoking status',
@@ -308,6 +309,20 @@ ggplot(data = subset(linked_data[!is.na(linked_data$fsmoker), ]), aes(x = fsmoke
     theme(plot.title = element_text(hjust = 0.5)) +
     theme_minimal()
 ```
+
+The median of the distance walked in 6 minutes for current smoker is far lower than the participants that have never smoked or ex smokers. A few outliers in both direction exist for ex smokers, while current smokers have more upper outliers. The maximum distance walked in 6 minutes is from the current smoker group and the minimum is from the ex smoker group. The spread of those who never smoked is far wider than the other groups.
+
+```{r normal distr}
+ggplot(data = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min), 
+                          c('walk6min', 'fsmoker')
+        ], aes(x = fsmoker, y = walk6min)
+    ) +
+    geom_violin(quantile.colour = '#D55E00', quantile.linetype = 'solid') +
+    geom_hline(aes(yintercept = overall_median)) +
+    scale_y_continuous(limits = c(200, 600), breaks = seq(200, 600, 100)) +
+    theme_minimal()
+```
+
 
 # Summary and limitations
 
