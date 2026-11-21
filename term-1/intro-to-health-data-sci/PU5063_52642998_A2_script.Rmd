@@ -271,7 +271,24 @@ The majority of the participants have low physical activity level with 37%, then
 
 ```{r frequency-smoker-activity, tab.cap = 'Crosstabulation of smoker status and level of physical activity'}
 total_smoker_activity = as.data.frame(table(linked_data[, c('fsmoker', 'fphy_activity')]))
-total_smoker_activity
+
+pct_within_smoker = round(
+    prop.table(
+        table(linked_data[, c('fsmoker', 'fphy_activity')]), margin = 1
+    ) * 100, 2
+) # Fetch the percentage within smokers
+
+pct_within_activity = round(
+    prop.table(
+        table(linked_data[, c('fsmoker', 'fphy_activity')]), margin = 2
+    ) * 100, 2
+) # Fetch the percentage within activity level
+
+total_smoker_activity$pct_within_smoker = c(pct_within_smoker)
+total_smoker_activity$pct_within_activity = c(pct_within_activity)
+kable(total_smoker_activity, align = 'l',
+    col.names = c('Smoking status', 'Level of physical activity', 'Total participants')
+)
 ```
 
 ```{r distance-per-visit, fig.cap = 'Box plot of distance walked in 6 minutes per visit'}
