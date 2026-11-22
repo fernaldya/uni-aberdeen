@@ -215,7 +215,7 @@ Missing data in the baseline data occured in the variables: **smoking status, us
 
 All the variables with missing data are presumed to be missing completely at random because while the majority of the missing data occurred on patients receiving inhaler, there is not enough data to draw a clear pattern.
 
-# Visits data
+## Visits data
 
 ```{r missing-visits}
 colSums(is.na(visits))
@@ -243,7 +243,7 @@ linked_data = merge(baseline, valid_visits, by = 'ID',
 nrow(linked_data)
 ```
 
-The total dataset after merging is 3298 rows. **Inner join** is used here because only participants that had their demographic characteristics and exposures taken and had their outcome measures taken are needed for the analysis. Participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa, patients that have a baseline or outcome measures but don't exist in the demographic characteristics and exposures dataset) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.
+The total dataset after merging is 3298 rows. **Inner join** is used here because only participants that had their demographic characteristics and exposures taken as well as their outcome measures are needed for the analysis. Participants that had their demographic characteristics and exposures measured but do not have any baseline or outcome measures (or vice versa, patients that have a baseline or outcome measures but don't exist in the demographic characteristics and exposures dataset) are excluded and treated as invalid participants. The merged dataset now contains the participant information, characteristics such as pre-existing conditions or exposures, as well as their baseline measure and all their follow-ups.
 
 # Exploratory analysis and visualisation
 
@@ -304,7 +304,6 @@ kable(total_smoker_activity[, c('fsmoker', 'fphy_activity', 'row_col_pct', 'pct_
 )
 ```
 
-Among those who never smoked, . However, since the majority of the participants are ex smokers it is expected that the cross tabulation of smoking status and their usual level of physical activity is highest in ex smokers. 
 
 ```{r heatmap}
 ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_within_smoker)) +
@@ -314,12 +313,13 @@ ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_with
             colour = ifelse(pct_within_smoker > 20, 'white', 'black')
         ),
         fontface = 'bold',
+        size = 3,
         show.legend = FALSE
     ) +
     scale_fill_viridis_c(
         option = 'C',
         direction = -1,
-        name = 'Within smoking status, %'
+        name = 'Within smoking status,\nn (%)'
     ) +
     scale_colour_manual(
         values = c('white' = '#FFFFFF', 'black' = '#111111')
@@ -330,40 +330,103 @@ ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_with
         title = 'Heatmap of cross tabulation between smoking status \n and level of physical activity'
     ) +
     theme_minimal() +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        legend.box.background = element_rect(
+            fill = alpha('#e5e5e5', 1), linewidth = 0.2, linetype = "solid", color = "#222222"
+        )
+    )
 ```
 
+In those who never smoked and the ex smoker groups, the trends are the same where the majority have a low level of physical activity with 42.11% and 36.57% respectively, followed with high level of physical activity at 31.58% and 30.19%, then moderate levels at 18.42% and 19.67%, and the least populated with very high level of physical activity at 7.89% and 13.57%. However, for current smokers the trend is slightly different where instead of very high level of physical activity being the least frequent, it is swapped with moderate level of physical activity instead.
 
 ## Outcome characteristics
 
-```{r distance-per-visit, fig.cap = 'Box plot of distance walked in 6 minutes per visit'}
-overall_median = median(linked_data$walk6min, na.rm = TRUE)
-ggplot(data = linked_data, aes(x = factor(visit), y = walk6min)) +
-    geom_boxplot(
-        outlier.color = '#D55E00', 
-        median.colour = '#111111',
-        fill = '#56B4E9', 
-        na.rm = TRUE
+```{r distance-per-visit, fig.cap = 'Distance walked in 6 minutes per visit'}
+overall_mean = mean(linked_data$walk6min, na.rm = TRUE)
+ggplot(
+      data = linked_data[!is.na(linked_data$walk6min), 
+      c('walk6min', 'visit')], 
+      aes(x = factor(visit), y = walk6min, fill = factor(visit))
+    ) +
+    geom_violin() +
+    geom_jitter(
+      alpha = 0.25, size = 0.4, 
+      width = 0.1, colour = '#1A1A1A',
+      show.legend = FALSE
     ) +
     geom_hline(
-        aes(yintercept = overall_median), 
-        linetype = 'dashed', linewidth = 0.8,
-        colour = '#CC79A7'
+      aes(yintercept = overall_mean, linetype ='Overall mean'), 
+      linewidth = 0.8, colour = '#444444'
     ) +
+    stat_summary(# 1 SD
+      fun = mean, 
+      fun.min = function(y) mean(y) - sd(y),
+      fun.max = function(y) mean(y) + sd(y),
+      geom = 'errorbar', colour = '#FFFFFF',
+      width = 0.1, linewidth = 0.8,
+    ) +
+    stat_summary(# Group mean
+      fun = mean, geom = 'point',
+      colour = '#FFFFFF', size = 2.5,
+      show.legend = FALSE
+    ) +
+    scale_y_continuous(limits = c(200, 600), breaks = c(seq(200, 600, 100), round(overall_mean))) +
+    scale_linetype_manual(
+      name = '',
+      values = c('Overall mean' = 'dashed')
+    ) +
+    scale_fill_discrete(guide = 'none') +
     labs(
-        title = 'Distance walked in 6 minutes per visit',
         x = 'Visit',
-        y = 'Distance walked in 6 minutes (m)'
-    ) +
+        y = 'Distance walked in 6 minutes (m)',
+        title = 'Distance walked in 6 minutes per visit',
+        fill = 'Visit'
+    ) + 
     theme_classic() +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(
+      plot.title = element_text(hjust = 0.5),
+      legend.key.width = unit(1, "cm")
+    )
 ```
 
-Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes are consistent with a few outliers but not notable. The median and interquartile range of each visit is also similar. The spread of the distance for the baseline and follow-ups are also similar with a few consistent upper outliers. Only two lower outliers exist on the second and sixth follow-up.
+Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes across the baseline and all the follow-ups are similar and approximately normal with a few outliers but not notable. The mean and 1 standard deviation spread as noted by the white error bar within each violin is relatively similar. Overall, without accounting for any specific exposure, there is no growth in the distance the participants are able to walk in 6 minutes from the baseline to the follow-ups.
 
+```{r distance-means-spread, tab.cap = 'Summary statistics of 6 minute walk distance without specific exposure'}
+distance_means = aggregate(
+    walk6min ~ visit, data = linked_data,
+    FUN = function(x) round(mean(x), 2)
+)
+distance_sd = aggregate(
+    walk6min ~ visit, data = linked_data,
+    FUN = function(x) round(sd(x), 2)
+)
+
+distance_summary = merge(
+    distance_means, distance_sd, 
+    by = 'visit'
+)
+distance_summary$one_sd_spread = sprintf('%.2f, %.2f', 
+    distance_summary$walk6min.x - distance_summary$walk6min.y,
+    distance_summary$walk6min.x + distance_summary$walk6min.y
+)
+distance_summary[1,1] = 'Baseline'
+
+kable(distance_summary,
+    align = 'l',
+    col.names = c('Visit', 'Average 6 minutes <br>walk distance (m)', 
+                  'Standard deviation 6 <br>minutes walk distance (m)',
+                  'Mean ± 1 SD')
+)
+```
+
+The table above shows how similar the average and the spread of the data is between the baseline and the follow-ups. It also further shows in detail the absence of growth from the baseline to the follow-ups. The highest average occurred on the second follow up but the increase from the baseline is only by 0.48 metres, while the baseline against all the other follow-ups only decreased. The lowest average is on the last follow-up at 378.20 metres, almost 3 metres lower than the baseline.
+
+### 1 Exposure
+
+**Need to change graph below to account for each visits, 3 parallel graphs vertically**
 
 ```{r distance-for-smoker, warning = FALSE, fig.cap = 'Distance walked in 6 minutes per smoking status'}
-overall_mean = mean(linked_data$walk6min, na.rm = TRUE)
 ggplot(
       data = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min), 
       c('walk6min', 'fsmoker')], 
@@ -410,6 +473,8 @@ ggplot(
     )
 ```
 The mean and one standard deviation spread as denoted by the white error bar within each violin plot, shows that the average of the distance walked in 6 minutes for current smoker is far lower than the participants that have never smoked or ex smokers. Furthermore, the average 6 minutes walk distance of those who never smoked and ex smokers is almost equal and both sits just slightly above the overall average. The shape of the distribution of those who never smoked is slightly left skewed, indicating that there are more participants with higher 6 minutes walk distance. Whereas for ex smoker and current smoker, the distribution is widest below the average, indicating that there are more participants with lower 6 minutes walk distance. However, the maximum outlier or the maximum distance walked in 6 minutes is from the current smoker group, while the minimum is from the ex smoker group.
+
+### 2 Exposures
 
 # Summary and limitations
 
