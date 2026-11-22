@@ -247,7 +247,7 @@ The total dataset after merging is 3298 rows. **Inner join** is used here becaus
 
 # Exploratory analysis and visualisation
 
-Since the focus is smoking status and the participants usual level of physical activity on whether it affects how far they are able to walk in 6 minutes, the focus of the analysis will be on these two variables only. *Use numerical summaries and figures to explore the linked data **in relation to your research question**. Choose summaries that suit each variable, and summarise the outcome at each visit and by your main baseline characteristic. Produce a small, focused set of figures, at least one showing how the outcome changes across visits. Give each figure axis labels with units and a caption (use the `fig.cap` chunk option), and follow each with a short interpretation. You can replicate the following chunks to structure your presentation.*
+## Exposure characteristics
 
 ```{r frequency-smoker, tab.cap = 'Total participants for each smoking status'}
 total_smokers = as.data.frame(table(baseline$fsmoker))
@@ -270,42 +270,93 @@ kable(total_activity, align = 'l',
 The majority of the participants have low physical activity level with 37%, then high level of physical activity with 29.8%, followed with moderate level of physical activity or 19.1%, and the least frequent is participants who have very high level of physical activity with only 14%.
 
 ```{r frequency-smoker-activity, tab.cap = 'Crosstabulation of smoker status and level of physical activity'}
-total_smoker_activity = as.data.frame(table(linked_data[, c('fsmoker', 'fphy_activity')]))
+total_smoker_activity = as.data.frame(table(baseline[, c('fsmoker', 'fphy_activity')]))
 
 pct_within_smoker = round(
     prop.table(
-        table(linked_data[, c('fsmoker', 'fphy_activity')]), margin = 1
+        table(baseline[, c('fsmoker', 'fphy_activity')]), margin = 1
     ) * 100, 2
 ) # Fetch the percentage within smokers
 
 pct_within_activity = round(
     prop.table(
-        table(linked_data[, c('fsmoker', 'fphy_activity')]), margin = 2
+        table(baseline[, c('fsmoker', 'fphy_activity')]), margin = 2
     ) * 100, 2
 ) # Fetch the percentage within activity level
 
+# Build percentage columns
 total_smoker_activity$pct_within_smoker = c(pct_within_smoker)
 total_smoker_activity$pct_within_activity = c(pct_within_activity)
-kable(total_smoker_activity, align = 'l',
-    col.names = c('Smoking status', 'Level of physical activity', 'Total participants')
+total_smoker_activity$pct_total = round(total_smoker_activity$Freq / sum(total_smoker_activity$Freq) * 100, 2)
+
+# Build formatted table
+total_smoker_activity$row_col_pct = sprintf('%d (%.2f) (%.2f)', total_smoker_activity$Freq, 
+    total_smoker_activity$pct_within_smoker, total_smoker_activity$pct_within_activity
+)
+
+total_smoker_activity$freq_row_pct = sprintf('%d (%.2f)', total_smoker_activity$Freq, total_smoker_activity$pct_within_smoker)
+
+kable(total_smoker_activity[, c('fsmoker', 'fphy_activity', 'row_col_pct', 'pct_total')], 
+    align = 'l',
+    col.names = c('Smoking status', 'Level of physical activity', 
+                  'Participants, <br> n (within smoker type, %) (within physical activity, %)', 
+                  'Total %')
 )
 ```
+
+Among those who never smoked, . However, since the majority of the participants are ex smokers it is expected that the cross tabulation of smoking status and their usual level of physical activity is highest in ex smokers. 
+
+```{r heatmap}
+ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_within_smoker)) +
+    geom_tile(colour = 'white', linewidth = 0.5) +
+    geom_text(
+        aes(label = freq_row_pct,
+            colour = ifelse(pct_within_smoker > 20, 'white', 'black')
+        ),
+        fontface = 'bold',
+        show.legend = FALSE
+    ) +
+    scale_fill_viridis_c(
+        option = 'C',
+        direction = -1,
+        name = 'Within smoking status, %'
+    ) +
+    scale_colour_manual(
+        values = c('white' = '#FFFFFF', 'black' = '#111111')
+    ) +
+    labs(
+        x = 'Smoking status',
+        y = 'Level of physical activity',
+        title = 'Heatmap of cross tabulation between smoking status \n and level of physical activity'
+    ) +
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## Outcome characteristics
 
 ```{r distance-per-visit, fig.cap = 'Box plot of distance walked in 6 minutes per visit'}
 overall_median = median(linked_data$walk6min, na.rm = TRUE)
 ggplot(data = linked_data, aes(x = factor(visit), y = walk6min)) +
-    geom_boxplot(outlier.color = '#D55E00', na.rm = TRUE) +
-    geom_hline(aes(yintercept = overall_median), 
-       linetype = 'solid', linewidth = 0.8,
-       colour = '#CC79A7'
+    geom_boxplot(
+        outlier.color = '#D55E00', 
+        median.colour = '#111111',
+        fill = '#56B4E9', 
+        na.rm = TRUE
+    ) +
+    geom_hline(
+        aes(yintercept = overall_median), 
+        linetype = 'dashed', linewidth = 0.8,
+        colour = '#CC79A7'
     ) +
     labs(
         title = 'Distance walked in 6 minutes per visit',
         x = 'Visit',
         y = 'Distance walked in 6 minutes (m)'
     ) +
-    theme(plot.title = element_text(hjust = 0.5)) +
-    theme_classic()
+    theme_classic() +
+    theme(plot.title = element_text(hjust = 0.5))
 ```
 
 Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes are consistent with a few outliers but not notable. The median and interquartile range of each visit is also similar. The spread of the distance for the baseline and follow-ups are also similar with a few consistent upper outliers. Only two lower outliers exist on the second and sixth follow-up.
@@ -362,17 +413,18 @@ The mean and one standard deviation spread as denoted by the white error bar wit
 
 # Summary and limitations
 
-*About 500 words in total across the two parts below, written for research scientists.*
-
 ## Summary of findings
 
 *Describe what your exploration suggests in relation to your research question, using cautious language appropriate to an observational study.*
 
 ## Limitations
 
-*Discuss the limitations of the data and of your analysis, such as data-quality problems and the decisions you made about them, missing information and the observational design. Explain how each might affect what can be concluded.*
+Potential limitation: 
 
-Potential limitation: - Study participants limited to 60-75 years old - No statistical test means can't conclude a result with statistical significance - No regression model means can't quantify magnitude of predictor against the dependent variable
+- Study participants limited to 60-75 years old 
+- No statistical test means can't conclude a result with statistical significance 
+- No regression model means can't quantify magnitude of predictor against the dependent variable
+- Potential confounders
 
 ## GenAI Declaration
 
