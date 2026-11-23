@@ -1,0 +1,118 @@
+---
+title: "exercise_8"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+```
+
+
+# Part 1
+
+```{r}
+DF = read.table('data/bmd.csv', header = TRUE, sep = ',')
+str(DF)
+```
+```{r}
+colSums(is.na(DF))
+```
+
+```{r}
+# sex, fracture, medication
+unique(DF$sex)
+DF$fsex = as.factor(DF$sex)
+
+unique(DF$fracture)
+DF$ffracture = as.factor(DF$fracture)
+
+unique(DF$medication)
+DF$fmedication = as.factor(DF$medication)
+
+str(DF)
+```
+```{r}
+DF$bmi = DF$weight_kg / (DF$height_cm / 100)^2
+```
+
+# Part 2
+
+```{r}
+summary(DF$bmi)
+hist(DF$bmi)
+```
+
+```{r}
+hist(DF$age) # Not normally distributed
+boxplot(DF$age)
+```
+
+```{r}
+ggplot(data = DF, aes(x = bmd, y = age)) +
+    geom_point() # Very weak negative relationship
+```
+
+# Part 3
+
+## How is BMD associated with age?
+
+```{r}
+fm1 = lm(bmd ~ age, data = DF)
+coef(fm1)
+```
+
+> BMD = 1.046 - 0.004 * age
+
+```{r}
+anova(fm1)
+```
+
+age is significant in the model.
+
+```{r}
+coef(fm1)['(Intercept)']
+```
+
+The intercept (= 1.046) when age = 0 has no clinically meaningful interpretation.
+
+```{r}
+summary(fm1)
+```
+
+Stats:
+
+- coefficient estimate of age = -0.004
+- SE (age) = 0.000993
+- t-value (age) = -4.162
+- p-value (age) < 0.05 (significant)
+- R^2 = 0.9399
+- Adjusted R^2 = 0.08856
+- Residual SE = 0.159 (167 df)
+
+```{r}
+confint(fm1, 'age', level = 0.95)
+```
+
+The 95% CI for age is the above range where it is the plausible range of values that the population regression coefficient of age.
+
+# Part 4 - Assumptions for linear regression
+
+```{r}
+par(mfrow = c(2,2))
+plot(fm1)
+```
+
+```{r}
+plot(fm1, which = 4)
+```
+
+# Part 5 - Predicting
+
+```{r}
+# Age = 65
+predict_x = data.frame(age = 65)
+predict(fm1, predict_x)
+predict(fm1, predict_x, interval = 'confidence', level = 0.95)
+predict(fm1, predict_x, interval = 'prediction', level = 0.95)
+```
+
