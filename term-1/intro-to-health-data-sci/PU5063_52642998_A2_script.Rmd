@@ -182,6 +182,7 @@ visits[duplicated(visits[, c('ID', 'visit')]),
 | 4 | baseline, phy_activity | Label `Hihg` found | `unique(baseline$phy_activity)` shows the unique values of phy_activity | Uncertain value | Update label to `High` | The typo is obvious where instead of `High`, the label `Hihg` was given | 6 rows |
 | 5 | baseline, ethnicity | Value of `4` found | `unique(baseline$ethnicity)` shows the unique values of ethnicity | Uncertain value | Update values to `NA` | It is not clear which label it's originally meant to be | 4 rows |
 | 6 | baseline, bmi | Irregular extreme values | `summary(baseline$bmi)` shows the max value of 295 and ordering the data based on bmi in a descending order shows another improbable bmi value of 288 | Uncertain value | Update values to `NA` | The likeliest value is 29.5 and 28.8 but no way to confirm | 2 rows |
+| 7 | baseline; sex, smoker, phy_activity, diabetes, ethnicity, inhaler | Wrong data type | `str(baseline)` shows the data type | Wrong data type | Cast to factor as a new corresponding variable prefixed with `f` | The data type is casted to factor following the data dictionary | All rows |
 
 # Missing data
 
@@ -209,9 +210,9 @@ Missing data in the baseline data occured in the variables: **smoking status, us
 | Variable | Total missing | Pattern | Type of missing |
 |:-----------------|:-----------------|:-----------------|:-----------------|
 | Smoking status | 3 rows | Too little data to find any missing patterns | Missing completely at random |
-| Usual level of physical activity | 14 rows | Majority of the missing occurred are participants receiving inhaler or ex smokers | Missing completely at random |
-| Diabetes | 10 rows | Majority of the missing occurred are participants receiving inhaler | Missing completely at random |
-| Ethnicity | 16 rows | Majority of the missing occurred are participants receiving inhaler | Missing completely at random |
+| Usual level of physical activity | 14 rows | Majority of the missing occurred are participants ex smokers, but not enough data to conclude a confident pattern | Missing completely at random |
+| Diabetes | 10 rows | Majority of the missing occurred are participants receiving inhaler, but not enough data to conclude a confident pattern | Missing completely at random |
+| Ethnicity | 16 rows | Majority of the missing occurred are participants without diabetes, but not enough data to conclude a confident pattern | Missing completely at random |
 
 All the variables with missing data are presumed to be missing completely at random because while the majority of the missing data occurred on patients receiving inhaler, there is not enough data to draw a clear pattern.
 
@@ -305,7 +306,7 @@ kable(total_smoker_activity[, c('fsmoker', 'fphy_activity', 'row_col_pct', 'pct_
 ```
 
 
-```{r heatmap}
+```{r heatmap-smoking-physical, fig.cap = 'Heatmap of smoking status and level of physical activity'}
 ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_within_smoker)) +
     geom_tile(colour = 'white', linewidth = 0.5) +
     geom_text(
@@ -422,7 +423,7 @@ kable(distance_summary,
 
 The table above shows how similar the average and the spread of the data is between the baseline and the follow-ups. It also further shows in detail the absence of growth from the baseline to the follow-ups. The highest average occurred on the second follow up but the increase from the baseline is only by 0.48 metres, while the baseline against all the other follow-ups only decreased. The lowest average is on the last follow-up at 378.20 metres, almost 3 metres lower than the baseline.
 
-### 1 Exposure
+### Univariate analysis
 
 **Need to change graph below to account for each visits, 3 parallel graphs vertically**
 
@@ -474,7 +475,7 @@ ggplot(
 ```
 The mean and one standard deviation spread as denoted by the white error bar within each violin plot, shows that the average of the distance walked in 6 minutes for current smoker is far lower than the participants that have never smoked or ex smokers. Furthermore, the average 6 minutes walk distance of those who never smoked and ex smokers is almost equal and both sits just slightly above the overall average. The shape of the distribution of those who never smoked is slightly left skewed, indicating that there are more participants with higher 6 minutes walk distance. Whereas for ex smoker and current smoker, the distribution is widest below the average, indicating that there are more participants with lower 6 minutes walk distance. However, the maximum outlier or the maximum distance walked in 6 minutes is from the current smoker group, while the minimum is from the ex smoker group.
 
-### 2 Exposures
+### Multivariate analysis
 
 # Summary and limitations
 
