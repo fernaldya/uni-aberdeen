@@ -396,7 +396,7 @@ ggplot(
     )
 ```
 
-Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes across the baseline and all the follow-ups are similar and approximately normal with a few outliers but not notable. The mean and 1 standard deviation spread as noted by the white error bar within each violin is relatively similar. Overall, without accounting for any specific exposure, there is no growth in the distance the participants are able to walk in 6 minutes from the baseline to the follow-ups.
+Across all the visits including baseline, the distribution of how far the participants are able to walk in 6 minutes across the baseline and all the follow-ups are similar and approximately normal with a few outliers but not notable. The mean and 1 standard deviation spread as noted by the white error bar within each violin is relatively similar. Overall, without accounting for any specific exposures, there is no growth in the distance the participants are able to walk in 6 minutes from the baseline to the follow-ups.
 
 ```{r distance-means-spread, tab.cap = 'Summary statistics of 6 minute walk distance without specific exposure'}
 distance_means = aggregate(
@@ -431,9 +431,10 @@ The table above shows how similar the average and the spread of the data is betw
 ```{r setup-analysis-df}
 # Subset dataframe to only include variables of interest and exclude NA values
 analysis_df = subset(linked_data, 
-     !is.na(walk6min) & 
-       !is.na(fsmoker) & 
-       !is.na(fphy_activity),
+     !is.na(walk6min) & (
+       !is.na(fsmoker) |
+       !is.na(fphy_activity)
+     ),
      select = c(fsmoker, fphy_activity, fvisit, walk6min)
 )
 ```
@@ -441,12 +442,11 @@ analysis_df = subset(linked_data,
 
 ### Univariate analysis
 
-**Need to change graph below to account for each visits, 3 parallel graphs vertically**
-
-```{r helper-for-dynamic-smoker, include = FALSE}
+<a id="univariate-smoker-setup"></a>
+```{r univariate-smoker-setup}
 smoker_outcome_plot = function(smoking_status) {
     # Filter dataframe
-    df = analysis_df[analysis_df$fsmoker == smoking_status, ]
+    df = analysis_df[analysis_df$fsmoker == smoking_status & !is.na(analysis_df$fsmoker), ]
     # Fetch the mean within the filtered smoker group
     within_group_mean = round(mean(df$walk6min))
     
@@ -455,75 +455,60 @@ smoker_outcome_plot = function(smoking_status) {
         data = df,
         aes(x = fsmoker, y = walk6min, fill = fvisit)
     ) +
-    geom_violin() +
+    geom_violin(width = 0.85) +
     geom_hline(
       aes(yintercept = within_group_mean, linetype ='Within group mean'), 
       linewidth = 0.8, colour = '#444444'
     ) +
+    stat_summary(# Within smoking and visit mean
+      fun = mean, geom = 'point',
+      colour = '#FFFFFF', size = 1.5,
+      show.legend = FALSE, position = position_dodge(width = 0.85)
+    ) +
     scale_linetype_manual(
       name = '',
       values = c('Within group mean' = 'dashed')
+    ) +
+    scale_y_continuous(
+        limits = c(200, 600), 
+        breaks = c(seq(200, 600, 100), within_group_mean)
+    ) +
+    scale_fill_manual(values = c('#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7')) +
+    labs(
+        x = 'Smoking status',
+        y = 'Distance walked in 6 minutes (m)',
+        fill = 'Visit'
+    ) +
+    theme_classic() +
+    theme(
+      legend.key.width = unit(1, "cm")
     )
 }
 ```
 
-```{r}
+```{r univariate-smoker, fig.height = 10, fig.width = 8}
 never_smoked = smoker_outcome_plot('Never smoked')
 ex_smoker = smoker_outcome_plot('Ex smoker')
 current_smoker = smoker_outcome_plot('Current smoker')
 
-never_smoked / ex_smoker / current_smoker
-```
-
-
-
-```{r distance-for-smoker, warning = FALSE, fig.cap = 'Distance walked in 6 minutes per smoking status'}
-ggplot(
-      data = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min), 
-      c('walk6min', 'fsmoker')], 
-      aes(x = fsmoker, y = walk6min, fill = fsmoker)
+never_smoked / ex_smoker / current_smoker +
+    plot_layout(
+        guides = 'collect',
+        axis_titles = 'collect'
     ) +
-    geom_violin() +
-    geom_jitter(
-      alpha = 0.25, size = 0.4, 
-      width = 0.08, colour = '#1A1A1A',
-      show.legend = FALSE
-    ) +
-    geom_hline(
-      aes(yintercept = overall_mean, linetype ='Overall mean'), 
-      linewidth = 0.8, colour = '#444444'
-    ) +
-    stat_summary(# 1 SD
-      fun = mean, 
-      fun.min = function(x) mean(x) - sd(x),
-      fun.max = function(x) mean(x) + sd(x),
-      geom = 'errorbar', colour = '#FFFFFF',
-      width = 0.1, linewidth = 0.8,
-    ) +
-    stat_summary(# Group mean
-      fun = mean, geom = 'point',
-      colour = '#FFFFFF', size = 2.5,
-      show.legend = FALSE
-    ) +
-    scale_y_continuous(limits = c(200, 600), breaks = seq(200, 600, 100)) +
-    scale_fill_manual(values = c('#56B4E9', '#009E73', '#CC79A7')) +
-    scale_linetype_manual(
-      name = '',
-      values = c('Overall mean' = 'dashed')
-    ) +
-    labs(
-        title = 'Distance walked in 6 minutes per smoking status',
-        x = 'Smoking status',
-        y = 'Distance walked in 6 minutes (m)',
-        fill = 'Smoking status'
-    ) +
-    theme_classic() +
-    theme(
-      plot.title = element_text(hjust = 0.5),
-      legend.key.width = unit(1, "cm")
+    plot_annotation(
+        title = 'Distance walked in 6 minutes per visit per smoking status',
+        theme = theme(plot.title = element_text(hjust = 0.5))
     )
 ```
-The mean and one standard deviation spread as denoted by the white error bar within each violin plot, shows that the average of the distance walked in 6 minutes for current smoker is far lower than the participants that have never smoked or ex smokers. Furthermore, the average 6 minutes walk distance of those who never smoked and ex smokers is almost equal and both sits just slightly above the overall average. The shape of the distribution of those who never smoked is slightly left skewed, indicating that there are more participants with higher 6 minutes walk distance. Whereas for ex smoker and current smoker, the distribution is widest below the average, indicating that there are more participants with lower 6 minutes walk distance. However, the maximum outlier or the maximum distance walked in 6 minutes is from the current smoker group, while the minimum is from the ex smoker group.
+
+Taking into account the participants' smoking status, it is clear that current smokers has a far lower 6 minutes walk distance average at each visit as well as the overall average compared to ex smokers and those who never smoked. Those who never smoked and ex smokers have very similar averages across all the visits. However, the shape of the violins for those who never smoked and ex smokers are different. Those who never smoked tend to be wider above the group mean, while ex smokers tend to be wider below the group mean.
+
+
+```{r univariate-physical-activity-setup}
+
+```
+
 
 ### Multivariate analysis
 
@@ -544,7 +529,19 @@ Potential limitation:
 
 ## GenAI Declaration
 
-No generative AI tools was used in completing this assessment.
+Generative AI (Claude) was used in completing this assessment to quickly search up how to enhance the plot builder I have in chunk [univariate-smoker-setup](#univariate-smoker-setup).
+
+To solve the issue where I wanted to display the mean as a point within each smoking status and within each visit, I passed the prompt:
+
+```{md}
+stat_summary(
+fun = mean, geom = 'point',
+colour = '#FFFFFF', size = 2.5,
+show.legend = FALSE
+)
+
+on a violin plot where x and fill are different categorical variables, how do i create a point mean within each permutation?
+```
 
 # Session information
 
