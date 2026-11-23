@@ -445,21 +445,25 @@ analysis_df = subset(linked_data,
 
 ```{r helper-for-dynamic-smoker, include = FALSE}
 smoker_outcome_plot = function(smoking_status) {
-    # Setup dataframe
-    df = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min), 
-                     c('walk6min', 'fvisit', 'fsmoker')]
-    
+    # Filter dataframe
+    df = analysis_df[analysis_df$fsmoker == smoking_status, ]
     # Fetch the mean within the filtered smoker group
-    within_group_mean = round(mean(linked_data[linked_data$fsmoker == smoking_status, 'walk6min']))
+    within_group_mean = round(mean(df$walk6min))
     
     # Build the graph
     ggplot(
-        data = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min) &
-                          linked_data$fsmoker == smoking_status, 
-                          c('walk6min', 'fvisit', 'fsmoker')],
-        aes(x = fsmoker, y = walk6min, fill = fvisit))
+        data = df,
+        aes(x = fsmoker, y = walk6min, fill = fvisit)
     ) +
-    geom_violin()
+    geom_violin() +
+    geom_hline(
+      aes(yintercept = within_group_mean, linetype ='Within group mean'), 
+      linewidth = 0.8, colour = '#444444'
+    ) +
+    scale_linetype_manual(
+      name = '',
+      values = c('Within group mean' = 'dashed')
+    )
 }
 ```
 
