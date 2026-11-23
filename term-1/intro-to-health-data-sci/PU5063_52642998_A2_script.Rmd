@@ -59,6 +59,7 @@ knitr::opts_chunk$set(
 ```{r packages}
 library(ggplot2)
 library(knitr)
+library(patchwork)
 ```
 
 # Research question
@@ -170,6 +171,10 @@ str(visits)
 visits[duplicated(visits), ] # No full duplicates
 visits[duplicated(visits[, c('ID', 'visit')]),
     c('ID', 'visit')] # No duplicates by ID and visit
+
+visits$fvisit = factor(visits$visit, levels = c(0, 1, 2, 3, 4, 5, 6),
+    labels = c('Baseline', '1', '2', '3', '4', '5', '6')
+)
 ```
 
 ## Data cleaning log
@@ -347,8 +352,8 @@ In those who never smoked and the ex smoker groups, the trends are the same wher
 overall_mean = mean(linked_data$walk6min, na.rm = TRUE)
 ggplot(
       data = linked_data[!is.na(linked_data$walk6min), 
-      c('walk6min', 'visit')], 
-      aes(x = factor(visit), y = walk6min, fill = factor(visit))
+      c('walk6min', 'fvisit')], 
+      aes(x = fvisit, y = walk6min, fill = fvisit)
     ) +
     geom_violin() +
     geom_jitter(
@@ -395,37 +400,78 @@ Across all the visits including baseline, the distribution of how far the partic
 
 ```{r distance-means-spread, tab.cap = 'Summary statistics of 6 minute walk distance without specific exposure'}
 distance_means = aggregate(
-    walk6min ~ visit, data = linked_data,
+    walk6min ~ fvisit, data = linked_data,
     FUN = function(x) round(mean(x), 2)
 )
 distance_sd = aggregate(
-    walk6min ~ visit, data = linked_data,
+    walk6min ~ fvisit, data = linked_data,
     FUN = function(x) round(sd(x), 2)
 )
 
 distance_summary = merge(
     distance_means, distance_sd, 
-    by = 'visit'
+    by = 'fvisit'
 )
 distance_summary$one_sd_spread = sprintf('%.2f, %.2f', 
     distance_summary$walk6min.x - distance_summary$walk6min.y,
     distance_summary$walk6min.x + distance_summary$walk6min.y
 )
-distance_summary[1,1] = 'Baseline'
 
-kable(distance_summary,
+kable(distance_summary[order(distance_summary$fvisit),],
     align = 'l',
     col.names = c('Visit', 'Average 6 minutes <br>walk distance (m)', 
                   'Standard deviation 6 <br>minutes walk distance (m)',
-                  'Mean ± 1 SD')
+                  'Mean ± 1 SD'),
+    row.names = FALSE
 )
 ```
 
 The table above shows how similar the average and the spread of the data is between the baseline and the follow-ups. It also further shows in detail the absence of growth from the baseline to the follow-ups. The highest average occurred on the second follow up but the increase from the baseline is only by 0.48 metres, while the baseline against all the other follow-ups only decreased. The lowest average is on the last follow-up at 378.20 metres, almost 3 metres lower than the baseline.
 
+```{r setup-analysis-df}
+# Subset dataframe to only include variables of interest and exclude NA values
+analysis_df = subset(linked_data, 
+     !is.na(walk6min) & 
+       !is.na(fsmoker) & 
+       !is.na(fphy_activity),
+     select = c(fsmoker, fphy_activity, fvisit, walk6min)
+)
+```
+
+
 ### Univariate analysis
 
 **Need to change graph below to account for each visits, 3 parallel graphs vertically**
+
+```{r helper-for-dynamic-smoker, include = FALSE}
+smoker_outcome_plot = function(smoking_status) {
+    # Setup dataframe
+    df = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min), 
+                     c('walk6min', 'fvisit', 'fsmoker')]
+    
+    # Fetch the mean within the filtered smoker group
+    within_group_mean = round(mean(linked_data[linked_data$fsmoker == smoking_status, 'walk6min']))
+    
+    # Build the graph
+    ggplot(
+        data = linked_data[!is.na(linked_data$fsmoker) & !is.na(linked_data$walk6min) &
+                          linked_data$fsmoker == smoking_status, 
+                          c('walk6min', 'fvisit', 'fsmoker')],
+        aes(x = fsmoker, y = walk6min, fill = fvisit))
+    ) +
+    geom_violin()
+}
+```
+
+```{r}
+never_smoked = smoker_outcome_plot('Never smoked')
+ex_smoker = smoker_outcome_plot('Ex smoker')
+current_smoker = smoker_outcome_plot('Current smoker')
+
+never_smoked / ex_smoker / current_smoker
+```
+
+
 
 ```{r distance-for-smoker, warning = FALSE, fig.cap = 'Distance walked in 6 minutes per smoking status'}
 ggplot(
