@@ -502,15 +502,136 @@ never_smoked / ex_smoker / current_smoker +
     )
 ```
 
-Taking into account the participants' smoking status, it is clear that current smokers has a far lower 6 minutes walk distance average at each visit as well as the overall average compared to ex smokers and those who never smoked. Those who never smoked and ex smokers have very similar averages across all the visits. However, the shape of the violins for those who never smoked and ex smokers are different. Those who never smoked tend to be wider above the group mean, while ex smokers tend to be wider below the group mean.
+Taking into account only the participants' smoking status, it is clear that current smokers has a far lower 6 minutes walk distance average at each visit as well as the overall average compared to ex smokers and those who never smoked. Those who never smoked and ex smokers have very similar averages across all the visits. However, the shape of the violins for those who never smoked and ex smokers are different. Those who never smoked tend to be wider above the group mean, while ex smokers tend to be wider below the group mean.
 
 
 ```{r univariate-physical-activity-setup}
-
+activity_outcome_plot = function(activity) {
+    # Filter dataframe
+    df = analysis_df[analysis_df$fphy_activity == activity & !is.na(analysis_df$fphy_activity), ]
+    # Fetch the mean within the filtered activity group
+    within_group_mean = round(mean(df$walk6min), 2)
+    
+    # Build the graph
+    ggplot(
+        data = df,
+        aes(x = fphy_activity, y = walk6min, fill = fvisit)
+    ) +
+    geom_violin(width = 0.85) +
+    geom_hline(
+      aes(yintercept = within_group_mean, linetype ='Within group mean'), 
+      linewidth = 0.8, colour = '#444444'
+    ) +
+    stat_summary(# Within activity and visit mean
+      fun = mean, geom = 'point',
+      colour = '#FFFFFF', size = 1.5,
+      show.legend = FALSE, position = position_dodge(width = 0.85)
+    ) +
+    scale_linetype_manual(
+      name = '',
+      values = c('Within group mean' = 'dashed')
+    ) +
+    scale_y_continuous(
+        limits = c(200, 600), 
+        breaks = c(seq(200, 600, 100), 
+             ifelse(activity == 'Low', NA, within_group_mean) # Remove y tick on low to avoid clashing
+        )
+    ) +
+    scale_fill_manual(values = c('#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7')) +
+    labs(
+        x = 'Level of physical activity',
+        y = 'Distance walked in 6 minutes (m)',
+        fill = 'Visit'
+    ) +
+    theme_classic() +
+    theme(
+      legend.key.width = unit(1, "cm")
+    )
+}
 ```
 
+```{r univariate-physical-activity, fig.height = 10, fig.width = 8}
+low_phys = activity_outcome_plot('Low')
+moderate_phys = activity_outcome_plot('Moderate')
+high_phys = activity_outcome_plot('High')
+very_high_phys = activity_outcome_plot('Very_high')
+
+low_phys / moderate_phys / high_phys / very_high_phys +
+    plot_layout(
+        guides = 'collect',
+        axis_titles = 'collect'
+    ) +
+    plot_annotation(
+        title = 'Distance walked in 6 minutes per visit per physical activity level',
+        theme = theme(plot.title = element_text(hjust = 0.5))
+    )
+```
+
+It is expected that participants with a very high level of physical to also have the largest 6 minutes walk distance. However, participants with low level of physical activity had a far higher average compared to those with moderate and high level of physical activity. Those with moderate level of physical activity had the lowest group average with 332.64 metres, followed with high level of physical activity at 372.7 metres, then 394.53 metres for low physical activity, and 420.87 for very high level of physical activity. However, in all the physical activity groups there aren't any visible trends indicating no improvement across follow-ups when only accounting for the participants' level of physical activity.
 
 ### Multivariate analysis
+
+```{r multivariate-setup}
+multivariate_df_mean = aggregate(
+    walk6min ~ fvisit + fsmoker + fphy_activity,
+    data = analysis_df[!is.na(analysis_df$fsmoker) & !is.na(analysis_df$fphy_activity), ],
+    FUN = mean,
+    na.rm = TRUE
+)
+multivariate_df_sd = aggregate(
+    walk6min ~ fvisit + fsmoker + fphy_activity,
+    data = analysis_df[!is.na(analysis_df$fsmoker) & !is.na(analysis_df$fphy_activity), ],
+    FUN = sd,
+    na.rm = TRUE
+)
+multivariate_df_len = aggregate(
+    walk6min ~ fvisit + fsmoker + fphy_activity,
+    data = analysis_df[!is.na(analysis_df$fsmoker) & !is.na(analysis_df$fphy_activity), ],
+    FUN = length
+)
+multivariate_df = merge(
+    merge(
+        multivariate_df_mean, multivariate_df_sd,
+        by = c('fvisit', 'fsmoker', 'fphy_activity')
+    ), multivariate_df_len, 
+    by = c('fvisit', 'fsmoker', 'fphy_activity')
+)
+colnames(multivariate_df)[c(4, 5, 6)] = c('mean', 'sd', 'n')
+multivariate_df$lower_ci = multivariate_df$mean - 1.96 * (multivariate_df$sd / sqrt(multivariate_df$n))
+multivariate_df$upper_ci = multivariate_df$mean + 1.96 * (multivariate_df$sd / sqrt(multivariate_df$n))
+# multivariate_df[order(multivariate_df$fsmoker, multivariate_df$fphy_activity, multivariate_df$fvisit), ]
+```
+
+```{r multivariate-analysis, fig.height = 6, fig.width = 8, fig.cap = '6 minutes walk distance per visit for every smoking status and physical activity level'}
+ggplot(
+    data = multivariate_df,
+    aes(x = fvisit, y = mean, colour = fsmoker, group = fsmoker)
+) +
+    geom_line(linewidth = 1) +
+    geom_errorbar(aes(
+            ymin = lower_ci,
+            ymax = upper_ci,
+            width = 0.2, linetype = 'solid',
+            alpha = 0.8
+        ), show.legend = FALSE
+    ) +
+    geom_point(size = 1.3, show.legend = FALSE) +
+    facet_wrap(~ fphy_activity) + 
+    scale_colour_manual(values = c("#E69F00", "#56B4E9", "#CC79A7")) +
+    labs(
+        x = 'Visit',
+        y = 'Distance walked in 6 minutes (m)',
+        title = 'Distance walked in 6 minutes per visit per smoker and physical activity level',
+        colour = 'Smoking status',
+        caption = 'Errorbar denotes the 95% confidence interval'
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        strip.background = element_rect(fill = "#CDDCDD")
+    )
+```
+
+Taking into account both exposures of interest, smoking status and usual level of physical activity the performance or the 6 minutes walk distance differs significantly across the groups.
 
 # Summary and limitations
 
@@ -522,10 +643,7 @@ Taking into account the participants' smoking status, it is clear that current s
 
 Potential limitation: 
 
-- Study participants limited to 60-75 years old 
-- No statistical test means can't conclude a result with statistical significance 
-- No regression model means can't quantify magnitude of predictor against the dependent variable
-- Potential confounders
+A few limitations exist in this study with the most notable being the lack of statistical tests done which makes it hard to suggest any significance in the possible differences across the smoking and physical activity level groups. Furthermore, the study only has participants aged 60-75 years old which severely limits the target population of the findings. The majority of the participants with nearly 75% are ex smokers, while the rest is either those who never smoked at 8% and 17.4% for current smokers. This difference may not draw a clearer conclusion for the less frequent groups. The lack of a regression model also makes it hard to quantify the magnitude of the predictors against the dependent variable.
 
 ## GenAI Declaration
 
@@ -533,7 +651,7 @@ Generative AI (Claude) was used in completing this assessment to quickly search 
 
 To solve the issue where I wanted to display the mean as a point within each smoking status and within each visit, I passed the prompt:
 
-```{md}
+```{}
 stat_summary(
 fun = mean, geom = 'point',
 colour = '#FFFFFF', size = 2.5,
