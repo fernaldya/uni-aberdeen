@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\usepackage{tabularx}
+\DTMlangsetup[en-GB]{ord=omit}
+\graphicspath{{./images}}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+
+\title{Designing Real World Trials\\Week 10\\Activity Unit 4 - Sample Size}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Question a}
+\paragraph{We want to know how many people with digestive discomfort we need to randomise in a clinical trial to test
+whether a probiotic yoghurt reduces the proportion of people with symptoms of bloating. We know that currently
+after 4 weeks 80\% of people without treatment report to still having bloating. Our new probiotic yoghurt is thought
+to reduce this to 30\% of people. We want to have 90\% power at the two-sided 5\% significance level to detect this
+difference, what is our required sample size?}
+
+\subsection*{What's known}
+\textbf{From the question}
+\begin{itemize}
+    \item After 4 weeks, 80\% of people without treatment still have bloating
+    \item Treatment is thought to reduce to 30\%
+    \item Want 90\% power (two-sided)
+    \item 5\% significance level
+\end{itemize}
+
+\textbf{Inferred / Assumptions}
+\begin{itemize}
+    \item Outcome is binary, bloat or no bloat
+    \item $P_A \text{: proportion expected without treatment} = 80\%$
+    \item $P_B \text{: proportion expected in probiotic yoghurt} = 30\%$
+    \item 1:1 treatment arm ratio
+    \item $\alpha = 5\%$ or $Z_{1 - \frac{0.05}{2}} = Z_{0.975} = 1.960$
+    \item Power = $1 - \beta = 1 - 0.90 = 0.1$ or $Z_{0.90} = 1.2816$
+    \item $\delta = P_A - P_B = 0.80 - 0.30 = 0.50$
+    \item $\hat{p} = \frac{P_A + P_B}{2} = \frac{0.80 + 0.30}{2} = 0.55$
+\end{itemize}
+
+\begin{equation*}
+    m = \dfrac{[Z_{1-\frac{\alpha}{2}} \sqrt{2\hat{p} (1-\hat{p})} + Z_{1-\beta} \sqrt{ P_A (1-P_A) + P_B (1-P_B) }]^2}
+        {\delta^2}
+\end{equation*}
+
+\begin{equation*}
+    m = \dfrac{[1.96 \times \sqrt{2 \times 0.55 \times 0.45} + 1.2816 \times \sqrt{0.80 \times 0.20 + 0.30 \times 0.70} ]^2}{0.50^2}
+\end{equation*}
+
+\begin{equation*}
+    m = \dfrac{[1.379 + 0.780]^2}{0.25}
+      = 18.65 \approx 19 \text{ per treatment arm}
+\end{equation*}
+\\
+Since the required is 19 per treatment arm, thus the entire trial will require 38 participants in total.
+
+\section*{Question b}
+\paragraph{After consideration, no treatment is not considered a fair comparison (as an aside, why do you think that might be
+the case?), and a decision is made to use a placebo yoghurt, we think that will reduce the number of people with
+bloating in the control arm to 60\%, how big does our trial have to be now?}
+
+\subsection*{Changes}
+The changes introduced is only to the expected proportion from no treatment to placebo
+\\
+\begin{itemize}
+    \item $P_A = 0.80 \rightarrow 0.60$
+    \item $\hat{p} = \frac{0.60 + 0.30}{2} = 0.45$
+    \item $\delta = 0.60 - 0.30 = 0.30$
+\end{itemize}
+
+\begin{equation*}
+    m = \dfrac{[1.96 \times \sqrt{2 \times 0.45 \times 0.55} + 1.2816 \times \sqrt{0.60 \times 0.40 + 0.30 \times 0.70} ]^2}{0.30^2}
+\end{equation*}
+
+\begin{equation*}
+    m = \dfrac{0.739}{0.09} = 8.212 \approx 9 \text{ per treatment arm}
+\end{equation*}
+\\
+Since the required is 9 per treatment arm, thus the entire trial will require 18 participants in total.
+
+\section*{Question c}
+\paragraph{The makers of yoghurt want to show it is better than a competitor’s yoghurt, which is reported to have only 50\%
+of people reporting symptoms at four weeks, how many people do we need to randomise now?}
+
+\subsection*{Changes}
+\begin{itemize}
+    \item $P_A = 0.60 \rightarrow 0.50$
+    \item $\hat{p} = \frac{0.50 + 0.30}{2} = 0.40$
+    \item $\delta = 0.50 - 0.30 = 0.20$
+\end{itemize}
+
+\begin{equation*}
+    m = \dfrac{[1.96 \times \sqrt{2 \times 0.40 \times 0.60} + 1.2816 \times \sqrt{0.50 \times 0.50 + 0.30 \times 0.70} ]^2}{0.20^2}
+\end{equation*}
+
+\begin{equation*}
+    m = \dfrac{1.358 + 0.869}{0.04} = 55.7 \approx 56 \text{ per treatment arm}
+\end{equation*}
+\\
+Since the required is 56 per treatment arm, thus the entire trial will require 112 participants in total.
+
+
+\section*{Question d}
+\paragraph{For each of a, b, and c above, we have no considered drop-out, we want to adjust our sample sizes for a 10\%
+attrition of participants, please adjust each sample size for this loss to follow-up}\mbox{}\\
+\\
+To account for drop-out with 10\% expected attrition, the new sample size can be calculated by
+\begin{equation*}
+    n = \frac{n_{\text{initial}}}{1 - \text{attrition percentage}}
+\end{equation*}
+
+\begin{itemize}
+    \item a) 38 participants: $\frac{38}{0.9} = 42.2 \approx 43 \rightarrow$ 43 participants
+    \item b) 18 participants: $\frac{18}{0.9} = 20 \rightarrow$ 20 participants
+    \item c) 38 participants: $\frac{112}{0.9} = 124.4 \approx 125 \rightarrow$ 125 participants  
+\end{itemize}
+
+
+\section*{Question e}
+\paragraph{After further consideration, these sample sizes are considered too large. What different assumptions and inputs
+could be used to reduce sample size?}
+
+\end{document}
