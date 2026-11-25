@@ -68,7 +68,7 @@ library(patchwork)
 
 Among adults aged 60 to 75 in primary care diagnosed with COPD, does **smoking status** have any association with how far they are able walk within 6 minutes measured at baseline and six times more over 6 months, taking into account their usual **level of physical activity**?
 
-> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affects the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD. An initial assumption around this research question is that active smokers should have a lower distance walked in 6 minutes while participants with higher level of physical activity should have higher distance walked. However, the following analyses will prove or disprove this hypothesis.
+> It would be beneficial to understand whether there is a pattern in how far the participants are able to walk within 6 minutes during each follow up depending on their smoking status and whether their usual **level of physical activity** also affects the distance they are able to walk. If there is, then a further analysis into how much it affects and whether a baseline for each permutation exists by finding their means and standard deviation (or median and IQR), followed up with knowing if a progression or even regression exists at each follow-up. It is worth knowing the relationships between these exposures as it could serve as a promoting point for avoiding smoking as well as having a better physical activity level despite having COPD. 
 
 # Data import and structure
 
@@ -253,7 +253,7 @@ The total dataset after merging is 3298 rows. **Inner join** is used here becaus
 
 # Exploratory analysis and visualisation
 
-## Exposure characteristics
+## Exposure analysis
 
 ```{r frequency-smoker, tab.cap = 'Total participants for each smoking status'}
 total_smokers = as.data.frame(table(baseline$fsmoker))
@@ -263,7 +263,7 @@ kable(total_smokers, align = 'l',
 )
 ```
 
-370 of the participants or 74.4% are ex smokers, followed with 87 current smokers or 17.5%, and 4 who never smoked or 8% of the participants.
+The majority of the participants are ex smokers with 370 of the participants or 74.4% being in the ex smoker group, followed with 87 current smokers or 17.5%, and 4 who never smoked or 8% of the participants.
 
 ```{r frequency-phyactivity, tab.cap = 'Total participants for each level of physical activity'}
 total_activity = as.data.frame(table(baseline$fphy_activity))
@@ -273,7 +273,7 @@ kable(total_activity, align = 'l',
 )
 ```
 
-The majority of the participants have low physical activity level with 37%, then high level of physical activity with 29.8%, followed with moderate level of physical activity or 19.1%, and the least frequent is participants who have very high level of physical activity with only 14%.
+The majority of the participants have low physical activity level with 180 participants or 37%, then 145 high level of physical activity participants or 29.8%, followed with 93 moderate level of physical activity participants or 19.1%, and the least frequent is participants who have very high level of physical activity with only 14% or 68 participants.
 
 ```{r frequency-smoker-activity, tab.cap = 'Crosstabulation of smoker status and level of physical activity'}
 total_smoker_activity = as.data.frame(table(baseline[, c('fsmoker', 'fphy_activity')]))
@@ -346,7 +346,7 @@ ggplot(data = total_smoker_activity, aes(fsmoker, fphy_activity, fill = pct_with
 
 In those who never smoked and the ex smoker groups, the trends are the same where the majority have a low level of physical activity with 42.11% and 36.57% respectively, followed with high level of physical activity at 31.58% and 30.19%, then moderate levels at 18.42% and 19.67%, and the least populated with very high level of physical activity at 7.89% and 13.57%. However, for current smokers the trend is slightly different where instead of very high level of physical activity being the least frequent, it is swapped with moderate level of physical activity instead.
 
-## Outcome characteristics
+## Outcome analysis
 
 ```{r distance-per-visit, fig.cap = 'Distance walked in 6 minutes per visit'}
 overall_mean = mean(linked_data$walk6min, na.rm = TRUE)
@@ -631,19 +631,21 @@ ggplot(
     )
 ```
 
-Taking into account both exposures of interest, smoking status and usual level of physical activity the performance or the 6 minutes walk distance differs significantly across the groups.
+Taking into account both exposures of interest, smoking status and level of physical activity the performance or the 6 minutes walk distance differs significantly across the groups. Overall, participants with very high physical activity level had the highest overall performance, followed with participants with low physical activity level, high physical activity, and moderate physical activity level. Additionally, in all the physical activity levels and within each smoking groups there are no visible positive nor negative trends and tend to stagnate, except in those who are current smoker but have a very high physical activity level where it trends downwards. In all the physical activity levels, current smokers almost consistently had the lowest 6 minutes walk distance. 
+
+Participants with **low physical activity level**, particularly those who never smoked generally performed better than ex smokers and current smokers hovering around 400 metres 6 minutes walk distance and lower for the other smoker groups. Those who never smoked also have a very fluctuative trend, while ex smoker and current smoker have a very stagnant trend. In the **moderate physical activity** group, there is a clear difference in performance between the three smoking groups. The ex smoker group had the highest 6 minutes walk distance across all the visits, followed with the never smoked group, and the current smoker group with average difference being 46 metres at the highest and 32 at the lowest. For the **high physical activity** participants, it shares a similar pattern with the low physical activity group but instead the never smoked groups' overall 6 minutes walk distance is around 380 metres and lower for the other smoker groups. The **very high physical activity** group has a different pattern than the other groups, where the baseline and first follow-up is nearly identical for the three smoking groups and starting from the second follow-up, it starts to diverge. The ex smoker group starts to rise slighly but ends at around the same as the baseline at the last follow-up, the never smoked group fluctuates rapidly but also ends around the same point at the final follow-up. However, the current smoker group shows a clear downturn from the first follow-up to the last follow-up.
 
 # Summary and limitations
 
 ## Summary of findings
 
-*Describe what your exploration suggests in relation to your research question, using cautious language appropriate to an observational study.*
+The univariate analysis for the smoker groups showed a clear difference in performance between the groups where those who never smoked and ex smokers performed better overall compared to those who are current smokers. For the physical activity analysis, it is also shown that those with very high usual physical activity level performed better than the others, however those with low physical activity level performed better than those with moderate or high physical activity level. Participants with moderate physical activity level performed the worst out of all the physical activity levels. The multivariate analysis indicated that there isn't much difference between ex smokers and those who never smoked in all the levels of physical activity group, but current smokers always performed worse compared to the other two groups.
 
 ## Limitations
 
 Potential limitation: 
 
-A few limitations exist in this study with the most notable being the lack of statistical tests done which makes it hard to suggest any significance in the possible differences across the smoking and physical activity level groups. Furthermore, the study only has participants aged 60-75 years old which severely limits the target population of the findings. The majority of the participants with nearly 75% are ex smokers, while the rest is either those who never smoked at 8% and 17.4% for current smokers. This difference may not draw a clearer conclusion for the less frequent groups. The lack of a regression model also makes it hard to quantify the magnitude of the predictors against the dependent variable.
+A few limitations exist in this study with the most notable being the lack of statistical tests done which makes it hard to suggest any significance in the possible differences across the smoking and physical activity level groups. Furthermore, the study only has participants aged 60-75 years old which severely limits the target population of the findings. The majority of the participants with nearly 75% are ex smokers, while the rest is either those who never smoked at 8% or current smokers at 17.4%. These differences in the sample size may blur the conclusion for the less frequent groups. The lack of a regression model also makes it hard to quantify the magnitude of the predictors against the dependent variable.
 
 ## GenAI Declaration
 
