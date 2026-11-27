@@ -1,0 +1,181 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\title{Applied Statistics\\Exam Notes}
+\author{Fernaldy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Sampling, Inference, and Hypothesis Testing}
+\subsection{Sampling}
+Sampling is selecting a group of individuals that represent the population to be able to generalise findings from the sample to the population. Some jargons around sampling are:
+
+\begin{itemize}
+    \item Population: Complete set of individuals to which we want to generalise our findings
+    \item Sampling frame: List of every unit in the population
+    \item Sample: Subset of the population used to study the population
+    \item Sample size: Number of individuals in the sample
+    \item Sampling method: Procedure to select the sample
+\end{itemize}
+\mbox{}\\
+The sampling methods can be categorised into:
+
+\textbf{Non-probability sampling:}
+\begin{itemize}
+    \item Convenience sampling: Selecting participants based on ease of access, availability, by proximity rather than random
+    \item Judgement sampling: Deliberately selecting participants based on judgement
+    \item Referral (Snowball) sampling: Existing participants refer other participants
+    \item Quota sampling: Divide into subgroup then recruit a set number or proportion from those groups but not chosen at random (etc. using judgement)
+\end{itemize}
+
+\textbf{Probability sampling:}
+\begin{itemize}
+    \item Simple random sampling: Every member of the population has equal chance of being selected
+    \item Systematic sampling: A sampling \textbf{interval} is obtained by dividing the population size with the sample size required. A number between 1 and the interval is randomly selected which becomes the first item in the sample, then the interval is added onto the position of the previously selected item then the process repeats until the sample target is met
+    \item Stratified sampling: Population is separated (stratified) into mutually exclusing, homegeneous groups (strata) where the members within the groups have little variation but each strata has wide variation. Then, a random sample is selected within each strata.
+    \item Cluster sampling: Population is divided into natural groups (clusters) where the clusters are heterogeneous (mini population). One or more clusters are selected randomly
+\end{itemize}
+
+\subsection{Inference}
+Inference is how we draw conclusions from the sample onto the population. Some jargons around this concept:
+
+\begin{itemize}
+    \item Population parameter: A measurable characteristic of the population, it is fixed unless the population itself changes. 
+    \item Sampling distribution: The probability distribution of a sample statistic calculated across all samples drawn from a population
+    \item Sampling error / precision: How far off the measure of the estimate obtained from the true population parameter
+    \item Standard deviation: Variability of the individuals in the sample
+    \item Standard error: Measure of uncertainty in the sample statistics and can be calculated depending on whether the population standard deviation is known
+        \begin{itemize}
+            \item If known: $SE = \frac{\sigma}{\sqrt{n}}$
+            \item Not known: $SE \text{ (or SEM)} = \frac{s}{\sqrt{n}}$
+        \end{itemize}
+    \item Confidence interval: An interval around a sample estimate which is likely to contain the population parameter (pratical definition); For 95\% CI, if the same sampling process is repeated 100 times then 95 out of 100 the population parameter should fall into the interval (Textbook definition). This can be calculated by (assuming 95\% confidence level): $\text{95\% CI} = \bar{x} \pm 1.96 * \frac{\sigma}{\sqrt{n}}$
+\end{itemize}
+\mbox{}\\
+Some notes on confidence interval in hypothesis testing where it tests the mean or median, if the CI contains 0 then it is not significant. When it tests for the odds / risk ratio then if the CI contains 1 then it is not significant.
+
+\subsection{Hypothesis testing}
+Null and alternate hypothesis is defined at the start, followed with the statistics test which gives the p-value to determine whether to reject the null hypothesis. The p-value is the probability of obtaining our results or more extreme results if the null hypothesis were true. Usually,
+\begin{itemize}
+    \item If the p-value is less than 0.05 ($< 0.05$), then the null hypothesis is rejected, or the result is statistically significant
+    \item If the p-value is greater than or equal to 0.05 ($\geq 0.05$), then there is not enough evidence to reject the null hypothesis, or the result is not statistically significant
+\end{itemize}
+
+Some common errors in hypothesis testing is the type I or type II errors:
+\begin{itemize}
+    \item Type I error: Rejecting the null hypothesis when it is true (False positive)
+    \item Type II error: Not rejecting the alternative hypothesis when it is false (False negative)
+\end{itemize}
+
+\pagebreak
+\section{Parametric tests: t-test and ANOVA}
+\subsection{One sample t-test}
+\textbf{One continuous variable} that you want to compare against a pre-specified value. E.g. Test whether the mean diastolic BP is equal to 75 mmHg. The null hypothesis would be \textit{The mean diastolic BP equals 75 mmHg in the population}. The assumption for this test is:
+\begin{itemize}
+    \item The continuous variable is normally distributed: Tested by plotting the histogram
+\end{itemize}
+\mbox{}\\
+To interpret the results from SPSS, 
+\begin{itemize}
+    \item Check the p-value for significance, if it is significant, proceed
+    \item Check the mean difference, the positive/negative sign indicates the direction (higher / lower) than the hypothesised mean
+    \item Interpret the CI, which indicates how much higher the mean is in the population than the hypothesised mean
+\end{itemize}
+
+\subsection{Independent samples t-test}
+\textbf{One continuous variable and a binary variable} that splits it into two groups. To coompare the mean of the continuous variable between the two groups. E.g. Total cholesterol between male and female is the same (the difference between the total cholesterol of male and female is 0). The assumptions for this test are:
+\begin{itemize}
+    \item The two groups are Independent of one another
+    \item The continuous variable is normally distributed in both groups: Histogram for both groups
+    \item The variances are equal between the two groups: Levene's test (p-value $\geq 0.05$), if the Levene's test p-value is $\le 0.05$ then the variances are not equal
+\end{itemize}
+\mbox{}\\
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Start from the Levene's test to check the variance, if equal (not significant) proceed
+    \item Check the p-value, if it is significant then the means of both groups are different
+    \item Check the mean difference, the positive/negative sign indicates the direction (which group is higher / lower)
+    \item Interpret the CI, which indicates how much higher the mean for the first group is compared to the second group
+\end{itemize}
+
+\subsection{Paired samples t-test}
+\textbf{Two of the same continuous variable that is measured repeatedly (at different time points)}. To compare the mean of the continuous variable and whether there is a difference in the before and after. E.g. Systolic BP at baseline and follow-up. The assumption for this test is:
+\begin{itemize}
+    \item The \textit{difference} in the continuous variable before and after is normally distributed.
+\end{itemize}
+\mbox{}\\
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Check p-value for significance
+    \item Check the mean difference, read the description of the test (to see if it is before - after or after - before) to interpret the direction of the difference
+    \item Interpret the CI, which indicates how much higher / lower the population parameter is at follow-up
+\end{itemize}
+
+\subsection{ANOVA}
+\textbf{One continuous variable and a categorical variable (with more than two categories)}. To compare the mean of the continuous variable and whether there is a difference between all the groups. E.g. Mean birth weight is the same in the three ethnic groups. The assumptions for this are:
+\begin{itemize}
+    \item Independent groups
+    \item Normal distribution of the continuous variable across all the groups: Histogram for all groups
+    \item Equal variance of the continuous variable between groups: Levene's test
+\end{itemize}
+\mbox{}\\
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Check the levene's test for significance, if not significant, proceed; If not use the Kruskal-Wallis test
+    \item Check the ANOVA p-value, if significant, check the post-hoc test for which groups are different and by how mnuch
+\end{itemize}
+
+\pagebreak
+\section{Non-parametric tests}
+\subsection{Mann-Whitney test}
+\textbf{One continuous variable and a binary variable} that splits it into two groups and:
+\begin{itemize}
+    \item The assumptions for the independent sample t-test is not met or
+    \item The continuous data is ranked (ordinal) or
+    \item small sample size
+\end{itemize}
+This compares the \textbf{distribution} between the two groups where the null hypothesis states that the distribution of the continuous variable is the same between the two groups in the population. The independent group assumption still has to be met.
+
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Check the p-value
+    \item Compare the medians and IQR
+\end{itemize}
+
+\subsection{Kruskal-Wallis test}
+\textbf{One continuous variable and a categorical variable (with more than two categories)} and:
+\begin{itemize}
+    \item The assumptions for ANOVA is not met or
+    \item The continuous data is ranked or
+    \item small sample size
+\end{itemize}
+This compares the distribution of the continuous variable between all the groups where the null hypothesis states that the distribution of the continuous variable is the same between all the groups in the population. The independent group assumption still has to be met.
+
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Check the p-value
+    \item Compare the medians and IQR
+\end{itemize}
+
+\subsection{Wilcoxon Matched pairs test}
+\textbf{A continuous variable in paired groups (before and after) and the difference is skewed} or small sample size. This compares the distribution of the continuous variable in the before and after measure. The null hypothesis is typically stated as \textit{There is no difference / no change in the distribution of the continuous variable in the population between before / baseline and after / follow-up}.
+
+To interpret the results from SPSS,
+\begin{itemize}
+    \item Check the p-value
+    \item Compare the medians and IQR or the mean rank
+\end{itemize}
+
+\end{document}
